@@ -17,8 +17,6 @@
     //* FILL IN LATER //
 */
 
-
-
 /******************************** Header files ********************************/
 
 #include "main.h"
@@ -28,6 +26,7 @@
 #include "terminal.h"
 #include "diagnostic.h"
 #include <stdio.h>
+
 
 
 // Start the main program loop
