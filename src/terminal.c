@@ -14,7 +14,7 @@
 #include "terminal.h"
 #include <ncurses.h>
 
-
+//test
 
 // Initialize the terminal
 void terminal_init(void)
