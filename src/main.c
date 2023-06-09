@@ -25,6 +25,7 @@
 #include "object_detection.h"
 #include "terminal.h"
 #include "diagnostic.h"
+#include "curses.h"
 #include <stdio.h>
 
 
