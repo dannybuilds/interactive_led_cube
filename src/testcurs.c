@@ -1,23 +1,10 @@
-// Authors :  Danny Restrepo
-//         :  Bodgan Gula
-//         :  Mark Gelman
-//         :  Nitin Suryadevara
-// Emails  :  restrepo@pdx.edu
-//         :  gula@pdx.edu
-//         :  gelman@pdx.edu
-//         :  nitin2@pdx.edu
-// Course  :  ECE103 Engineering Programming
-// School  :  Portland State University
-// Date    :  25th May 2023
-// Project :  Interactive LED Cube
-
-//*
-* This is a test program for PDCurses.Originally by
-* John Burnell <johnb@kea.am.dsir.govt.nz>
-*
-* wrs(1993 - 05 - 28) --modified to be consistent(perform identically)
-* with either PDCurses or under Unix System V, R4
-* /
+/*
+ * This is a test program for PDCurses. Originally by
+ * John Burnell <johnb@kea.am.dsir.govt.nz>
+ *
+ *  wrs (1993-05-28) -- modified to be consistent (perform identically)
+ *                      with either PDCurses or under Unix System V, R4
+ */
 
 #ifndef _XOPEN_SOURCE_EXTENDED
 # define _XOPEN_SOURCE_EXTENDED 1
@@ -217,7 +204,7 @@ int main(int argc, char* argv[])
     return 0;
 }
 
-void Continue(WINDOW * win)
+void Continue(WINDOW* win)
 {
     mvwaddstr(win, 10, 1, " Press any key to continue");
     wrefresh(win);
@@ -235,7 +222,7 @@ void Continue2(void)
     getch();
 }
 
-int initTest(WINDOW * *win, int argc, char* argv[])
+int initTest(WINDOW** win, int argc, char* argv[])
 {
 #ifdef XCURSES
     Xinitscr(argc, argv);
@@ -262,7 +249,7 @@ int initTest(WINDOW * *win, int argc, char* argv[])
     return 0;
 }
 
-void introTest(WINDOW * win)
+void introTest(WINDOW* win)
 {
     werase(win);
     wmove(win, height / 2 - 5, width / 2);
@@ -288,7 +275,7 @@ void introTest(WINDOW * win)
     Continue(win);
 }
 
-void scrollTest(WINDOW * win)
+void scrollTest(WINDOW* win)
 {
     int i, OldY;
 #ifndef PDCURSES
@@ -342,7 +329,7 @@ void scrollTest(WINDOW * win)
     wsetscrreg(win, 0, OldY);
 }
 
-void inputTest(WINDOW * win)
+void inputTest(WINDOW* win)
 {
     int w, h, bx, by, sw, sh, i, c, num = 0;
     char buffer[80];
@@ -571,7 +558,7 @@ void inputTest(WINDOW * win)
     Continue(win);
 }
 
-void outputTest(WINDOW * win)
+void outputTest(WINDOW* win)
 {
     WINDOW* win1;
     char Buffer[80];
@@ -743,7 +730,7 @@ void outputTest(WINDOW * win)
 }
 
 #if HAVE_RESIZE
-void resizeTest(WINDOW * dummy)
+void resizeTest(WINDOW* dummy)
 {
     WINDOW* win1;
     int nwidth = 135, nheight = 52;
@@ -793,7 +780,7 @@ void resizeTest(WINDOW * dummy)
 }
 #endif /* HAVE_RESIZE */
 
-void padTest(WINDOW * dummy)
+void padTest(WINDOW* dummy)
 {
     WINDOW* pad, * spad;
 
@@ -831,7 +818,7 @@ void padTest(WINDOW * dummy)
 }
 
 #if HAVE_CLIPBOARD
-void clipboardTest(WINDOW * win)
+void clipboardTest(WINDOW* win)
 {
     static const char* text =
         "This string placed in clipboard by PDCurses test program, testcurs.";
@@ -918,7 +905,7 @@ void curTest(void)
     } while (TRUE);
 }
 
-void acsTest(WINDOW * win)
+void acsTest(WINDOW* win)
 {
 #ifdef ACS_S3
 # define ACSNUM 32
@@ -1033,7 +1020,7 @@ void acsTest(WINDOW * win)
 #endif
 }
 
-void attrTest(WINDOW * win)
+void attrTest(WINDOW* win)
 {
     int tmarg = (LINES - 16) / 2;
     int col1 = (COLS - 36) / 2, col2 = col1 + 20;
@@ -1260,7 +1247,7 @@ void gradient(int tmarg)
     curTest();
 }
 
-void colorTest(WINDOW * win)
+void colorTest(WINDOW* win)
 {
     static const short colors[] =
     {
@@ -1336,7 +1323,7 @@ void colorTest(WINDOW * win)
 #endif
 
 #if HAVE_WIDE
-void wideTest(WINDOW * win)
+void wideTest(WINDOW* win)
 {
     wchar_t tmp[513];
     size_t i;
