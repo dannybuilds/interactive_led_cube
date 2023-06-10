@@ -35,7 +35,7 @@ void setup()
 {
   //? Look for these macros
 
-  
+
   SPI.setBitOrder(MSBFIRST);//Most Significant Bit First
   SPI.setDataMode(SPI_MODE0);// Mode 0 Rising edge of data, keep clock low
   SPI.setClockDivider(SPI_CLOCK_DIV2);//Run the data in at 16MHz/2 - 8MHz
