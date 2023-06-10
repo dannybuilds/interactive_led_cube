@@ -1,5 +1,5 @@
 #include <SPI.h>// SPI Library used to clock data out to the shift registers
-#include "animations.c"
+#include "animations.cpp"
 
 //? arbitrary, go to shift registers
 #define latch_pin 2// can use any pin you want to latch the shift registers
