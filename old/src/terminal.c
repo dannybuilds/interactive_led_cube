@@ -11,13 +11,15 @@
 // Date    :  25th May 2023
 // Project :  Interactive LED Cube
 
-//*
+/*
 * This is a test program for PDCurses.Originally by
 * John Burnell <johnb@kea.am.dsir.govt.nz>
 *
 * wrs(1993 - 05 - 28) --modified to be consistent(perform identically)
 * with either PDCurses or under Unix System V, R4
 * /
+
+*/
 
 #ifndef _XOPEN_SOURCE_EXTENDED
 # define _XOPEN_SOURCE_EXTENDED 1

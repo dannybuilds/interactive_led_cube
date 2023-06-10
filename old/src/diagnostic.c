@@ -16,6 +16,7 @@
 #include "sensor_manager.h"
 #include "object_detection.h"
 #include "terminal.h"
+#include "curses.h"
 #include <stdio.h>
 
 
