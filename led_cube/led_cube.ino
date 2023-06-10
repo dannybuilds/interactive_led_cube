@@ -1,6 +1,5 @@
-
-
 #include <SPI.h>// SPI Library used to clock data out to the shift registers
+#include "animations.c"
 
 //? arbitrary, go to shift registers
 #define latch_pin 2// can use any pin you want to latch the shift registers
@@ -35,6 +34,8 @@ unsigned long start;//for a millis timer to cycle through the animations
 void setup()
 {
   //? Look for these macros
+
+  
   SPI.setBitOrder(MSBFIRST);//Most Significant Bit First
   SPI.setDataMode(SPI_MODE0);// Mode 0 Rising edge of data, keep clock low
   SPI.setClockDivider(SPI_CLOCK_DIV2);//Run the data in at 16MHz/2 - 8MHz
