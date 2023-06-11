@@ -47,14 +47,14 @@ byte red1[64], green1[64], blue1[64];
 byte red2[64], green2[64], blue2[64];
 byte red3[64], green3[64], blue3[64];
 
-// Creates pointer to ESP32 hardware timer object
-hw_timer_t* timer = NULL;
-
 
 
 /******************************** Sketch Setup ********************************/
 void setup()
 {
+    // Creates pointer to ESP32 hardware timer object
+    hw_timer_t* timer = NULL;
+
     Serial.begin(115200);
 
     SPI.setBitOrder(LSBFIRST);   // Least Significant Bit First
