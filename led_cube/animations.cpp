@@ -1191,11 +1191,8 @@ void bouncy()
         }
         delay(20);
 
-
         //direcTwo=random(3);  
         //if(direcTwo==1)
-
-
 
         if (direct == 0)
             x[0] = x[0] + xbit;
@@ -1210,9 +1207,6 @@ void bouncy()
             y[0] = y[0] - ybit;
         if (direct == 5)
             z[0] = z[0] - zbit;
-
-
-
 
 
         if (x[0] > 7)
