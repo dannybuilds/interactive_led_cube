@@ -469,6 +469,7 @@ void folder()
     }
 
     start = millis();
+
     while (millis() - start < 10000)
     {
         if (top == 1)
