@@ -25,13 +25,31 @@
 
 
 
-
 /***************************** Animation Patterns *****************************/
 void wipe_out()
 {
-    int xxx = 0, yyy = 0, zzz = 0;
-    int fx = random(8), fy = random(8), fz = random(8), direct, fxm = 1, fym = 1, fzm = 1, fxo = 0, fyo = 0, fzo = 0;
-    int  ftx = random(8), fty = random(8), ftz = random(8), ftxm = 1, ftym = 1, ftzm = 1, ftxo = 0, ftyo = 0, ftzo = 0;
+    int xxx = 0;
+    int yyy = 0;
+    int zzz = 0;
+    int fx = random(8);
+    int fy = random(8);
+    int fz = random(8);
+    int direct;
+    int fxm = 1;
+    int fym = 1;
+    int fzm = 1;
+    int fxo = 0;
+    int fyo = 0;
+    int fzo = 0;
+    int  ftx = random(8);
+    int fty = random(8);
+    int ftz = random(8);
+    int ftxm = 1;
+    int ftym = 1;
+    int ftzm = 1;
+    int ftxo = 0;
+    int ftyo = 0;
+    int ftzo = 0;
     int select, rr, gg, bb, rrt, ggt, bbt;
 
     for (xxx = 0; xxx < 8; xxx++)
@@ -93,9 +111,7 @@ void wipe_out()
 
     while (millis() - start < 10000)
     {
-
-        // fx=random(8); fy=random(8); fz=random(8);
-
+        // fx = random(8); fy = random(8); fz = random(8);
         set_led(fxo, fyo, fzo, 0, 0, 0);
         set_led(fxo, fyo, fzo + 1, 0, 0, 0);
         set_led(fxo, fyo, fzo - 1, 0, 0, 0);
@@ -231,8 +247,21 @@ void wipe_out()
 
 void rain()
 {
-    int x[64], y[64], z[64], addr, leds = 64, bright = 1, ledcolor, colowheel;
-    int xx[64], yy[64], zz[64], xold[64], yold[64], zold[64], slowdown;
+    int x[64];
+    int y[64];
+    int z[64];
+    int addr;
+    int leds = 64;
+    int bright = 1;
+    int ledcolor;
+    int colowheel;
+    int xx[64];
+    int yy[64];
+    int zz[64];
+    int xold[64];
+    int yold[64];
+    int zold[64];
+    int slowdown;
 
     for (addr = 0; addr < 64; addr++)
     {
@@ -243,60 +272,95 @@ void rain()
         yy[addr] = random(16);
         zz[addr] = random(16);
     }
+
     start = millis();
     while (millis() - start < 20000)
     {
-        //wipe_out();
-        //for(addr=0; addr<leds; addr++)
-        //set_led(zold[addr], xold[addr], yold[addr], 0, 0, 0);
+        // wipe_out();
+        // for(addr = 0; addr < leds; addr++)
+        // set_led(zold[addr], xold[addr], yold[addr], 0, 0, 0);
 
         if (ledcolor < 200)
         {
             for (addr = 0; addr < leds; addr++)
             {
                 set_led(zold[addr], xold[addr], yold[addr], 0, 0, 0);
+
                 if (z[addr] >= 7)
+                {
                     set_led(z[addr], x[addr], y[addr], 0, 5, 15);
+                }
                 if (z[addr] == 6)
+                {
                     set_led(z[addr], x[addr], y[addr], 0, 1, 9);
+                }
                 if (z[addr] == 5)
+                {
                     set_led(z[addr], x[addr], y[addr], 0, 0, 10);
+                }
                 if (z[addr] == 4)
+                {
                     set_led(z[addr], x[addr], y[addr], 1, 0, 11);
+                }
                 if (z[addr] == 3)
+                {
                     set_led(z[addr], x[addr], y[addr], 3, 0, 12);
+                }
                 if (z[addr] == 2)
+                {
                     set_led(z[addr], x[addr], y[addr], 10, 0, 15);
+                }
                 if (z[addr] == 1)
+                {
                     set_led(z[addr], x[addr], y[addr], 10, 0, 10);
+                }
                 if (z[addr] <= 0)
+                {
                     set_led(z[addr], x[addr], y[addr], 10, 0, 1);
+                }
             }
-        }//200
+        }
 
         if (ledcolor >= 200 && ledcolor < 300)
         {
             for (addr = 0; addr < leds; addr++)
             {
                 set_led(zold[addr], xold[addr], yold[addr], 0, 0, 0);
+
                 if (z[addr] >= 7)
+                {
                     set_led(z[addr], x[addr], y[addr], 15, 15, 0);
+                }
                 if (z[addr] == 6)
+                {
                     set_led(z[addr], x[addr], y[addr], 10, 10, 0);
+                }
                 if (z[addr] == 5)
+                {
                     set_led(z[addr], x[addr], y[addr], 15, 5, 0);
+                }
                 if (z[addr] == 4)
+                {
                     set_led(z[addr], x[addr], y[addr], 15, 2, 0);
+                }
                 if (z[addr] == 3)
+                {
                     set_led(z[addr], x[addr], y[addr], 15, 1, 0);
+                }
                 if (z[addr] == 2)
+                {
                     set_led(z[addr], x[addr], y[addr], 15, 0, 0);
+                }
                 if (z[addr] == 1)
+                {
                     set_led(z[addr], x[addr], y[addr], 12, 0, 0);
+                }
                 if (z[addr] <= 0)
+                {
                     set_led(z[addr], x[addr], y[addr], 10, 0, 0);
+                }
             }
-        }//300
+        }
 
         if (ledcolor >= 300 && ledcolor < 400)
         {

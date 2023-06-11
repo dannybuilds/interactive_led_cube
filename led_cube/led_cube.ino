@@ -242,11 +242,17 @@ void IRAM_ATTR onTimer()
     // each level will have a chance to light up for 1 cycle, the BAM bit keeps track of which bit we are modulating out of the 4 bits
     // Bam counter is the cycle count, meaning as we light up each level, we increment the bam_counter
     if (bam_counter == 8)
+    {
         bam_bit++;
+    }
     else if (bam_counter == 24)
+    {
         bam_bit++;
+    }
     else if (bam_counter == 56)
+    {
         bam_bit++;
+    }
 
     // Here is where we increment the BAM counter
     bam_counter++;
@@ -265,6 +271,7 @@ void IRAM_ATTR onTimer()
                 SPI.transfer(blue0[shift_out]);
             }
             break;
+
         case 1:
             for (int shift_out = level; shift_out < level + 8; shift_out++)
             {
@@ -273,6 +280,7 @@ void IRAM_ATTR onTimer()
                 SPI.transfer(blue1[shift_out]);
             }
             break;
+
         case 2:
             for (int shift_out = level; shift_out < level + 8; shift_out++)
             {
@@ -281,6 +289,7 @@ void IRAM_ATTR onTimer()
                 SPI.transfer(blue2[shift_out]);
             }
             break;
+
         case 3:
             for (int shift_out = level; shift_out < level + 8; shift_out++)
             {
@@ -288,6 +297,7 @@ void IRAM_ATTR onTimer()
                 SPI.transfer(green3[shift_out]);
                 SPI.transfer(blue3[shift_out]);
             }
+
             // Here is where the bam_counter is reset back to 0, it's only 4 bit, but since each cycle takes 8 counts,
             // it goes 0 8 16 32, and when BAM_counter hits 64 we reset the BAM
             if (bam_counter == 120)
