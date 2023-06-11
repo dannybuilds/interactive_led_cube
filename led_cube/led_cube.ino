@@ -47,6 +47,9 @@ byte red1[64], green1[64], blue1[64];
 byte red2[64], green2[64], blue2[64];
 byte red3[64], green3[64], blue3[64];
 
+// Creates pointer to ESP32 hardware timer object
+hw_timer_t* timer = NULL;
+
 
 
 /******************************** Sketch Setup ********************************/
@@ -94,11 +97,11 @@ void loop()
     // To control an LED, you simply:
     // LED(level you want 0-7, row you want 0-7, column you want 0-7, red brighness 0-15, green brighness 0-15, blue brighness 0-15);
 
+    sine_wave();
+    clean();
     // rain();
     // folder();
-    sine_wave();
     //wipe_out();
-    clean();
     // bouncy();
     // color_wheel_v2();
     // clean();
