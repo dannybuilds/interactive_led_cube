@@ -37,7 +37,7 @@ volatile int level = 0;          // Keeps track of which level we are shifting d
 unsigned long start;             // For a millis timer to cycle through the animations
 
 // These variables are used by multiplexing and Bit Angle Modulation Code
-int shift_out;                 // Used in the code a lot in for(i= type loops
+int shift_out;                   // Used in the code a lot in for loops
 
 // Byte to write to the cathode shift register, 8 of them, shifting the ON level in each byte in the array
 byte cathode[8];
@@ -57,7 +57,7 @@ void setup()
 {
     Serial.begin(115200);
 
-    SPI.setBitOrder(MSBFIRST);   // Most Significant Bit First
+    SPI.setBitOrder(LSBFIRST);   // Least Significant Bit First
     SPI.setDataMode(SPI_MODE0);  // Mode 0 Rising edge of data, keep clock low
     noInterrupts();              // Kill interrupts until everything is set up
 
@@ -65,7 +65,7 @@ void setup()
     timer = timerBegin(0, 8, true);
     // Timer 0, 8 prescaler (0.5us resolution, because ESP32 runs at 160MHz by default and 160/8 = 20MHz)
     timerAttachInterrupt(timer, &onTimer, true);
-    // Set alarm to trigger every 62*0.5us = 31us (it's the closest we can get to 124us with the ESP32's clock speed and prescaler options)
+    // Set alarm to trigger every 62*0.5us = 31 us (it's the closest we can get to 124us with the ESP32's clock speed and prescaler options)
     timerAlarmWrite(timer, 62, true);
     timerAlarmEnable(timer);
 
