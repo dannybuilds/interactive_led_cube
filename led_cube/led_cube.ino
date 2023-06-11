@@ -14,16 +14,13 @@
 
 /*
     Program Description:
-
-    //* FILL IN LATER //
 */
 
 
 
 /***************************** Includes & Macros ******************************/
-
-#include <SPI.h>               // SPI Library used to clock data out to the shift registers
-#include "animations.cpp"
+#include <SPI.h>                 // SPI Library used to clock data out to the shift registers
+#include "prototypes.h"          // Function prototypes for the source and implementation files
 
 const int latch_pin = 21;        // GPIO21 will drive RCLK (latch) on shift registers
 const int blank_pin = 26;        // Same, can use any pin you want for this, just make sure you pull up via a 1k to 5V
@@ -97,15 +94,15 @@ void loop()
     // To control an LED, you simply:
     // LED(level you want 0-7, row you want 0-7, column you want 0-7, red brighness 0-15, green brighness 0-15, blue brighness 0-15);
 
-    rain();
-    folder();
+    // rain();
+    // folder();
     sine_wave();
     //wipe_out();
     clean();
-    bouncy();
-    color_wheel_v2();
-    clean();
-    harlem_shake();
+    // bouncy();
+    // color_wheel_v2();
+    // clean();
+    // harlem_shake();
 }
 
 

@@ -10,18 +10,17 @@
 // School  :  Portland State University
 // Date    :  25th May 2023
 // Project :  Interactive LED Cube
-// Title   :  Animations Module, Source File
+// Title   :  Animations Module, Implementation File
 
 /*
     Program Description:
-
-    //* FILL IN LATER //
 */
 
 
 
 /***************************** Includes & Macros ******************************/
-#include <SPI.h>
+#include <SPI.h>                 // SPI Library used to clock data out to the shift registers
+#include "prototypes.h"          // Function prototypes for the source and implementation files
 
 
 
