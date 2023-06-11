@@ -362,15 +362,8 @@ void rain()
             }
         }
 
-        if (ledcolor >= 300 && ledcolor < 400)
-        {
-
-        }
-        if (ledcolor >= 500 && ledcolor < 600)
-        {
-
-        }
-
+        if (ledcolor >= 300 && ledcolor < 400) {}
+        if (ledcolor >= 500 && ledcolor < 600) {}
 
         ledcolor++;
         if (ledcolor >= 300)
@@ -383,16 +376,15 @@ void rain()
             zold[addr] = z[addr];
         }
 
-
         delay(15);
 
-        //for(addr=0; addr<leds; addr++)
-        //set_led(z[addr], x[addr], y[addr], 0, 0, 0);
+        // for(addr = 0; addr < leds; addr++)
+        // set_led(z[addr], x[addr], y[addr], 0, 0, 0);
+
         for (addr = 0; addr < leds; addr++)
         {
-
-            //slowdown = random(2);
-            //if(bitRead(z[addr],0))
+            // slowdown = random(2);
+            // if (bitRead(z[addr],0))
             z[addr] = z[addr] - 1;
 
             // x[addr] = x[addr]+1;
@@ -408,7 +400,7 @@ void rain()
                     xx[addr] = 0;
                     zz[addr] = random(16);
                     yy[addr] = random(16);
-                    //zz[addr]=0;
+                    // zz[addr] = 0;
                 }
 
                 if (select == 1)
@@ -416,7 +408,7 @@ void rain()
                     xx[addr] = random(16);
                     zz[addr] = 0;
                     yy[addr] = random(16);
-                    //yy[addr]=0;
+                    // yy[addr] = 0;
                 }
 
                 if (select == 2)
@@ -436,10 +428,30 @@ void rain()
 
 void folder()
 {
-    int xx, yy, zz, pullback[16], state = 0, backorfront = 7;//backorfront 7 for back 0 for front
+    // backorfront 7 for back 0 for front
+    int xx;
+    int yy;
+    int zz;
+    int pullback[16];
+    int state = 0;
+    int backorfront = 7;
 
-    int folderaddr[16], LED_Old[16], oldpullback[16], ranx = random(16), rany = random(16), ranz = random(16), ranselect;
-    int bot = 0, top = 1, right = 0, left = 0, back = 0, front = 0, side = 0, side_select;
+    int folderaddr[16];
+    int LED_Old[16];
+    int oldpullback[16];
+    int ranx = random(16);
+    int rany = random(16);
+    int ranz = random(16);
+    int ranselect;
+
+    int bot = 0;
+    int top = 1;
+    int right = 0;
+    int left = 0;
+    int back = 0;
+    int front = 0;
+    int side = 0;
+    int side_select;
 
     folderaddr[0] = -7;
     folderaddr[1] = -6;
@@ -456,8 +468,6 @@ void folder()
         pullback[xx] = 0;
     }
 
-
-
     start = millis();
     while (millis() - start < 10000)
     {
@@ -465,7 +475,7 @@ void folder()
         {
             if (side == 0)
             {
-                //top to left-side
+                // top to left-side
                 for (yy = 0; yy < 8; yy++)
                 {
                     for (xx = 0; xx < 8; xx++)
@@ -475,9 +485,10 @@ void folder()
                     }
                 }
             }
+
             if (side == 2)
             {
-                //top to back-side
+                // top to back-side
                 for (yy = 0; yy < 8; yy++)
                 {
                     for (xx = 0; xx < 8; xx++)
@@ -487,9 +498,10 @@ void folder()
                     }
                 }
             }
+
             if (side == 3)
             {
-                //top-side to front-side
+                // top-side to front-side
                 for (yy = 0; yy < 8; yy++)
                 {
                     for (xx = 0; xx < 8; xx++)
@@ -499,9 +511,10 @@ void folder()
                     }
                 }
             }
+
             if (side == 1)
             {
-                //top-side to right
+                // top-side to right
                 for (yy = 0; yy < 8; yy++)
                 {
                     for (xx = 0; xx < 8; xx++)
@@ -511,13 +524,13 @@ void folder()
                     }
                 }
             }
-        }//top
+        }
 
         if (right == 1)
         {
             if (side == 4)
             {
-                //right-side to top
+                // right-side to top
                 for (yy = 0; yy < 8; yy++)
                 {
                     for (xx = 0; xx < 8; xx++)
@@ -527,9 +540,10 @@ void folder()
                     }
                 }
             }
+
             if (side == 3)
             {
-                //right-side to front-side
+                // right-side to front-side
                 for (yy = 0; yy < 8; yy++)
                 {
                     for (xx = 0; xx < 8; xx++)
@@ -539,9 +553,10 @@ void folder()
                     }
                 }
             }
+
             if (side == 2)
             {
-                //right-side to back-side
+                // right-side to back-side
                 for (yy = 0; yy < 8; yy++)
                 {
                     for (xx = 0; xx < 8; xx++)
@@ -551,9 +566,10 @@ void folder()
                     }
                 }
             }
+
             if (side == 5)
             {
-                //right-side to bottom
+                // right-side to bottom
                 for (yy = 0; yy < 8; yy++)
                 {
                     for (xx = 0; xx < 8; xx++)
@@ -563,13 +579,13 @@ void folder()
                     }
                 }
             }
-        }//right
+        }
 
         if (left == 1)
         {
             if (side == 4)
             {
-                //left-side to top
+                // left-side to top
                 for (yy = 0; yy < 8; yy++)
                 {
                     for (xx = 0; xx < 8; xx++)
@@ -579,9 +595,10 @@ void folder()
                     }
                 }
             }
+
             if (side == 3)
             {
-                //left-side to front-side
+                // left-side to front-side
                 for (yy = 0; yy < 8; yy++)
                 {
                     for (xx = 0; xx < 8; xx++)
@@ -591,9 +608,10 @@ void folder()
                     }
                 }
             }
+
             if (side == 2)
             {
-                //left-side to back-side
+                // left-side to back-side
                 for (yy = 0; yy < 8; yy++)
                 {
                     for (xx = 0; xx < 8; xx++)
@@ -603,9 +621,10 @@ void folder()
                     }
                 }
             }
+
             if (side == 5)
             {
-                //left-side to bottom
+                // left-side to bottom
                 for (yy = 0; yy < 8; yy++)
                 {
                     for (xx = 0; xx < 8; xx++)
@@ -615,14 +634,13 @@ void folder()
                     }
                 }
             }
-        }//left
-
+        }
 
         if (back == 1)
         {
             if (side == 1)
             {
-                //back-side to right-side
+                // back-side to right-side
                 for (yy = 0; yy < 8; yy++)
                 {
                     for (xx = 0; xx < 8; xx++)
@@ -632,6 +650,7 @@ void folder()
                     }
                 }
             }
+
             if (side == 4)
             {
                 // back-side to top-side
@@ -644,6 +663,7 @@ void folder()
                     }
                 }
             }
+
             if (side == 5)
             {
                 // back-side to bottom
@@ -655,10 +675,11 @@ void folder()
                         set_led(yy - pullback[yy], xx, folderaddr[yy], ranx, rany, ranz);
                     }
                 }
-            }//state1
+            }
+
             if (side == 0)
             {
-                //back-side to left-side
+                // back-side to left-side
                 for (yy = 0; yy < 8; yy++)
                 {
                     for (xx = 0; xx < 8; xx++)
@@ -668,7 +689,8 @@ void folder()
                     }
                 }
             }
-        }//back
+        }
+
         if (bot == 1)
         {
             if (side == 1)
@@ -683,9 +705,10 @@ void folder()
                     }
                 }
             }
+
             if (side == 3)
             {
-                //bottom to front-side
+                // bottom to front-side
                 for (yy = 0; yy < 8; yy++)
                 {
                     for (xx = 0; xx < 8; xx++)
@@ -695,9 +718,10 @@ void folder()
                     }
                 }
             }
+
             if (side == 2)
             {
-                //bottom to back-side
+                // bottom to back-side
                 for (yy = 0; yy < 8; yy++)
                 {
                     for (xx = 0; xx < 8; xx++)
@@ -707,9 +731,10 @@ void folder()
                     }
                 }
             }
+
             if (side == 0)
             {
-                //bottom to left-side
+                // bottom to left-side
                 for (yy = 0; yy < 8; yy++)
                 {
                     for (xx = 0; xx < 8; xx++)
@@ -719,13 +744,13 @@ void folder()
                     }
                 }
             }
-        }//bot
+        }
 
         if (front == 1)
         {
             if (side == 0)
             {
-                //front-side to left-side
+                // front-side to left-side
                 for (yy = 0; yy < 8; yy++)
                 {
                     for (xx = 0; xx < 8; xx++)
@@ -735,6 +760,7 @@ void folder()
                     }
                 }
             }
+
             if (side == 5)
             {
                 // front-side to bottom
@@ -747,6 +773,7 @@ void folder()
                     }
                 }
             }
+
             if (side == 4)
             {
                 // front-side to top-side
@@ -759,9 +786,10 @@ void folder()
                     }
                 }
             }
+
             if (side == 1)
             {
-                //front-side to right-side
+                // front-side to right-side
                 for (yy = 0; yy < 8; yy++)
                 {
                     for (xx = 0; xx < 8; xx++)
@@ -771,34 +799,32 @@ void folder()
                     }
                 }
             }
-        }//front
+        }
 
+        delay(5);
 
-
-
-        delay(5);//               DELAY   DELAY  DELAY
         for (xx = 0; xx < 8; xx++)
         {
             LED_Old[xx] = folderaddr[xx];
             oldpullback[xx] = pullback[xx];
         }
 
-
-
-
-
         if (folderaddr[7] == 7)
         {
-            // pullback=8;
+            // pullback = 8;
             for (zz = 0; zz < 8; zz++)
+            {
                 pullback[zz] = pullback[zz] + 1;
+            }
 
+            // finished with fold
             if (pullback[7] == 8)
-            {//finished with fold
+            {
                 delay(10);
-                //state++;
-                //if(state==4)
-                //state=0;
+
+                // state++;
+                // if (state == 4)
+                // state = 0;
 
                 ranselect = random(3);
                 if (ranselect == 0)
@@ -807,12 +833,14 @@ void folder()
                     rany = random(1, 16);
                     ranz = random(1, 16);
                 }
+
                 if (ranselect == 1)
                 {
                     ranx = random(1, 16);
                     rany = 0;
                     ranz = random(1, 16);
                 }
+
                 if (ranselect == 2)
                 {
                     ranx = random(1, 16);
@@ -823,249 +851,274 @@ void folder()
                 side_select = random(3);
 
                 if (top == 1)
-                {//                 TOP
+                {
                     top = 0;
+
+                    // top to left
                     if (side == 0)
-                    {//top to left
+                    {
                         left = 1;
                         if (side_select == 0) side = 2;
                         if (side_select == 1) side = 3;
-                        //if(side_select==2) side=4;
+                        // if(side_select == 2) side = 4;
                         if (side_select == 2) side = 5;
                     }
-                    else
-                        if (side == 1)
-                        {//top to right
-                            right = 1;
-                            if (side_select == 0) side = 5;
-                            if (side_select == 1) side = 2;
-                            if (side_select == 2) side = 3;
-                            //if(side_select==3) side=4;
-                        }
-                        else
-                            if (side == 2)
-                            {//top to back
-                                back = 1;
-                                if (side_select == 0) side = 0;
-                                if (side_select == 1) side = 1;
-                                if (side_select == 2) side = 5;
-                                //if(side_select==3) side=4;
-                            }
-                            else
-                                if (side == 3)
-                                {//top to front
-                                    front = 1;
-                                    if (side_select == 0) side = 0;
-                                    if (side_select == 1) side = 1;
-                                    if (side_select == 2) side = 5;
-                                    //if(side_select==3) side=4;
-                                }
-                }
-                else//top
-                    if (bot == 1)
-                    {//                 BOTTOM
-                        bot = 0;
-                        if (side == 0)
-                        {//bot to left
-                            left = 1;
-                            if (side_select == 0) side = 2;
-                            if (side_select == 1) side = 3;
-                            if (side_select == 2) side = 4;
-                            //if(side_select==3) side=5;
-                        }
-                        else
-                            if (side == 1)
-                            {//bot to right
-                                right = 1;
-                                //if(side_select==0) side=5;
-                                if (side_select == 0) side = 2;
-                                if (side_select == 1) side = 3;
-                                if (side_select == 2) side = 4;
-                            }
-                            else
-                                if (side == 2)
-                                {//bot to back
-                                    back = 1;
-                                    if (side_select == 0) side = 0;
-                                    if (side_select == 1) side = 1;
-                                    //if(side_select==2) side=5;
-                                    if (side_select == 2) side = 4;
-                                }
-                                else
-                                    if (side == 3)
-                                    {//bot to front
-                                        front = 1;
-                                        if (side_select == 0) side = 0;
-                                        if (side_select == 1) side = 1;
-                                        //if(side_select==2) side=5;
-                                        if (side_select == 2) side = 4;
-                                    }
+
+                    //top to right
+                    else if (side == 1)
+                    {
+                        right = 1;
+                        if (side_select == 0) side = 5;
+                        if (side_select == 1) side = 2;
+                        if (side_select == 2) side = 3;
+                        //if(side_select==3) side=4;
                     }
-                    else//bot
-                        if (right == 1)
-                        {//                 RIGHT
-                            right = 0;
-                            if (side == 4)
-                            {//right to top
-                                top = 1;
-                                if (side_select == 0) side = 2;
-                                if (side_select == 1) side = 3;
-                                if (side_select == 2) side = 0;
-                                //if(side_select==3) side=1;
-                            }
-                            else
-                                if (side == 5)
-                                {//right to bot
-                                    bot = 1;
-                                    if (side_select == 0) side = 0;
-                                    if (side_select == 1) side = 2;
-                                    if (side_select == 2) side = 3;
-                                    //if(side_select==3) side=1;
-                                }
-                                else
-                                    if (side == 2)
-                                    {//right to back
-                                        back = 1;
-                                        if (side_select == 0) side = 0;
-                                        //if(side_select==1) side=1;
-                                        if (side_select == 1) side = 5;
-                                        if (side_select == 2) side = 4;
-                                    }
-                                    else
-                                        if (side == 3)
-                                        {//right to front
-                                            front = 1;
-                                            if (side_select == 0) side = 0;
-                                            //if(side_select==1) side=1;
-                                            if (side_select == 1) side = 5;
-                                            if (side_select == 2) side = 4;
-                                        }
-                        }
-                        else//bot
-                            if (left == 1)
-                            {//                 LEFT
-                                left = 0;
-                                if (side == 4)
-                                {//left to top
-                                    top = 1;
-                                    //if(side_select==0) side=2;
-                                    if (side_select == 0) side = 3;
-                                    if (side_select == 1) side = 2;
-                                    if (side_select == 2) side = 1;
-                                }
-                                else
-                                    if (side == 5)
-                                    {//left to bot
-                                        bot = 1;
-                                        //if(side_select==0) side=0;
-                                        if (side_select == 0) side = 2;
-                                        if (side_select == 1) side = 3;
-                                        if (side_select == 2) side = 1;
-                                    }
-                                    else
-                                        if (side == 2)
-                                        {//left to back
-                                            back = 1;
-                                            //if(side_select==0) side=0;
-                                            if (side_select == 0) side = 1;
-                                            if (side_select == 1) side = 5;
-                                            if (side_select == 2) side = 4;
-                                        }
-                                        else
-                                            if (side == 3)
-                                            {//left to front
-                                                front = 1;
-                                                //if(side_select==0) side=0;
-                                                if (side_select == 0) side = 1;
-                                                if (side_select == 1) side = 5;
-                                                if (side_select == 2) side = 4;
-                                            }
-                            }
-                            else//bot
-                                if (front == 1)
-                                {//                 front
-                                    front = 0;
-                                    if (side == 4)
-                                    {//front to top
-                                        top = 1;
-                                        if (side_select == 0) side = 2;
-                                        //if(side_select==1) side=3;
-                                        if (side_select == 1) side = 0;
-                                        if (side_select == 2) side = 1;
-                                    }
-                                    else
-                                        if (side == 5)
-                                        {//front to bot
-                                            bot = 1;
-                                            if (side_select == 0) side = 0;
-                                            if (side_select == 1) side = 2;
-                                            //if(side_select==2) side=3;
-                                            if (side_select == 2) side = 1;
-                                        }
-                                        else
-                                            if (side == 0)
-                                            {//front to left
-                                                left = 1;
-                                                if (side_select == 0) side = 2;
-                                                // if(side_select==1) side=3;
-                                                if (side_select == 1) side = 5;
-                                                if (side_select == 2) side = 4;
-                                            }
-                                            else
-                                                if (side == 1)
-                                                {//front to right
-                                                    right = 1;
-                                                    if (side_select == 0) side = 2;
-                                                    // if(side_select==1) side=3;
-                                                    if (side_select == 1) side = 5;
-                                                    if (side_select == 2) side = 4;
-                                                }
-                                }
-                                else//bot
-                                    if (back == 1)
-                                    {//                 back
-                                        back = 0;
-                                        if (side == 4)
-                                        {//back to top
-                                            top = 1;
-                                            //if(side_select==0) side=2;
-                                            if (side_select == 0) side = 3;
-                                            if (side_select == 1) side = 0;
-                                            if (side_select == 2) side = 1;
-                                        }
-                                        else
-                                            if (side == 5)
-                                            {//back to bot
-                                                bot = 1;
-                                                if (side_select == 0) side = 0;
-                                                //if(side_select==1) side=2;
-                                                if (side_select == 1) side = 3;
-                                                if (side_select == 2) side = 1;
-                                            }
-                                            else
-                                                if (side == 0)
-                                                {//back to left
-                                                    left = 1;
-                                                    //if(side_select==0) side=2;
-                                                    if (side_select == 0) side = 3;
-                                                    if (side_select == 1) side = 5;
-                                                    if (side_select == 2) side = 4;
-                                                }
-                                                else
-                                                    if (side == 1)
-                                                    {//back to right
-                                                        right = 1;
-                                                        //if(side_select==0) side=2;
-                                                        if (side_select == 0) side = 3;
-                                                        if (side_select == 1) side = 5;
-                                                        if (side_select == 2) side = 4;
-                                                    }
-                                    } //bot
 
+                    // top to back
+                    else if (side == 2)
+                    {
+                        back = 1;
+                        if (side_select == 0) side = 0;
+                        if (side_select == 1) side = 1;
+                        if (side_select == 2) side = 5;
+                        //if(side_select==3) side=4;
+                    }
 
-                                     // for(yy=0; yy<8; yy++)
-                                 //for(xx=0; xx<8; xx++)
-                                 //set_led(LED_Old[yy], xx, yy-oldpullback[yy], 0, 0, 0);
+                    // top to front
+                    else if (side == 3)
+                    {
+                        front = 1;
+                        if (side_select == 0) side = 0;
+                        if (side_select == 1) side = 1;
+                        if (side_select == 2) side = 5;
+                        //if(side_select==3) side=4;
+                    }
+                }
+
+                else if (bot == 1)
+                {
+                    bot = 0;
+
+                    // bot to left
+                    if (side == 0)
+                    {
+                        left = 1;
+                        if (side_select == 0) side = 2;
+                        if (side_select == 1) side = 3;
+                        if (side_select == 2) side = 4;
+                        //if (side_select == 3) side = 5;
+                    }
+
+                    // bot to right
+                    else if (side == 1)
+                    {
+                        right = 1;
+                        //if(side_select==0) side=5;
+                        if (side_select == 0) side = 2;
+                        if (side_select == 1) side = 3;
+                        if (side_select == 2) side = 4;
+                    }
+
+                    // bot to back
+                    else if (side == 2)
+                    {
+                        back = 1;
+                        if (side_select == 0) side = 0;
+                        if (side_select == 1) side = 1;
+                        //if(side_select==2) side=5;
+                        if (side_select == 2) side = 4;
+                    }
+
+                    // bot to front
+                    else if (side == 3)
+                    {
+                        front = 1;
+                        if (side_select == 0) side = 0;
+                        if (side_select == 1) side = 1;
+                        //if(side_select==2) side=5;
+                        if (side_select == 2) side = 4;
+                    }
+                }
+                else if (right == 1)
+                {
+                    right = 0;
+
+                    // right to top
+                    if (side == 4)
+                    {
+                        top = 1;
+                        if (side_select == 0) side = 2;
+                        if (side_select == 1) side = 3;
+                        if (side_select == 2) side = 0;
+                        //if(side_select==3) side=1;
+                    }
+
+                    // right to bot
+                    else if (side == 5)
+                    {
+                        bot = 1;
+                        if (side_select == 0) side = 0;
+                        if (side_select == 1) side = 2;
+                        if (side_select == 2) side = 3;
+                        //if(side_select==3) side=1;
+                    }
+
+                    // right to back
+                    else if (side == 2)
+                    {
+                        back = 1;
+                        if (side_select == 0) side = 0;
+                        //if(side_select==1) side=1;
+                        if (side_select == 1) side = 5;
+                        if (side_select == 2) side = 4;
+                    }
+
+                    // right to front
+                    else if (side == 3)
+                    {
+                        front = 1;
+                        if (side_select == 0) side = 0;
+                        //if(side_select==1) side=1;
+                        if (side_select == 1) side = 5;
+                        if (side_select == 2) side = 4;
+                    }
+                }
+
+                else if (left == 1)
+                {
+                    left = 0;
+
+                    // left to top
+                    if (side == 4)
+                    {
+                        top = 1;
+                        //if(side_select==0) side=2;
+                        if (side_select == 0) side = 3;
+                        if (side_select == 1) side = 2;
+                        if (side_select == 2) side = 1;
+                    }
+
+                    // left to bot
+                    else if (side == 5)
+                    {
+                        bot = 1;
+                        //if(side_select==0) side=0;
+                        if (side_select == 0) side = 2;
+                        if (side_select == 1) side = 3;
+                        if (side_select == 2) side = 1;
+                    }
+
+                    // left to back
+                    else if (side == 2)
+                    {
+                        back = 1;
+                        //if(side_select==0) side=0;
+                        if (side_select == 0) side = 1;
+                        if (side_select == 1) side = 5;
+                        if (side_select == 2) side = 4;
+                    }
+
+                    // left to front
+                    else if (side == 3)
+                    {
+                        front = 1;
+                        //if(side_select==0) side=0;
+                        if (side_select == 0) side = 1;
+                        if (side_select == 1) side = 5;
+                        if (side_select == 2) side = 4;
+                    }
+                }
+
+                else if (front == 1)
+                {
+                    front = 0;
+
+                    // front to top
+                    if (side == 4)
+                    {
+                        top = 1;
+                        if (side_select == 0) side = 2;
+                        //if(side_select==1) side=3;
+                        if (side_select == 1) side = 0;
+                        if (side_select == 2) side = 1;
+                    }
+
+                    // front to bot
+                    else if (side == 5)
+                    {
+                        bot = 1;
+                        if (side_select == 0) side = 0;
+                        if (side_select == 1) side = 2;
+                        //if(side_select==2) side=3;
+                        if (side_select == 2) side = 1;
+                    }
+
+                    // front to left
+                    else if (side == 0)
+                    {
+                        left = 1;
+                        if (side_select == 0) side = 2;
+                        // if(side_select==1) side=3;
+                        if (side_select == 1) side = 5;
+                        if (side_select == 2) side = 4;
+                    }
+
+                    // front to right
+                    else if (side == 1)
+                    {
+                        right = 1;
+                        if (side_select == 0) side = 2;
+                        // if(side_select==1) side=3;
+                        if (side_select == 1) side = 5;
+                        if (side_select == 2) side = 4;
+                    }
+                }
+
+                else if (back == 1)
+                {
+                    back = 0;
+
+                    // back to top
+                    if (side == 4)
+                    {
+                        top = 1;
+                        //if(side_select==0) side=2;
+                        if (side_select == 0) side = 3;
+                        if (side_select == 1) side = 0;
+                        if (side_select == 2) side = 1;
+                    }
+
+                    // back to bot
+                    else if (side == 5)
+                    {
+                        bot = 1;
+                        if (side_select == 0) side = 0;
+                        //if(side_select==1) side=2;
+                        if (side_select == 1) side = 3;
+                        if (side_select == 2) side = 1;
+                    }
+
+                    // back to left
+                    else if (side == 0)
+                    {
+                        left = 1;
+                        //if(side_select==0) side=2;
+                        if (side_select == 0) side = 3;
+                        if (side_select == 1) side = 5;
+                        if (side_select == 2) side = 4;
+                    }
+
+                    // back to right
+                    else if (side == 1)
+                    {
+                        right = 1;
+                        //if(side_select==0) side=2;
+                        if (side_select == 0) side = 3;
+                        if (side_select == 1) side = 5;
+                        if (side_select == 2) side = 4;
+                    }
+                }
+
                 for (xx = 0; xx < 8; xx++)
                 {
                     oldpullback[xx] = 0;
@@ -1080,21 +1133,18 @@ void folder()
                 folderaddr[5] = -3;
                 folderaddr[6] = -2;
                 folderaddr[7] = -1;
-
-            }//pullback==7
-        }//folderaddr==7    
+            }
+        }
 
         if (folderaddr[7] != 7)
+        {
             for (zz = 0; zz < 8; zz++)
+            {
                 folderaddr[zz] = folderaddr[zz] + 1;
-
-    }//while
-
-
-
-
-
-}//folder
+            }
+        }
+    }
+}
 
 
 
