@@ -25,29 +25,30 @@
 #include <SPI.h>               // SPI Library used to clock data out to the shift registers
 #include "animations.cpp"
 
-#define latch_pin 21           // GPIO21 will drive RCLK (latch) on shift registers
-#define blank_pin 26           // Same, can use any pin you want for this, just make sure you pull up via a 1k to 5V
-#define data_pin 18            // Used by SPI, must be GPIO18
-#define clock_pin 5            // Used by SPI, must be GPIO5
+const int latch_pin = 21;        // GPIO21 will drive RCLK (latch) on shift registers
+const int blank_pin = 26;        // Same, can use any pin you want for this, just make sure you pull up via a 1k to 5V
+const int data_pin = 18;         // Used by SPI, must be GPIO18
+const int clock_pin = 5;         // Used by SPI, must be GPIO5
+
+volatile int bam_counter = 0;    // Bit Angle Modulation variable to keep track of things
+volatile int bam_bit = 0;        // Bit Angle Modulation variable to keep track of things
+volatile int cathode_level = 0;  // This increments through the anode levels
+volatile int level = 0;          // Keeps track of which level we are shifting data to
+unsigned long start;             // For a millis timer to cycle through the animations
 
 // These variables are used by multiplexing and Bit Angle Modulation Code
 int shift_out;                 // Used in the code a lot in for(i= type loops
-byte cathode[8];               // Byte to write to the cathode shift register, 8 of them, shifting the ON level in each byte in the array
+
+// Byte to write to the cathode shift register, 8 of them, shifting the ON level in each byte in the array
+byte cathode[8];
 
 // This is how the brightness for every LED is stored,  
 // Each LED only needs a 'bit' to know if it should be ON or OFF, so 64 Bytes gives you 512 bits= 512 LEDs
 // Since we are modulating the LEDs, using 4 bit resolution, each color has 4 arrays containing 64 bits each
-byte red0[64], red1[64], red2[64], red3[64];
-byte blue0[64], blue1[64], blue2[64], blue3[64];
-byte green0[64], green1[64], green2[64], green3[64];
-// Notice how more resolution will eat up more of your precious RAM
-
-int level = 0;                 // Keeps track of which level we are shifting data to
-int cathode_level = 0;         // This increments through the anode levels
-int bam_bit, bam_counter = 0;  // Bit Angle Modulation variables to keep track of things
-
-// These variables can be used for other things
-unsigned long start;           // For a millis timer to cycle through the animations
+byte red0[64], green0[64], blue0[64];
+byte red1[64], green1[64], blue1[64];
+byte red2[64], green2[64], blue2[64];
+byte red3[64], green3[64], blue3[64];
 
 
 
@@ -116,29 +117,53 @@ void set_led(int level, int row, int column, byte red, byte green, byte blue)
 
     // First, check and make sure nothing went beyond the limits, just clamp things at either 0 or 7 for location, and 0 or 15 for brightness
     if (level < 0)
+    {
         level = 0;
+    }
     if (level > 7)
+    {
         level = 7;
+    }
     if (row < 0)
+    {
         row = 0;
+    }
     if (row > 7)
+    {
         row = 7;
+    }
     if (column < 0)
+    {
         column = 0;
+    }
     if (column > 7)
+    {
         column = 7;
+    }
     if (red < 0)
+    {
         red = 0;
+    }
     if (red > 15)
+    {
         red = 15;
+    }
     if (green < 0)
+    {
         green = 0;
+    }
     if (green > 15)
+    {
         green = 15;
+    }
     if (blue < 0)
+    {
         blue = 0;
+    }
     if (blue > 15)
+    {
         blue = 15;
+    }
 
     // There are 512 LEDs in the cube, so when we write to level 2, column 5, row 4, that needs to be translated into a number from 0 to 511
     int whichbyte = int(((level * 64) + (row * 8) + column) / 8);
@@ -207,32 +232,21 @@ void set_led(int level, int row, int column, byte red, byte green, byte blue)
 
 
 
-/******************************** RENAME THIS  ********************************/
-ISR(TIMER1_COMPA_vect)
+/**************************** Bit Angle Modulation ****************************/
+void IRAM_ATTR onTimer()
 {
-
-    // This routine is called in the background automatically at frequency set by OCR1A
-    // In this code, I set OCR1A to 30, so this is called every 124us, giving each level in the cube 124us of ON time
-    // There are 8 levels, so we have a maximum brightness of 1/8, since the level must turn off before the next level is turned on
-    // The frequency of the multiplexing is then 124us*8=992us, or 1/992us= about 1kHz
-
-    //The first thing we do is turn all of the LEDs OFF, by writing a 1 to the blank pin
-    PORTD |= 1 << blank_pin;
-    // Note, in my bread-boarded version, I was able to move this way down in the cube, meaning that the OFF time was minimized
-    // do to signal integrity and parasitic capcitance, my rise/fall times, required all of the LEDs to first turn off, before updating
-    // otherwise you get a ghosting effect on the previous level
+    // Turn all of the LEDs OFF, by writing a 1 to the blank pin
+    digitalWrite(blank_pin, HIGH);
 
     // This is 4 bit 'Bit angle Modulation' or BAM, There are 8 levels, so when a '1' is written to the color brightness, 
     // each level will have a chance to light up for 1 cycle, the BAM bit keeps track of which bit we are modulating out of the 4 bits
     // Bam counter is the cycle count, meaning as we light up each level, we increment the bam_counter
     if (bam_counter == 8)
         bam_bit++;
-    else
-        if (bam_counter == 24)
-            bam_bit++;
-        else
-            if (bam_counter == 56)
-                bam_bit++;
+    else if (bam_counter == 24)
+        bam_bit++;
+    else if (bam_counter == 56)
+        bam_bit++;
 
     // Here is where we increment the BAM counter
     bam_counter++;
@@ -244,36 +258,36 @@ ISR(TIMER1_COMPA_vect)
         // Next, it depends on which level we're on, so the byte in the array to be written depends on which level, but since each level contains 64 LED,
         // we only shift out 8 bytes for each color
         case 0:
-            for (shift_out = level; shift_out < level + 8; shift_out++)
+            for (int shift_out = level; shift_out < level + 8; shift_out++)
+            {
                 SPI.transfer(red0[shift_out]);
-            for (shift_out = level; shift_out < level + 8; shift_out++)
                 SPI.transfer(green0[shift_out]);
-            for (shift_out = level; shift_out < level + 8; shift_out++)
                 SPI.transfer(blue0[shift_out]);
+            }
             break;
         case 1:
-            for (shift_out = level; shift_out < level + 8; shift_out++)
+            for (int shift_out = level; shift_out < level + 8; shift_out++)
+            {
                 SPI.transfer(red1[shift_out]);
-            for (shift_out = level; shift_out < level + 8; shift_out++)
                 SPI.transfer(green1[shift_out]);
-            for (shift_out = level; shift_out < level + 8; shift_out++)
                 SPI.transfer(blue1[shift_out]);
+            }
             break;
         case 2:
-            for (shift_out = level; shift_out < level + 8; shift_out++)
+            for (int shift_out = level; shift_out < level + 8; shift_out++)
+            {
                 SPI.transfer(red2[shift_out]);
-            for (shift_out = level; shift_out < level + 8; shift_out++)
                 SPI.transfer(green2[shift_out]);
-            for (shift_out = level; shift_out < level + 8; shift_out++)
                 SPI.transfer(blue2[shift_out]);
+            }
             break;
         case 3:
-            for (shift_out = level; shift_out < level + 8; shift_out++)
+            for (int shift_out = level; shift_out < level + 8; shift_out++)
+            {
                 SPI.transfer(red3[shift_out]);
-            for (shift_out = level; shift_out < level + 8; shift_out++)
                 SPI.transfer(green3[shift_out]);
-            for (shift_out = level; shift_out < level + 8; shift_out++)
                 SPI.transfer(blue3[shift_out]);
+            }
             // Here is where the bam_counter is reset back to 0, it's only 4 bit, but since each cycle takes 8 counts,
             // it goes 0 8 16 32, and when BAM_counter hits 64 we reset the BAM
             if (bam_counter == 120)
@@ -284,18 +298,23 @@ ISR(TIMER1_COMPA_vect)
             break;
     }
 
-    SPI.transfer(cathode[cathode_level]);  // Finally, send out the cathode level byte
+    SPI.transfer(cathode[cathode_level]);  // Sends out the cathode level byte
 
-    PORTD |= 1 << latch_pin;            // Latch pin HIGH
-    PORTD &= ~(1 << latch_pin);         // Latch pin LOW
-    PORTD &= ~(1 << blank_pin);         // Blank pin LOW to turn on the LEDs with the new data
+    digitalWrite(latch_pin, HIGH);         // Latch pin HIGH
+    digitalWrite(latch_pin, LOW);          // Latch pin LOW
+    digitalWrite(blank_pin, LOW);          // Blank pin LOW to turn on the LEDs with the new data
 
-    cathode_level++;                       // Increment the cathode level
-    level = level + 8;                  // Increment the level variable by 8, which is used to shift out data, since the next level woudl be the next 8 bytes in the arrays
+    cathode_level++;
+    level = level + 8;                     // Increment the level variable by 8, which is used to shift out data, since the next level woudl be the next 8 bytes in the arrays
 
     if (cathode_level == 8)                // Go back to 0 if max is reached
+    {
         cathode_level = 0;
-    if (level == 64)                    // If you hit 64 on level, this means you just sent out all 63 bytes, so go back
+    }
+    if (level == 64)                       // If you hit 64 on level, this means you just sent out all 63 bytes, so go back
+    {
         level = 0;
-    pinMode(blank_pin, OUTPUT);         // Moved down here so outputs are all off until the first call of this function
+    }
+
+    pinMode(blank_pin, OUTPUT);            // Moved down here so outputs are all off until the first call of this function
 }
