@@ -64,7 +64,7 @@ void setup()
     // Initialize a timer
     timer = timerBegin(0, 8, true);
     // Timer 0, 8 prescaler (0.5us resolution, because ESP32 runs at 160MHz by default and 160/8 = 20MHz)
-    timerAttachInterrupt(timer, &on_timer, true);
+    timerAttachInterrupt(timer, &onTimer, true);
     // Set alarm to trigger every 62*0.5us = 31 us (it's the closest we can get to 124us with the ESP32's clock speed and prescaler options)
     timerAlarmWrite(timer, 62, true);
     timerAlarmEnable(timer);
@@ -86,6 +86,26 @@ void setup()
     pinMode(blank_pin, OUTPUT);  // Output Enable, important to do this last, so LEDs do not flash on boot up
     SPI.begin();                 // Start up the SPI library
     interrupts();                // This lets the multiplexing start
+}
+
+
+
+/******************************** Sketch Loop *********************************/
+void loop()
+{
+    // Each animation located in a sub routine
+    // To control an LED, you simply:
+    // LED(level you want 0-7, row you want 0-7, column you want 0-7, red brighness 0-15, green brighness 0-15, blue brighness 0-15);
+
+    sine_wave();
+    // clean();
+    // rain();
+    // folder();
+    //wipe_out();
+    // bouncy();
+    // color_wheel_v2();
+    // clean();
+    // harlem_shake();
 }
 
 
@@ -213,7 +233,7 @@ void set_led(int level, int row, int column, byte red, byte green, byte blue)
 
 
 /**************************** Bit Angle Modulation ****************************/
-void IRAM_ATTR on_timer()
+void IRAM_ATTR onTimer()
 {
     // Turn all of the LEDs OFF, by writing a 1 to the blank pin
     digitalWrite(blank_pin, HIGH);
@@ -309,24 +329,4 @@ void IRAM_ATTR on_timer()
     pinMode(blank_pin, OUTPUT);            // Moved down here so outputs are all off until the first call of this function
 
     SPI.endTransaction();                  // End serial transaction
-}
-
-
-
-/******************************** Sketch Loop *********************************/
-void loop()
-{
-    // Each animation located in a sub routine
-    // To control an LED, you simply:
-    // LED(level you want 0-7, row you want 0-7, column you want 0-7, red brighness 0-15, green brighness 0-15, blue brighness 0-15);
-
-    sine_wave();
-    // clean();
-    // rain();
-    // folder();
-    //wipe_out();
-    // bouncy();
-    // color_wheel_v2();
-    // clean();
-    // harlem_shake();
 }

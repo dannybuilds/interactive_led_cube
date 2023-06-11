@@ -22,7 +22,7 @@
 
 void set_led(int level, int row, int column, byte red, byte green, byte blue);
 
-void IRAM_ATTR on_timer();
+void IRAM_ATTR onTimer();
 
 void wipe_out();
 
