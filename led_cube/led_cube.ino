@@ -58,7 +58,7 @@ void setup()
     Serial.begin(115200);
 
     SPI.setBitOrder(LSBFIRST);   // Least Significant Bit First
-    SPI.setDataMode(SPI_MODE0);  // Mode 0 Rising edge of data, keep clock low
+    SPI.setDataMode(SPI_MODE0);  // Mode 0 Rising edge of data, need to keep clock low
     noInterrupts();              // Kill interrupts until everything is set up
 
     // Initialize a timer
@@ -70,14 +70,14 @@ void setup()
     timerAlarmEnable(timer);
 
     // Sets up the cathode array, this is what's written to the cathode shift register, to enable each level
-    cathode[0] = B00000001;
-    cathode[1] = B00000010;
-    cathode[2] = B00000100;
-    cathode[3] = B00001000;
-    cathode[4] = B00010000;
-    cathode[5] = B00100000;
-    cathode[6] = B01000000;
-    cathode[7] = B10000000;
+    cathode[0] = B11111110;
+    cathode[1] = B11111101;
+    cathode[2] = B11111011;
+    cathode[3] = B11110111;
+    cathode[4] = B11101111;
+    cathode[5] = B11011111;
+    cathode[6] = B10111111;
+    cathode[7] = B01111111;
 
     // Sets up the Outputs
     pinMode(latch_pin, OUTPUT);  // Latch
