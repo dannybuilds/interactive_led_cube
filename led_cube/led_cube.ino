@@ -67,7 +67,7 @@ void setup()
     // Initialize a timer
     timer = timerBegin(0, 8, true);
     // Timer 0, 8 prescaler (0.5us resolution, because ESP32 runs at 160MHz by default and 160/8 = 20MHz)
-    timerAttachInterrupt(timer, &onTimer, true);
+    timerAttachInterrupt(timer, &on_timer, true);
     // Set alarm to trigger every 62*0.5us = 31 us (it's the closest we can get to 124us with the ESP32's clock speed and prescaler options)
     timerAlarmWrite(timer, 62, true);
     timerAlarmEnable(timer);
@@ -216,7 +216,7 @@ void set_led(int level, int row, int column, byte red, byte green, byte blue)
 
 
 /**************************** Bit Angle Modulation ****************************/
-void IRAM_ATTR onTimer()
+void IRAM_ATTR on_timer()
 {
     // Turn all of the LEDs OFF, by writing a 1 to the blank pin
     digitalWrite(blank_pin, HIGH);
