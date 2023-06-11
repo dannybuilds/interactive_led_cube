@@ -321,7 +321,7 @@ void loop()
     // LED(level you want 0-7, row you want 0-7, column you want 0-7, red brighness 0-15, green brighness 0-15, blue brighness 0-15);
 
     sine_wave();
-    clean();
+    // clean();
     // rain();
     // folder();
     //wipe_out();
