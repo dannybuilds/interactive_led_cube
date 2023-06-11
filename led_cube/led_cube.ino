@@ -50,6 +50,9 @@ byte red3[64], green3[64], blue3[64];
 // Creates pointer to ESP32 hardware timer object
 hw_timer_t* timer = NULL;
 
+// For a millis timer to cycle through the animations
+extern unsigned long start;
+
 
 
 /******************************** Sketch Setup ********************************/

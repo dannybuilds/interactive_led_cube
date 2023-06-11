@@ -22,6 +22,9 @@
 #include <SPI.h>                 // SPI Library used to clock data out to the shift registers
 #include "prototypes.h"          // Function prototypes for the source and implementation files
 
+// For a millis timer to cycle through the animations
+extern unsigned long start;
+
 
 
 /***************************** Animation Patterns *****************************/
