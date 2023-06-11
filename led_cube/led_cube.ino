@@ -90,26 +90,6 @@ void setup()
 
 
 
-/******************************** Sketch Loop *********************************/
-void loop()
-{
-    // Each animation located in a sub routine
-    // To control an LED, you simply:
-    // LED(level you want 0-7, row you want 0-7, column you want 0-7, red brighness 0-15, green brighness 0-15, blue brighness 0-15);
-
-    sine_wave();
-    clean();
-    // rain();
-    // folder();
-    //wipe_out();
-    // bouncy();
-    // color_wheel_v2();
-    // clean();
-    // harlem_shake();
-}
-
-
-
 /***************************** LED Update Routine *****************************/
 void set_led(int level, int row, int column, byte red, byte green, byte blue)
 {
@@ -329,4 +309,24 @@ void IRAM_ATTR onTimer()
     pinMode(blank_pin, OUTPUT);            // Moved down here so outputs are all off until the first call of this function
 
     SPI.endTransaction();                  // End serial transaction
+}
+
+
+
+/******************************** Sketch Loop *********************************/
+void loop()
+{
+    // Each animation located in a sub routine
+    // To control an LED, you simply:
+    // LED(level you want 0-7, row you want 0-7, column you want 0-7, red brighness 0-15, green brighness 0-15, blue brighness 0-15);
+
+    sine_wave();
+    clean();
+    // rain();
+    // folder();
+    //wipe_out();
+    // bouncy();
+    // color_wheel_v2();
+    // clean();
+    // harlem_shake();
 }
