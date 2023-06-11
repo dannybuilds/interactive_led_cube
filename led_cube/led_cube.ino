@@ -25,14 +25,10 @@
 #include <SPI.h>               // SPI Library used to clock data out to the shift registers
 #include "animations.cpp"
 
-//? arbitrary, go to shift registers
-#define latch_pin 2            // Can use any pin you want to latch the shift registers
-//? arbitrary, go to shift registers
-#define blank_pin 4            // Same, can use any pin you want for this, just make sure you pull up via a 1k to 5V
-//! have to be MOSI, CHANGE for our microcontroller
-#define data_pin 11            // Used by SPI, must be pin 11
-//! have to be SCK, CHANGE for our microcontroller
-#define clock_pin 13           // Used by SPI, must be 13
+#define latch_pin 21           // GPIO21 will drive RCLK (latch) on shift registers
+#define blank_pin 26           // Same, can use any pin you want for this, just make sure you pull up via a 1k to 5V
+#define data_pin 18            // Used by SPI, must be GPIO18
+#define clock_pin 5            // Used by SPI, must be GPIO5
 
 // These variables are used by multiplexing and Bit Angle Modulation Code
 int shift_out;                 // Used in the code a lot in for(i= type loops
@@ -47,8 +43,8 @@ byte green0[64], green1[64], green2[64], green3[64];
 // Notice how more resolution will eat up more of your precious RAM
 
 int level = 0;                 // Keeps track of which level we are shifting data to
-int anodelevel = 0;            // This increments through the anode levels
-int BAM_Bit, BAM_Counter = 0;  // Bit Angle Modulation variables to keep track of things
+int cathode_level = 0;         // This increments through the anode levels
+int bam_bit, bam_counter = 0;  // Bit Angle Modulation variables to keep track of things
 
 // These variables can be used for other things
 unsigned long start;           // For a millis timer to cycle through the animations
@@ -196,7 +192,7 @@ void set_led(int level, int row, int column, byte red, byte green, byte blue)
     // Are you now more confused? You shouldn't be! It's starting to make sense now. Notice how each line is a bitWrite, which is,
     // bitWrite(the byte you want to write to, the bit of the byte to write, and the 0 or 1 you want to write)
     // This means that the 'whichbyte' is the byte from 0-63 in which the bit corresponding to the LED from 0-511
-    // Is making sense now why we did that? taking a value from 0-511 and converting it to a value from 0-63, since each LED represents a bit in 
+    // Is making sense now why we did that? Taking a value from 0-511 and converting it to a value from 0-63, since each LED represents a bit in 
     // an array of 64 bytes.
     // Then next line is which bit 'wholebyte-(8*whichbyte)'  
     // This is simply taking the LED's value of 0-511 and subracting it from the BYTE its bit was located in times 8
@@ -228,20 +224,20 @@ ISR(TIMER1_COMPA_vect)
 
     // This is 4 bit 'Bit angle Modulation' or BAM, There are 8 levels, so when a '1' is written to the color brightness, 
     // each level will have a chance to light up for 1 cycle, the BAM bit keeps track of which bit we are modulating out of the 4 bits
-    // Bam counter is the cycle count, meaning as we light up each level, we increment the BAM_Counter
-    if (BAM_Counter == 8)
-        BAM_Bit++;
+    // Bam counter is the cycle count, meaning as we light up each level, we increment the bam_counter
+    if (bam_counter == 8)
+        bam_bit++;
     else
-        if (BAM_Counter == 24)
-            BAM_Bit++;
+        if (bam_counter == 24)
+            bam_bit++;
         else
-            if (BAM_Counter == 56)
-                BAM_Bit++;
+            if (bam_counter == 56)
+                bam_bit++;
 
     // Here is where we increment the BAM counter
-    BAM_Counter++;
+    bam_counter++;
 
-    switch (BAM_Bit)
+    switch (bam_bit)
     {
         // The BAM bit will be a value from 0-3, and only shift out the arrays corresponding to that bit, 0-3
         // Here's how this works, each case is the bit in the Bit angle modulation from 0-4, 
@@ -278,27 +274,27 @@ ISR(TIMER1_COMPA_vect)
                 SPI.transfer(green3[shift_out]);
             for (shift_out = level; shift_out < level + 8; shift_out++)
                 SPI.transfer(blue3[shift_out]);
-            // Here is where the BAM_Counter is reset back to 0, it's only 4 bit, but since each cycle takes 8 counts,
+            // Here is where the bam_counter is reset back to 0, it's only 4 bit, but since each cycle takes 8 counts,
             // it goes 0 8 16 32, and when BAM_counter hits 64 we reset the BAM
-            if (BAM_Counter == 120)
+            if (bam_counter == 120)
             {
-                BAM_Counter = 0;
-                BAM_Bit = 0;
+                bam_counter = 0;
+                bam_bit = 0;
             }
             break;
     }
 
-    SPI.transfer(cathode[anodelevel]);  // Finally, send out the cathode level byte
+    SPI.transfer(cathode[cathode_level]);  // Finally, send out the cathode level byte
 
     PORTD |= 1 << latch_pin;            // Latch pin HIGH
     PORTD &= ~(1 << latch_pin);         // Latch pin LOW
     PORTD &= ~(1 << blank_pin);         // Blank pin LOW to turn on the LEDs with the new data
 
-    anodelevel++;                       // Increment the cathode level
+    cathode_level++;                       // Increment the cathode level
     level = level + 8;                  // Increment the level variable by 8, which is used to shift out data, since the next level woudl be the next 8 bytes in the arrays
 
-    if (anodelevel == 8)                // Go back to 0 if max is reached
-        anodelevel = 0;
+    if (cathode_level == 8)                // Go back to 0 if max is reached
+        cathode_level = 0;
     if (level == 64)                    // If you hit 64 on level, this means you just sent out all 63 bytes, so go back
         level = 0;
     pinMode(blank_pin, OUTPUT);         // Moved down here so outputs are all off until the first call of this function
