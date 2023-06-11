@@ -327,4 +327,6 @@ void IRAM_ATTR onTimer()
     }
 
     pinMode(blank_pin, OUTPUT);            // Moved down here so outputs are all off until the first call of this function
+
+    SPI.endTransaction();                  // End serial transaction
 }
