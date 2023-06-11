@@ -20,6 +20,7 @@
 
 /***************************** Includes & Macros ******************************/
 #include <SPI.h>                 // SPI Library used to clock data out to the shift registers
+#include <Arduino.h>             // For the byte data type
 #include "prototypes.h"          // Function prototypes for the source and implementation files
 
 const int latch_pin = 21;        // GPIO21 will drive RCLK (latch) on shift registers
