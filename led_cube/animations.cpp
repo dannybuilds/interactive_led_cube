@@ -1,20 +1,46 @@
+// Authors :  Danny Restrepo
+//         :  Bodgan Gula
+//         :  Mark Gelman
+//         :  Nitin Suryadevara
+// Emails  :  restrepo@pdx.edu
+//         :  gula@pdx.edu
+//         :  gelman@pdx.edu
+//         :  nitin2@pdx.edu
+// Course  :  ECE103 Engineering Programming
+// School  :  Portland State University
+// Date    :  25th May 2023
+// Project :  Interactive LED Cube
+// Title   :  Animations Module, Source File
+
+/*
+    Program Description:
+
+    //* FILL IN LATER //
+*/
+
+
+
+/***************************** Includes & Macros ******************************/
 #include <SPI.h>
 
-//*+*+*+*+*+*+*+*+*+*+*+*+PUT ANIMATIONS DOWN HERE*+*+*+*+*+*+*+*+*+*+*+*+PUT ANIMATIONS DOWN HERE*+*+*+*+*+*+*+*+*+*+*+*+PUT ANIMATIONS DOWN HERE
 
+
+
+/***************************** Animation Patterns *****************************/
 void wipe_out()
-{//*****wipe_out*****wipe_out*****wipe_out*****wipe_out*****wipe_out*****wipe_out*****wipe_out*****wipe_out
+{
     int xxx = 0, yyy = 0, zzz = 0;
     int fx = random(8), fy = random(8), fz = random(8), direct, fxm = 1, fym = 1, fzm = 1, fxo = 0, fyo = 0, fzo = 0;
     int  ftx = random(8), fty = random(8), ftz = random(8), ftxm = 1, ftym = 1, ftzm = 1, ftxo = 0, ftyo = 0, ftzo = 0;
     int select, rr, gg, bb, rrt, ggt, bbt;
+
     for (xxx = 0; xxx < 8; xxx++)
     {
         for (yyy = 0; yyy < 8; yyy++)
         {
             for (zzz = 0; zzz < 8; zzz++)
             {
-                LED(xxx, yyy, zzz, 0, 0, 0);
+                set_led(xxx, yyy, zzz, 0, 0, 0);
             }
         }
     }
@@ -26,12 +52,14 @@ void wipe_out()
         gg = random(1, 16);
         bb = 0;
     }
+
     if (select == 1)
     {
         rr = random(1, 16);
         gg = 0;
         bb = random(1, 16);
     }
+
     if (select == 2)
     {
         rr = 0;
@@ -46,57 +74,59 @@ void wipe_out()
         ggt = random(1, 16);
         bbt = 0;
     }
+
     if (select == 1)
     {
         rrt = random(1, 16);
         ggt = 0;
         bbt = random(1, 16);
     }
+
     if (select == 2)
     {
         rrt = 0;
         ggt = random(1, 16);
         bbt = random(1, 16);
     }
+
     start = millis();
 
     while (millis() - start < 10000)
     {
 
-  //fx=random(8); fy=random(8); fz=random(8);
+        // fx=random(8); fy=random(8); fz=random(8);
 
-        LED(fxo, fyo, fzo, 0, 0, 0);
-        LED(fxo, fyo, fzo + 1, 0, 0, 0);
-        LED(fxo, fyo, fzo - 1, 0, 0, 0);
-        LED(fxo + 1, fyo, fzo, 0, 0, 0);
-        LED(fxo - 1, fyo, fzo, 0, 0, 0);
-        LED(fxo, fyo + 1, fzo, 0, 0, 0);
-        LED(fxo, fyo - 1, fzo, 0, 0, 0);
+        set_led(fxo, fyo, fzo, 0, 0, 0);
+        set_led(fxo, fyo, fzo + 1, 0, 0, 0);
+        set_led(fxo, fyo, fzo - 1, 0, 0, 0);
+        set_led(fxo + 1, fyo, fzo, 0, 0, 0);
+        set_led(fxo - 1, fyo, fzo, 0, 0, 0);
+        set_led(fxo, fyo + 1, fzo, 0, 0, 0);
+        set_led(fxo, fyo - 1, fzo, 0, 0, 0);
 
-        LED(ftxo, ftyo, ftzo, 0, 0, 0);
-        LED(ftxo, ftyo, ftzo + 1, 0, 0, 0);
-        LED(ftxo, ftyo, ftzo - 1, 0, 0, 0);
-        LED(ftxo + 1, ftyo, ftzo, 0, 0, 0);
-        LED(ftxo - 1, ftyo, ftzo, 0, 0, 0);
-        LED(ftxo, ftyo + 1, ftzo, 0, 0, 0);
-        LED(ftxo, ftyo - 1, ftzo, 0, 0, 0);
+        set_led(ftxo, ftyo, ftzo, 0, 0, 0);
+        set_led(ftxo, ftyo, ftzo + 1, 0, 0, 0);
+        set_led(ftxo, ftyo, ftzo - 1, 0, 0, 0);
+        set_led(ftxo + 1, ftyo, ftzo, 0, 0, 0);
+        set_led(ftxo - 1, ftyo, ftzo, 0, 0, 0);
+        set_led(ftxo, ftyo + 1, ftzo, 0, 0, 0);
+        set_led(ftxo, ftyo - 1, ftzo, 0, 0, 0);
 
-        LED(ftx, fty, ftz, rr, gg, bb);
-        LED(ftx, fty, ftz + 1, rr, gg, bb);
-        LED(ftx, fty, ftz - 1, rr, gg, bb);
-        LED(ftx + 1, fty, ftz, rr, gg, bb);
-        LED(ftx - 1, fty, ftz, rr, gg, bb);
-        LED(ftx, fty + 1, ftz, rr, gg, bb);
-        LED(ftx, fty - 1, ftz, rr, gg, bb);
+        set_led(ftx, fty, ftz, rr, gg, bb);
+        set_led(ftx, fty, ftz + 1, rr, gg, bb);
+        set_led(ftx, fty, ftz - 1, rr, gg, bb);
+        set_led(ftx + 1, fty, ftz, rr, gg, bb);
+        set_led(ftx - 1, fty, ftz, rr, gg, bb);
+        set_led(ftx, fty + 1, ftz, rr, gg, bb);
+        set_led(ftx, fty - 1, ftz, rr, gg, bb);
 
-        LED(fx, fy, fz, rrt, ggt, bbt);
-        LED(fx, fy, fz + 1, rrt, ggt, bbt);
-        LED(fx, fy, fz - 1, rrt, ggt, bbt);
-        LED(fx + 1, fy, fz, rrt, ggt, bbt);
-        LED(fx - 1, fy, fz, rrt, ggt, bbt);
-        LED(fx, fy + 1, fz, rrt, ggt, bbt);
-        LED(fx, fy - 1, fz, rrt, ggt, bbt);
-
+        set_led(fx, fy, fz, rrt, ggt, bbt);
+        set_led(fx, fy, fz + 1, rrt, ggt, bbt);
+        set_led(fx, fy, fz - 1, rrt, ggt, bbt);
+        set_led(fx + 1, fy, fz, rrt, ggt, bbt);
+        set_led(fx - 1, fy, fz, rrt, ggt, bbt);
+        set_led(fx, fy + 1, fz, rrt, ggt, bbt);
+        set_led(fx, fy - 1, fz, rrt, ggt, bbt);
 
         delay(10);
 
@@ -110,11 +140,17 @@ void wipe_out()
 
         direct = random(3);
         if (direct == 0)
+        {
             fx = fx + fxm;
+        }
         if (direct == 1)
+        {
             fy = fy + fym;
+        }
         if (direct == 2)
+        {
             fz = fz + fzm;
+        }
         if (fx < 0)
         {
             fx = 0; fxm = 1;
@@ -142,11 +178,17 @@ void wipe_out()
 
         direct = random(3);
         if (direct == 0)
+        {
             ftx = ftx + ftxm;
+        }
         if (direct == 1)
+        {
             fty = fty + ftym;
+        }
         if (direct == 2)
+        {
             ftz = ftz + ftzm;
+        }
         if (ftx < 0)
         {
             ftx = 0; ftxm = 1;
@@ -171,23 +213,24 @@ void wipe_out()
         {
             ftz = 7; ftzm = -1;
         }
-    }//while
+    }
+
     for (xxx = 0; xxx < 8; xxx++)
     {
         for (yyy = 0; yyy < 8; yyy++)
         {
             for (zzz = 0; zzz < 8; zzz++)
             {
-                LED(xxx, yyy, zzz, 0, 0, 0);
+                set_led(xxx, yyy, zzz, 0, 0, 0);
             }
         }
     }
+}
 
-}//wipeout
 
 
-void rainVersionTwo()
-{//****rainVersionTwo****rainVersionTwo****rainVersionTwo****rainVersionTwo****rainVersionTwo
+void rain()
+{
     int x[64], y[64], z[64], addr, leds = 64, bright = 1, ledcolor, colowheel;
     int xx[64], yy[64], zz[64], xold[64], yold[64], zold[64], slowdown;
 
@@ -203,31 +246,31 @@ void rainVersionTwo()
     start = millis();
     while (millis() - start < 20000)
     {
-  //wipe_out();
-  //for(addr=0; addr<leds; addr++)
-  //LED(zold[addr], xold[addr], yold[addr], 0, 0, 0);
+        //wipe_out();
+        //for(addr=0; addr<leds; addr++)
+        //set_led(zold[addr], xold[addr], yold[addr], 0, 0, 0);
 
         if (ledcolor < 200)
         {
             for (addr = 0; addr < leds; addr++)
             {
-                LED(zold[addr], xold[addr], yold[addr], 0, 0, 0);
+                set_led(zold[addr], xold[addr], yold[addr], 0, 0, 0);
                 if (z[addr] >= 7)
-                    LED(z[addr], x[addr], y[addr], 0, 5, 15);
+                    set_led(z[addr], x[addr], y[addr], 0, 5, 15);
                 if (z[addr] == 6)
-                    LED(z[addr], x[addr], y[addr], 0, 1, 9);
+                    set_led(z[addr], x[addr], y[addr], 0, 1, 9);
                 if (z[addr] == 5)
-                    LED(z[addr], x[addr], y[addr], 0, 0, 10);
+                    set_led(z[addr], x[addr], y[addr], 0, 0, 10);
                 if (z[addr] == 4)
-                    LED(z[addr], x[addr], y[addr], 1, 0, 11);
+                    set_led(z[addr], x[addr], y[addr], 1, 0, 11);
                 if (z[addr] == 3)
-                    LED(z[addr], x[addr], y[addr], 3, 0, 12);
+                    set_led(z[addr], x[addr], y[addr], 3, 0, 12);
                 if (z[addr] == 2)
-                    LED(z[addr], x[addr], y[addr], 10, 0, 15);
+                    set_led(z[addr], x[addr], y[addr], 10, 0, 15);
                 if (z[addr] == 1)
-                    LED(z[addr], x[addr], y[addr], 10, 0, 10);
+                    set_led(z[addr], x[addr], y[addr], 10, 0, 10);
                 if (z[addr] <= 0)
-                    LED(z[addr], x[addr], y[addr], 10, 0, 1);
+                    set_led(z[addr], x[addr], y[addr], 10, 0, 1);
             }
         }//200
 
@@ -235,23 +278,23 @@ void rainVersionTwo()
         {
             for (addr = 0; addr < leds; addr++)
             {
-                LED(zold[addr], xold[addr], yold[addr], 0, 0, 0);
+                set_led(zold[addr], xold[addr], yold[addr], 0, 0, 0);
                 if (z[addr] >= 7)
-                    LED(z[addr], x[addr], y[addr], 15, 15, 0);
+                    set_led(z[addr], x[addr], y[addr], 15, 15, 0);
                 if (z[addr] == 6)
-                    LED(z[addr], x[addr], y[addr], 10, 10, 0);
+                    set_led(z[addr], x[addr], y[addr], 10, 10, 0);
                 if (z[addr] == 5)
-                    LED(z[addr], x[addr], y[addr], 15, 5, 0);
+                    set_led(z[addr], x[addr], y[addr], 15, 5, 0);
                 if (z[addr] == 4)
-                    LED(z[addr], x[addr], y[addr], 15, 2, 0);
+                    set_led(z[addr], x[addr], y[addr], 15, 2, 0);
                 if (z[addr] == 3)
-                    LED(z[addr], x[addr], y[addr], 15, 1, 0);
+                    set_led(z[addr], x[addr], y[addr], 15, 1, 0);
                 if (z[addr] == 2)
-                    LED(z[addr], x[addr], y[addr], 15, 0, 0);
+                    set_led(z[addr], x[addr], y[addr], 15, 0, 0);
                 if (z[addr] == 1)
-                    LED(z[addr], x[addr], y[addr], 12, 0, 0);
+                    set_led(z[addr], x[addr], y[addr], 12, 0, 0);
                 if (z[addr] <= 0)
-                    LED(z[addr], x[addr], y[addr], 10, 0, 0);
+                    set_led(z[addr], x[addr], y[addr], 10, 0, 0);
             }
         }//300
 
@@ -280,21 +323,22 @@ void rainVersionTwo()
         delay(15);
 
         //for(addr=0; addr<leds; addr++)
-        //LED(z[addr], x[addr], y[addr], 0, 0, 0);
+        //set_led(z[addr], x[addr], y[addr], 0, 0, 0);
         for (addr = 0; addr < leds; addr++)
         {
 
-    //slowdown = random(2);
-    //if(bitRead(z[addr],0))
+            //slowdown = random(2);
+            //if(bitRead(z[addr],0))
             z[addr] = z[addr] - 1;
 
-           // x[addr] = x[addr]+1;
-           // y[addr] = y[addr]+1;
+            // x[addr] = x[addr]+1;
+            // y[addr] = y[addr]+1;
             if (z[addr] < random(-100, 0))
             {
                 x[addr] = random(8);
                 y[addr] = random(8);
                 int select = random(3);
+
                 if (select == 0)
                 {
                     xx[addr] = 0;
@@ -302,6 +346,7 @@ void rainVersionTwo()
                     yy[addr] = random(16);
                     //zz[addr]=0;
                 }
+
                 if (select == 1)
                 {
                     xx[addr] = random(16);
@@ -309,26 +354,24 @@ void rainVersionTwo()
                     yy[addr] = random(16);
                     //yy[addr]=0;
                 }
+
                 if (select == 2)
                 {
                     xx[addr] = random(16);
                     zz[addr] = random(16);
                     yy[addr] = 0;
-
-
                 }
+
                 z[addr] = 7;
+            }
+        }
+    }
+}
 
-            }//-check
-        }//add
 
-
-    }//while
-
-}//rainv2
 
 void folder()
-{//****folder****folder****folder****folder****folder****folder****folder****folder****folder
+{
     int xx, yy, zz, pullback[16], state = 0, backorfront = 7;//backorfront 7 for back 0 for front
 
     int folderaddr[16], LED_Old[16], oldpullback[16], ranx = random(16), rany = random(16), ranz = random(16), ranselect;
@@ -358,49 +401,49 @@ void folder()
         {
             if (side == 0)
             {
-      //top to left-side
+                //top to left-side
                 for (yy = 0; yy < 8; yy++)
                 {
                     for (xx = 0; xx < 8; xx++)
                     {
-                        LED(7 - LED_Old[yy], yy - oldpullback[yy], xx, 0, 0, 0);
-                        LED(7 - folderaddr[yy], yy - pullback[yy], xx, ranx, rany, ranz);
+                        set_led(7 - LED_Old[yy], yy - oldpullback[yy], xx, 0, 0, 0);
+                        set_led(7 - folderaddr[yy], yy - pullback[yy], xx, ranx, rany, ranz);
                     }
                 }
             }
             if (side == 2)
             {
-      //top to back-side
+                //top to back-side
                 for (yy = 0; yy < 8; yy++)
                 {
                     for (xx = 0; xx < 8; xx++)
                     {
-                        LED(7 - LED_Old[yy], xx, yy - oldpullback[yy], 0, 0, 0);
-                        LED(7 - folderaddr[yy], xx, yy - pullback[yy], ranx, rany, ranz);
+                        set_led(7 - LED_Old[yy], xx, yy - oldpullback[yy], 0, 0, 0);
+                        set_led(7 - folderaddr[yy], xx, yy - pullback[yy], ranx, rany, ranz);
                     }
                 }
             }
             if (side == 3)
             {
-      //top-side to front-side
+                //top-side to front-side
                 for (yy = 0; yy < 8; yy++)
                 {
                     for (xx = 0; xx < 8; xx++)
                     {
-                        LED(7 - LED_Old[7 - yy], xx, yy + oldpullback[yy], 0, 0, 0);
-                        LED(7 - folderaddr[7 - yy], xx, yy + pullback[yy], ranx, rany, ranz);
+                        set_led(7 - LED_Old[7 - yy], xx, yy + oldpullback[yy], 0, 0, 0);
+                        set_led(7 - folderaddr[7 - yy], xx, yy + pullback[yy], ranx, rany, ranz);
                     }
                 }
             }
             if (side == 1)
             {
-      //top-side to right
+                //top-side to right
                 for (yy = 0; yy < 8; yy++)
                 {
                     for (xx = 0; xx < 8; xx++)
                     {
-                        LED(7 - LED_Old[7 - yy], yy + oldpullback[yy], xx, 0, 0, 0);
-                        LED(7 - folderaddr[7 - yy], yy + pullback[yy], xx, ranx, rany, ranz);
+                        set_led(7 - LED_Old[7 - yy], yy + oldpullback[yy], xx, 0, 0, 0);
+                        set_led(7 - folderaddr[7 - yy], yy + pullback[yy], xx, ranx, rany, ranz);
                     }
                 }
             }
@@ -410,49 +453,49 @@ void folder()
         {
             if (side == 4)
             {
-      //right-side to top
+                //right-side to top
                 for (yy = 0; yy < 8; yy++)
                 {
                     for (xx = 0; xx < 8; xx++)
                     {
-                        LED(yy + oldpullback[7 - yy], 7 - LED_Old[7 - yy], xx, 0, 0, 0);
-                        LED(yy + pullback[7 - yy], 7 - folderaddr[7 - yy], xx, ranx, rany, ranz);
+                        set_led(yy + oldpullback[7 - yy], 7 - LED_Old[7 - yy], xx, 0, 0, 0);
+                        set_led(yy + pullback[7 - yy], 7 - folderaddr[7 - yy], xx, ranx, rany, ranz);
                     }
                 }
             }
             if (side == 3)
             {
-      //right-side to front-side
+                //right-side to front-side
                 for (yy = 0; yy < 8; yy++)
                 {
                     for (xx = 0; xx < 8; xx++)
                     {
-                        LED(xx, 7 - LED_Old[7 - yy], yy + oldpullback[yy], 0, 0, 0);
-                        LED(xx, 7 - folderaddr[7 - yy], yy + pullback[yy], ranx, rany, ranz);
+                        set_led(xx, 7 - LED_Old[7 - yy], yy + oldpullback[yy], 0, 0, 0);
+                        set_led(xx, 7 - folderaddr[7 - yy], yy + pullback[yy], ranx, rany, ranz);
                     }
                 }
             }
             if (side == 2)
             {
-      //right-side to back-side
+                //right-side to back-side
                 for (yy = 0; yy < 8; yy++)
                 {
                     for (xx = 0; xx < 8; xx++)
                     {
-                        LED(xx, 7 - LED_Old[yy], yy - oldpullback[yy], 0, 0, 0);
-                        LED(xx, 7 - folderaddr[yy], yy - pullback[yy], ranx, rany, ranz);
+                        set_led(xx, 7 - LED_Old[yy], yy - oldpullback[yy], 0, 0, 0);
+                        set_led(xx, 7 - folderaddr[yy], yy - pullback[yy], ranx, rany, ranz);
                     }
                 }
             }
             if (side == 5)
             {
-      //right-side to bottom
+                //right-side to bottom
                 for (yy = 0; yy < 8; yy++)
                 {
                     for (xx = 0; xx < 8; xx++)
                     {
-                        LED(yy - oldpullback[yy], 7 - LED_Old[yy], xx, 0, 0, 0);
-                        LED(yy - pullback[yy], 7 - folderaddr[yy], xx, ranx, rany, ranz);
+                        set_led(yy - oldpullback[yy], 7 - LED_Old[yy], xx, 0, 0, 0);
+                        set_led(yy - pullback[yy], 7 - folderaddr[yy], xx, ranx, rany, ranz);
                     }
                 }
             }
@@ -462,49 +505,49 @@ void folder()
         {
             if (side == 4)
             {
-      //left-side to top
+                //left-side to top
                 for (yy = 0; yy < 8; yy++)
                 {
                     for (xx = 0; xx < 8; xx++)
                     {
-                        LED(yy + oldpullback[yy], LED_Old[7 - yy], xx, 0, 0, 0);
-                        LED(yy + pullback[yy], folderaddr[7 - yy], xx, ranx, rany, ranz);
+                        set_led(yy + oldpullback[yy], LED_Old[7 - yy], xx, 0, 0, 0);
+                        set_led(yy + pullback[yy], folderaddr[7 - yy], xx, ranx, rany, ranz);
                     }
                 }
             }
             if (side == 3)
             {
-      //left-side to front-side
+                //left-side to front-side
                 for (yy = 0; yy < 8; yy++)
                 {
                     for (xx = 0; xx < 8; xx++)
                     {
-                        LED(xx, LED_Old[7 - yy], yy + oldpullback[yy], 0, 0, 0);
-                        LED(xx, folderaddr[7 - yy], yy + pullback[yy], ranx, rany, ranz);
+                        set_led(xx, LED_Old[7 - yy], yy + oldpullback[yy], 0, 0, 0);
+                        set_led(xx, folderaddr[7 - yy], yy + pullback[yy], ranx, rany, ranz);
                     }
                 }
             }
             if (side == 2)
             {
-      //left-side to back-side
+                //left-side to back-side
                 for (yy = 0; yy < 8; yy++)
                 {
                     for (xx = 0; xx < 8; xx++)
                     {
-                        LED(xx, LED_Old[yy], yy - oldpullback[yy], 0, 0, 0);
-                        LED(xx, folderaddr[yy], yy - pullback[yy], ranx, rany, ranz);
+                        set_led(xx, LED_Old[yy], yy - oldpullback[yy], 0, 0, 0);
+                        set_led(xx, folderaddr[yy], yy - pullback[yy], ranx, rany, ranz);
                     }
                 }
             }
             if (side == 5)
             {
-      //left-side to bottom
+                //left-side to bottom
                 for (yy = 0; yy < 8; yy++)
                 {
                     for (xx = 0; xx < 8; xx++)
                     {
-                        LED(yy - oldpullback[yy], LED_Old[yy], xx, 0, 0, 0);
-                        LED(yy - pullback[yy], folderaddr[yy], xx, ranx, rany, ranz);
+                        set_led(yy - oldpullback[yy], LED_Old[yy], xx, 0, 0, 0);
+                        set_led(yy - pullback[yy], folderaddr[yy], xx, ranx, rany, ranz);
                     }
                 }
             }
@@ -515,49 +558,49 @@ void folder()
         {
             if (side == 1)
             {
-      //back-side to right-side
+                //back-side to right-side
                 for (yy = 0; yy < 8; yy++)
                 {
                     for (xx = 0; xx < 8; xx++)
                     {
-                        LED(xx, yy + oldpullback[yy], LED_Old[7 - yy], 0, 0, 0);
-                        LED(xx, yy + pullback[yy], folderaddr[7 - yy], ranx, rany, ranz);
+                        set_led(xx, yy + oldpullback[yy], LED_Old[7 - yy], 0, 0, 0);
+                        set_led(xx, yy + pullback[yy], folderaddr[7 - yy], ranx, rany, ranz);
                     }
                 }
             }
             if (side == 4)
             {
-      // back-side to top-side
+                // back-side to top-side
                 for (yy = 0; yy < 8; yy++)
                 {
                     for (xx = 0; xx < 8; xx++)
                     {
-                        LED(yy + oldpullback[yy], xx, LED_Old[7 - yy], 0, 0, 0);
-                        LED(yy + pullback[yy], xx, folderaddr[7 - yy], ranx, rany, ranz);
+                        set_led(yy + oldpullback[yy], xx, LED_Old[7 - yy], 0, 0, 0);
+                        set_led(yy + pullback[yy], xx, folderaddr[7 - yy], ranx, rany, ranz);
                     }
                 }
             }
             if (side == 5)
             {
-      // back-side to bottom
+                // back-side to bottom
                 for (yy = 0; yy < 8; yy++)
                 {
                     for (xx = 0; xx < 8; xx++)
                     {
-                        LED(yy - oldpullback[yy], xx, LED_Old[yy], 0, 0, 0);
-                        LED(yy - pullback[yy], xx, folderaddr[yy], ranx, rany, ranz);
+                        set_led(yy - oldpullback[yy], xx, LED_Old[yy], 0, 0, 0);
+                        set_led(yy - pullback[yy], xx, folderaddr[yy], ranx, rany, ranz);
                     }
                 }
             }//state1
             if (side == 0)
             {
-      //back-side to left-side
+                //back-side to left-side
                 for (yy = 0; yy < 8; yy++)
                 {
                     for (xx = 0; xx < 8; xx++)
                     {
-                        LED(xx, yy - oldpullback[yy], LED_Old[yy], 0, 0, 0);
-                        LED(xx, yy - pullback[yy], folderaddr[yy], ranx, rany, ranz);
+                        set_led(xx, yy - oldpullback[yy], LED_Old[yy], 0, 0, 0);
+                        set_led(xx, yy - pullback[yy], folderaddr[yy], ranx, rany, ranz);
                     }
                 }
             }
@@ -566,49 +609,49 @@ void folder()
         {
             if (side == 1)
             {
-      // bottom-side to right-side
+                // bottom-side to right-side
                 for (yy = 0; yy < 8; yy++)
                 {
                     for (xx = 0; xx < 8; xx++)
                     {
-                        LED(LED_Old[7 - yy], yy + oldpullback[yy], xx, 0, 0, 0);
-                        LED(folderaddr[7 - yy], yy + pullback[yy], xx, ranx, rany, ranz);
+                        set_led(LED_Old[7 - yy], yy + oldpullback[yy], xx, 0, 0, 0);
+                        set_led(folderaddr[7 - yy], yy + pullback[yy], xx, ranx, rany, ranz);
                     }
                 }
             }
             if (side == 3)
             {
-      //bottom to front-side
+                //bottom to front-side
                 for (yy = 0; yy < 8; yy++)
                 {
                     for (xx = 0; xx < 8; xx++)
                     {
-                        LED(LED_Old[7 - yy], xx, yy + oldpullback[yy], 0, 0, 0);
-                        LED(folderaddr[7 - yy], xx, yy + pullback[yy], ranx, rany, ranz);
+                        set_led(LED_Old[7 - yy], xx, yy + oldpullback[yy], 0, 0, 0);
+                        set_led(folderaddr[7 - yy], xx, yy + pullback[yy], ranx, rany, ranz);
                     }
                 }
             }
             if (side == 2)
             {
-      //bottom to back-side
+                //bottom to back-side
                 for (yy = 0; yy < 8; yy++)
                 {
                     for (xx = 0; xx < 8; xx++)
                     {
-                        LED(LED_Old[yy], xx, yy - oldpullback[yy], 0, 0, 0);
-                        LED(folderaddr[yy], xx, yy - pullback[yy], ranx, rany, ranz);
+                        set_led(LED_Old[yy], xx, yy - oldpullback[yy], 0, 0, 0);
+                        set_led(folderaddr[yy], xx, yy - pullback[yy], ranx, rany, ranz);
                     }
                 }
             }
             if (side == 0)
             {
-      //bottom to left-side
+                //bottom to left-side
                 for (yy = 0; yy < 8; yy++)
                 {
                     for (xx = 0; xx < 8; xx++)
                     {
-                        LED(LED_Old[yy], yy - oldpullback[yy], xx, 0, 0, 0);
-                        LED(folderaddr[yy], yy - pullback[yy], xx, ranx, rany, ranz);
+                        set_led(LED_Old[yy], yy - oldpullback[yy], xx, 0, 0, 0);
+                        set_led(folderaddr[yy], yy - pullback[yy], xx, ranx, rany, ranz);
                     }
                 }
             }
@@ -618,49 +661,49 @@ void folder()
         {
             if (side == 0)
             {
-      //front-side to left-side
+                //front-side to left-side
                 for (yy = 0; yy < 8; yy++)
                 {
                     for (xx = 0; xx < 8; xx++)
                     {
-                        LED(xx, yy - oldpullback[yy], 7 - LED_Old[yy], 0, 0, 0);
-                        LED(xx, yy - pullback[yy], 7 - folderaddr[yy], ranx, rany, ranz);
+                        set_led(xx, yy - oldpullback[yy], 7 - LED_Old[yy], 0, 0, 0);
+                        set_led(xx, yy - pullback[yy], 7 - folderaddr[yy], ranx, rany, ranz);
                     }
                 }
             }
             if (side == 5)
             {
-      // front-side to bottom
+                // front-side to bottom
                 for (yy = 0; yy < 8; yy++)
                 {
                     for (xx = 0; xx < 8; xx++)
                     {
-                        LED(yy - oldpullback[yy], xx, 7 - LED_Old[yy], 0, 0, 0);
-                        LED(yy - pullback[yy], xx, 7 - folderaddr[yy], ranx, rany, ranz);
+                        set_led(yy - oldpullback[yy], xx, 7 - LED_Old[yy], 0, 0, 0);
+                        set_led(yy - pullback[yy], xx, 7 - folderaddr[yy], ranx, rany, ranz);
                     }
                 }
             }
             if (side == 4)
             {
-      // front-side to top-side
+                // front-side to top-side
                 for (yy = 0; yy < 8; yy++)
                 {
                     for (xx = 0; xx < 8; xx++)
                     {
-                        LED(yy + oldpullback[yy], xx, 7 - LED_Old[7 - yy], 0, 0, 0);
-                        LED(yy + pullback[yy], xx, 7 - folderaddr[7 - yy], ranx, rany, ranz);
+                        set_led(yy + oldpullback[yy], xx, 7 - LED_Old[7 - yy], 0, 0, 0);
+                        set_led(yy + pullback[yy], xx, 7 - folderaddr[7 - yy], ranx, rany, ranz);
                     }
                 }
             }
             if (side == 1)
             {
-      //front-side to right-side
+                //front-side to right-side
                 for (yy = 0; yy < 8; yy++)
                 {
                     for (xx = 0; xx < 8; xx++)
                     {
-                        LED(xx, yy + oldpullback[yy], 7 - LED_Old[7 - yy], 0, 0, 0);
-                        LED(xx, yy + pullback[yy], 7 - folderaddr[7 - yy], ranx, rany, ranz);
+                        set_led(xx, yy + oldpullback[yy], 7 - LED_Old[7 - yy], 0, 0, 0);
+                        set_led(xx, yy + pullback[yy], 7 - folderaddr[7 - yy], ranx, rany, ranz);
                     }
                 }
             }
@@ -682,16 +725,16 @@ void folder()
 
         if (folderaddr[7] == 7)
         {
-    // pullback=8;
+            // pullback=8;
             for (zz = 0; zz < 8; zz++)
                 pullback[zz] = pullback[zz] + 1;
 
             if (pullback[7] == 8)
             {//finished with fold
                 delay(10);
-                  //state++;
-                  //if(state==4)
-                  //state=0;
+                //state++;
+                //if(state==4)
+                //state=0;
 
                 ranselect = random(3);
                 if (ranselect == 0)
@@ -900,7 +943,7 @@ void folder()
                                             {//front to left
                                                 left = 1;
                                                 if (side_select == 0) side = 2;
-                                               // if(side_select==1) side=3;
+                                                // if(side_select==1) side=3;
                                                 if (side_select == 1) side = 5;
                                                 if (side_select == 2) side = 4;
                                             }
@@ -909,7 +952,7 @@ void folder()
                                                 {//front to right
                                                     right = 1;
                                                     if (side_select == 0) side = 2;
-                                                   // if(side_select==1) side=3;
+                                                    // if(side_select==1) side=3;
                                                     if (side_select == 1) side = 5;
                                                     if (side_select == 2) side = 4;
                                                 }
@@ -958,7 +1001,7 @@ void folder()
 
                                      // for(yy=0; yy<8; yy++)
                                  //for(xx=0; xx<8; xx++)
-                                 //LED(LED_Old[yy], xx, yy-oldpullback[yy], 0, 0, 0);
+                                 //set_led(LED_Old[yy], xx, yy-oldpullback[yy], 0, 0, 0);
                 for (xx = 0; xx < 8; xx++)
                 {
                     oldpullback[xx] = 0;
@@ -990,8 +1033,9 @@ void folder()
 }//folder
 
 
-void bouncyvTwo()
-{//****bouncyTwo****bouncyTwo****bouncyTwo****bouncyTwo****bouncyTwo****bouncyTwo****bouncyTwo
+
+void bouncy()
+{
     int wipex, wipey, wipez, ranr, rang, ranb, select, oldx[50], oldy[50], oldz[50];
     int x[50], y[50], z[50], addr, ledcount = 20, direct, direcTwo;
     int xx[50], yy[50], zz[50];
@@ -1018,8 +1062,8 @@ void bouncyvTwo()
 
         for (addr = 1; addr < ledcount + 1; addr++)
         {
-            LED(oldx[addr], oldy[addr], oldz[addr], 0, 0, 0);
-            LED(x[addr], y[addr], z[addr], xx[addr], yy[addr], zz[addr]);
+            set_led(oldx[addr], oldy[addr], oldz[addr], 0, 0, 0);
+            set_led(x[addr], y[addr], z[addr], xx[addr], yy[addr], zz[addr]);
         }
 
         for (addr = 1; addr < ledcount + 1; addr++)
@@ -1118,17 +1162,13 @@ void bouncyvTwo()
             yy[addr] = yy[addr - 1];
             zz[addr] = zz[addr - 1];
         }
-
-
-    }//while
-
-
+    }
+}
 
 
 
-}//bouncyv2
-void sinwaveTwo()
-{//*****sinewaveTwo*****sinewaveTwo*****sinewaveTwo*****sinewaveTwo*****sinewaveTwo*****sinewaveTwo
+void sine_wave()
+{
     int sinewavearray[8], addr, sinemult[8], colselect, rr = 0, gg = 0, bb = 15, addrt;
     int sinewavearrayOLD[8], select, subZ = -7, subT = 7, multi = 0;//random(-1, 2);
     sinewavearray[0] = 0;
@@ -1185,74 +1225,64 @@ void sinwaveTwo()
                 gg = random(1, 16);
                 bb = random(1, 16);
             }
-      /*
-      if(multi==1)
-      multi=0;
-      else
-      multi=1;
-      */
-
         }
-
-
 
         for (addr = 0; addr < 8; addr++)
         {
-            LED(sinewavearrayOLD[addr], addr, 0, 0, 0, 0);
-            LED(sinewavearrayOLD[addr], 0, addr, 0, 0, 0);
-            LED(sinewavearrayOLD[addr], subT - addr, 7, 0, 0, 0);
-            LED(sinewavearrayOLD[addr], 7, subT - addr, 0, 0, 0);
-            LED(sinewavearray[addr], addr, 0, rr, gg, bb);
-            LED(sinewavearray[addr], 0, addr, rr, gg, bb);
-            LED(sinewavearray[addr], subT - addr, 7, rr, gg, bb);
-            LED(sinewavearray[addr], 7, subT - addr, rr, gg, bb);
-        }//}
+            set_led(sinewavearrayOLD[addr], addr, 0, 0, 0, 0);
+            set_led(sinewavearrayOLD[addr], 0, addr, 0, 0, 0);
+            set_led(sinewavearrayOLD[addr], subT - addr, 7, 0, 0, 0);
+            set_led(sinewavearrayOLD[addr], 7, subT - addr, 0, 0, 0);
+            set_led(sinewavearray[addr], addr, 0, rr, gg, bb);
+            set_led(sinewavearray[addr], 0, addr, rr, gg, bb);
+            set_led(sinewavearray[addr], subT - addr, 7, rr, gg, bb);
+            set_led(sinewavearray[addr], 7, subT - addr, rr, gg, bb);
+        }
 
         for (addr = 1; addr < 7; addr++)
         {
-            LED(sinewavearrayOLD[addr + multi * 1], addr, 1, 0, 0, 0);
-            LED(sinewavearrayOLD[addr + multi * 1], 1, addr, 0, 0, 0);
-            LED(sinewavearrayOLD[addr + multi * 1], subT - addr, 6, 0, 0, 0);
-            LED(sinewavearrayOLD[addr + multi * 1], 6, subT - addr, 0, 0, 0);
-            LED(sinewavearray[addr + multi * 1], addr, 1, rr, gg, bb);
-            LED(sinewavearray[addr + multi * 1], 1, addr, rr, gg, bb);
-            LED(sinewavearray[addr + multi * 1], subT - addr, 6, rr, gg, bb);
-            LED(sinewavearray[addr + multi * 1], 6, subT - addr, rr, gg, bb);
+            set_led(sinewavearrayOLD[addr + multi * 1], addr, 1, 0, 0, 0);
+            set_led(sinewavearrayOLD[addr + multi * 1], 1, addr, 0, 0, 0);
+            set_led(sinewavearrayOLD[addr + multi * 1], subT - addr, 6, 0, 0, 0);
+            set_led(sinewavearrayOLD[addr + multi * 1], 6, subT - addr, 0, 0, 0);
+            set_led(sinewavearray[addr + multi * 1], addr, 1, rr, gg, bb);
+            set_led(sinewavearray[addr + multi * 1], 1, addr, rr, gg, bb);
+            set_led(sinewavearray[addr + multi * 1], subT - addr, 6, rr, gg, bb);
+            set_led(sinewavearray[addr + multi * 1], 6, subT - addr, rr, gg, bb);
         }
 
         for (addr = 2; addr < 6; addr++)
         {
-            LED(sinewavearrayOLD[addr + multi * 2], addr, 2, 0, 0, 0);
-            LED(sinewavearrayOLD[addr + multi * 2], 2, addr, 0, 0, 0);
-            LED(sinewavearrayOLD[addr + multi * 2], subT - addr, 5, 0, 0, 0);
-            LED(sinewavearrayOLD[addr + multi * 2], 5, subT - addr, 0, 0, 0);
-            LED(sinewavearray[addr + multi * 2], addr, 2, rr, gg, bb);
-            LED(sinewavearray[addr + multi * 2], 2, addr, rr, gg, bb);
-            LED(sinewavearray[addr + multi * 2], subT - addr, 5, rr, gg, bb);
-            LED(sinewavearray[addr + multi * 2], 5, subT - addr, rr, gg, bb);
+            set_led(sinewavearrayOLD[addr + multi * 2], addr, 2, 0, 0, 0);
+            set_led(sinewavearrayOLD[addr + multi * 2], 2, addr, 0, 0, 0);
+            set_led(sinewavearrayOLD[addr + multi * 2], subT - addr, 5, 0, 0, 0);
+            set_led(sinewavearrayOLD[addr + multi * 2], 5, subT - addr, 0, 0, 0);
+            set_led(sinewavearray[addr + multi * 2], addr, 2, rr, gg, bb);
+            set_led(sinewavearray[addr + multi * 2], 2, addr, rr, gg, bb);
+            set_led(sinewavearray[addr + multi * 2], subT - addr, 5, rr, gg, bb);
+            set_led(sinewavearray[addr + multi * 2], 5, subT - addr, rr, gg, bb);
         }
+
         for (addr = 3; addr < 5; addr++)
         {
-            LED(sinewavearrayOLD[addr + multi * 3], addr, 3, 0, 0, 0);
-            LED(sinewavearrayOLD[addr + multi * 3], 3, addr, 0, 0, 0);
-            LED(sinewavearrayOLD[addr + multi * 3], subT - addr, 4, 0, 0, 0);
-            LED(sinewavearrayOLD[addr + multi * 3], 4, subT - addr, 0, 0, 0);
-            LED(sinewavearray[addr + multi * 3], addr, 3, rr, gg, bb);
-            LED(sinewavearray[addr + multi * 3], 3, addr, rr, gg, bb);
-            LED(sinewavearray[addr + multi * 3], subT - addr, 4, rr, gg, bb);
-            LED(sinewavearray[addr + multi * 3], 4, subT - addr, rr, gg, bb);
+            set_led(sinewavearrayOLD[addr + multi * 3], addr, 3, 0, 0, 0);
+            set_led(sinewavearrayOLD[addr + multi * 3], 3, addr, 0, 0, 0);
+            set_led(sinewavearrayOLD[addr + multi * 3], subT - addr, 4, 0, 0, 0);
+            set_led(sinewavearrayOLD[addr + multi * 3], 4, subT - addr, 0, 0, 0);
+            set_led(sinewavearray[addr + multi * 3], addr, 3, rr, gg, bb);
+            set_led(sinewavearray[addr + multi * 3], 3, addr, rr, gg, bb);
+            set_led(sinewavearray[addr + multi * 3], subT - addr, 4, rr, gg, bb);
+            set_led(sinewavearray[addr + multi * 3], 4, subT - addr, rr, gg, bb);
         }
 
         for (addr = 0; addr < 8; addr++)
             sinewavearrayOLD[addr] = sinewavearray[addr];
+
         delay(30);
+    }
+}
 
 
-
-    }//while
-
-
-}//SinewaveTwo
 
 void color_wheel()
 {
@@ -1273,7 +1303,7 @@ void color_wheel()
                 for (zz = 0;zz < 8;zz++)
                 {
 
-                    LED(xx, yy, zz, ranx, 0, rany);
+                    set_led(xx, yy, zz, ranx, 0, rany);
                 }
             }
             delay(50);
@@ -1288,7 +1318,7 @@ void color_wheel()
             {
                 for (zz = 0;zz < 8;zz++)
                 {
-                    LED(xx, yy, zz, ranx, rany, 0);
+                    set_led(xx, yy, zz, ranx, rany, 0);
                 }
             }
             delay(50);
@@ -1301,7 +1331,7 @@ void color_wheel()
             {
                 for (zz = 0;zz < 8;zz++)
                 {
-                    LED(xx, yy, zz, 0, ranx, rany);
+                    set_led(xx, yy, zz, 0, ranx, rany);
                 }
             }
             delay(50);
@@ -1315,18 +1345,18 @@ void color_wheel()
             {
                 for (zz = 0;zz < 8;zz++)
                 {
-                    LED(xx, yy, zz, rany, ranx, 0);
+                    set_led(xx, yy, zz, rany, ranx, 0);
                 }
             }
             delay(50);
         }
+    }
+}
 
-    }//while
 
-}//color wheel
 
-void color_wheelTWO()
-{//*****colorWheelTwo*****colorWheelTwo*****colorWheelTwo*****colorWheelTwo*****colorWheelTwo
+void color_wheel_v2()
+{
     int xx, yy, zz, ww, rr = 1, gg = 1, bb = 1, ranx, rany, ranz, select, swiper;
 
     start = millis();
@@ -1363,7 +1393,7 @@ void color_wheelTWO()
                 {
                     for (zz = 0;zz < 8;zz++)
                     {
-                        LED(xx, yy, zz, ranx, ranz, rany);
+                        set_led(xx, yy, zz, ranx, ranz, rany);
                     }
                 }
                 delay(30);
@@ -1377,7 +1407,7 @@ void color_wheelTWO()
                 {
                     for (zz = 0;zz < 8;zz++)
                     {
-                        LED(xx, yy, zz, ranx, ranz, rany);
+                        set_led(xx, yy, zz, ranx, ranz, rany);
                     }
                 }
                 delay(30);
@@ -1391,7 +1421,7 @@ void color_wheelTWO()
                 {
                     for (yy = 0;yy < 8;yy++)
                     {
-                        LED(xx, yy, zz, ranx, ranz, rany);
+                        set_led(xx, yy, zz, ranx, ranz, rany);
                     }
                 }
                 delay(30);
@@ -1405,7 +1435,7 @@ void color_wheelTWO()
                 {
                     for (zz = 0;zz < 8;zz++)
                     {
-                        LED(xx, yy, zz, ranx, ranz, rany);
+                        set_led(xx, yy, zz, ranx, ranz, rany);
                     }
                 }
                 delay(30);
@@ -1419,7 +1449,7 @@ void color_wheelTWO()
                 {
                     for (zz = 0;zz < 8;zz++)
                     {
-                        LED(xx, yy, zz, ranx, ranz, rany);
+                        set_led(xx, yy, zz, ranx, ranz, rany);
                     }
                 }
                 delay(30);
@@ -1433,7 +1463,7 @@ void color_wheelTWO()
                 {
                     for (yy = 0;yy < 8;yy++)
                     {
-                        LED(xx, yy, zz, ranx, ranz, rany);
+                        set_led(xx, yy, zz, ranx, ranz, rany);
                     }
                 }
                 delay(30);
@@ -1447,13 +1477,10 @@ void color_wheelTWO()
 
 }//color wheel
 
-//    Harlem Shake    Harlem Shake    Harlem Shake    Harlem Shake    Harlem Shake
+
 
 void harlem_shake()
 {
-
-
-
     int greenx = random(1, 7), greeny = random(1, 7), bluex = random(1, 7), bluey = random(1, 7), redx = random(1, 7), redy = random(1, 7);
     int greenmult = 1, bluemult = 1, redmult = 1;
     int greenmulty = 1, bluemulty = 1, redmulty = 1;
@@ -1468,11 +1495,12 @@ void harlem_shake()
     {
         for (i = 0; i < 8; i++)
         {
-            LED(i, oredx, oredx, 0, 0, 0);
+            set_led(i, oredx, oredx, 0, 0, 0);
         }
+
         for (i = 0; i < 8; i++)
         {
-            LED(i, redx, redx, 15, 0, 0);
+            set_led(i, redx, redx, 15, 0, 0);
         }
 
         oredx = redx;
@@ -1489,7 +1517,6 @@ void harlem_shake()
         if (redy > 6 || redy < 1)
         {
             redmulty = redmulty * -1;
-
         }
 
         if (redx > 6 || redx < 1)
@@ -1502,21 +1529,22 @@ void harlem_shake()
 
         redy = redy + redmulty;
         redx = redx + redmult;
-    }//counter
-
+    }
 
     for (counter = 0; counter < 85; counter++)
     {
         for (i = 0; i < 8; i++)
         {
-            LED(i, oredx, oredx, 0, 0, 0);
-            LED(ogreenx, i, ogreeny, 0, 0, 0);
+            set_led(i, oredx, oredx, 0, 0, 0);
+            set_led(ogreenx, i, ogreeny, 0, 0, 0);
         }
+
         for (i = 0; i < 8; i++)
         {
-            LED(i, redx, redx, 15, 0, 0);
-            LED(greenx, i, greeny, 0, 15, 0);
+            set_led(i, redx, redx, 15, 0, 0);
+            set_led(greenx, i, greeny, 0, 15, 0);
         }
+
         ogreenx = greenx;
         ogreeny = greeny;
         oredx = redx;
@@ -1529,16 +1557,13 @@ void harlem_shake()
         if (time_counter > 100 || time_counter < 10)
             timemult = timemult * -1;
 
-
         if (greeny > 6 || greeny < 1)
             greenmulty = greenmulty * -1;
 
         if (redy > 6 || redy < 1)
         {
             redmulty = redmulty * -1;
-
         }
-
 
         if (greenx > 6 || greenx < 1)
         {
@@ -1551,31 +1576,31 @@ void harlem_shake()
         if (redx > 6 || redx < 1)
         {
             redmult = redmult * -1;
-
             cr1 = random(16);
             cr2 = random(16);
         }
-        greenx = greenx + greenmult;
 
+        greenx = greenx + greenmult;
         redy = redy + redmulty;
         redx = redx + redmult;
-    }//counter
-
+    }
 
     for (counter = 0; counter < 85; counter++)
     {
         for (i = 0; i < 8; i++)
         {
-            LED(i, oredx, oredx, 0, 0, 0);
-            LED(obluey, obluex, i, 0, 0, 0);
-            LED(ogreenx, i, ogreeny, 0, 0, 0);
+            set_led(i, oredx, oredx, 0, 0, 0);
+            set_led(obluey, obluex, i, 0, 0, 0);
+            set_led(ogreenx, i, ogreeny, 0, 0, 0);
         }
+
         for (i = 0; i < 8; i++)
         {
-            LED(i, redx, redx, 15, 0, 0);
-            LED(bluey, bluex, i, 0, 0, 15);
-            LED(greenx, i, greeny, 0, 15, 0);
+            set_led(i, redx, redx, 15, 0, 0);
+            set_led(bluey, bluex, i, 0, 0, 15);
+            set_led(greenx, i, greeny, 0, 15, 0);
         }
+
         ogreenx = greenx;
         ogreeny = greeny;
         obluex = bluex;
@@ -1590,7 +1615,6 @@ void harlem_shake()
         if (time_counter > 100 || time_counter < 10)
             timemult = timemult * -1;
 
-
         if (greeny > 6 || greeny < 1)
             greenmulty = greenmulty * -1;
 
@@ -1600,9 +1624,7 @@ void harlem_shake()
         if (redy > 6 || redy < 1)
         {
             redmulty = redmulty * -1;
-
         }
-
 
         if (greenx > 6 || greenx < 1)
         {
@@ -1611,6 +1633,7 @@ void harlem_shake()
             cg1 = random(16);
             cg2 = random(16);
         }
+
         if (bluex > 6 || bluex < 1)
         {
             bluemult = bluemult * -1;
@@ -1618,6 +1641,7 @@ void harlem_shake()
             cb1 = random(16);
             cb2 = random(16);
         }
+
         if (redx > 6 || redx < 1)
         {
             redmult = redmult * -1;
@@ -1625,324 +1649,72 @@ void harlem_shake()
             cr1 = random(16);
             cr2 = random(16);
         }
+
         greenx = greenx + greenmult;
         bluex = bluex + bluemult;
         redy = redy + redmulty;
         redx = redx + redmult;
-    }//counter
-
-
+    }
 
     for (counter = 0; counter < 3; counter++)
     {
         for (i = 0; i < 8; i++)
             for (j = 0; j < 8; j++)
                 for (k = 0; k < 8; k++)
-                    LED(i, j, k, 15, 15, 15);
+                    set_led(i, j, k, 15, 15, 15);
         delay(50);
         for (i = 0; i < 8; i++)
             for (j = 0; j < 8; j++)
                 for (k = 0; k < 8; k++)
-                    LED(i, j, k, 0, 0, 0);
+                    set_led(i, j, k, 0, 0, 0);
         delay(50);
-    }//counter
+    }
 
     for (m = 0; m < 1; m++)
     {
-
-
         for (i = 0; i < 8; i++)
             for (j = 0; j < 8; j++)
                 for (k = 0; k < 8; k++)
-                    LED(i, j, k, 0, random(16), random(16));
+                    set_led(i, j, k, 0, random(16), random(16));
 
         for (i = 7; i >= 0; i--)
             for (j = 0; j < 8; j++)
                 for (k = 0; k < 8; k++)
-                    LED(i, j, k, random(16), 0, random(16));
+                    set_led(i, j, k, random(16), 0, random(16));
 
         for (i = 0; i < 8; i++)
             for (j = 0; j < 8; j++)
                 for (k = 0; k < 8; k++)
-                    LED(i, j, k, random(16), random(16), 0);
+                    set_led(i, j, k, random(16), random(16), 0);
 
         for (i = 7; i >= 0; i--)
             for (j = 0; j < 8; j++)
                 for (k = 0; k < 8; k++)
-                    LED(i, j, k, random(16), 0, random(16));
+                    set_led(i, j, k, random(16), 0, random(16));
     }
 
     clean();
-
 
     for (m = 0; m < 3; m++)
     {
         for (k = 0; k < 200; k++)
         {
-            LED(random(8), random(8), random(8), random(16), random(16), 0);
-            LED(random(8), random(8), random(8), random(16), 0, random(16));
-            LED(random(8), random(8), random(8), 0, random(16), random(16));
-             //   c1=random(8);
-               // c2=random(8);
-                //c3=random(8);
-            //LED(c1,c2,c3,15,15,15);
-        }
-        for (k = 0; k < 200; k++)
-        {
-            LED(random(8), random(8), random(8), 0, 0, 0);
-        }
+            set_led(random(8), random(8), random(8), random(16), random(16), 0);
+            set_led(random(8), random(8), random(8), random(16), 0, random(16));
+            set_led(random(8), random(8), random(8), 0, random(16), random(16));
+            // c1=random(8);
+            // c2=random(8);
+            // c3=random(8);
+            // set_led(c1,c2,c3,15,15,15);
 
-    }//m
-
-
-
-
-    clean();
-
-
-    color_select = random(0, 3);
-    if (color_select == 0)
-    {
-        c1 = 0;
-        c2 = random(0, 16);
-        c3 = random(0, 16);
-    }
-    if (color_select == 1)
-    {
-        c1 = random(0, 16);
-        c2 = 0;
-        c3 = random(0, 16);
-    }
-    if (color_select == 2)
-    {
-        c1 = random(0, 16);
-        c2 = random(0, 16);
-        c3 = 0;
-    }
-
-
-    color_select2 = random(0, 3);
-    if (color_select2 == 0)
-    {
-        c21 = 0;
-        c22 = random(0, 16);
-        c23 = random(0, 16);
-    }
-    if (color_select2 == 1)
-    {
-        c21 = random(0, 16);
-        c22 = 0;
-        c23 = random(0, 16);
-    }
-    if (color_select2 == 2)
-    {
-        c21 = random(0, 16);
-        c22 = random(0, 16);
-        c23 = 0;
-    }
-
-    for (counter = 0; counter < 200; counter++)
-    {
-
-        LED(xo, yo, zo, 0, 0, 0);
-        LED(xo + 1, yo, zo, 0, 0, 0);
-        LED(xo + 2, yo, zo, 0, 0, 0);
-        LED(xo - 1, yo, zo, 0, 0, 0);
-        LED(xo - 2, yo, zo, 0, 0, 0);
-        LED(xo, yo + 1, zo, 0, 0, 0);
-        LED(xo, yo - 1, zo, 0, 0, 0);
-        LED(xo, yo + 2, zo, 0, 0, 0);
-        LED(xo, yo - 2, zo, 0, 0, 0);
-        LED(xo, yo, zo - 1, 0, 0, 0);
-        LED(xo, yo, zo + 1, 0, 0, 0);
-        LED(xo, yo, zo - 2, 0, 0, 0);
-        LED(xo, yo, zo + 2, 0, 0, 0);
-
-        LED(x2o, y2o, z2o, 0, 0, 0);
-        LED(x2o + 1, y2o, z2o, 0, 0, 0);
-        LED(x2o + 2, y2o, z2o, 0, 0, 0);
-        LED(x2o - 1, y2o, z2o, 0, 0, 0);
-        LED(x2o - 2, y2o, z2o, 0, 0, 0);
-        LED(x2o, y2o + 1, z2o, 0, 0, 0);
-        LED(x2o, y2o - 1, z2o, 0, 0, 0);
-        LED(x2o, y2o + 2, z2o, 0, 0, 0);
-        LED(x2o, y2o - 2, z2o, 0, 0, 0);
-        LED(x2o, y2o, z2o - 1, 0, 0, 0);
-        LED(x2o, y2o, z2o + 1, 0, 0, 0);
-        LED(x2o, y2o, z2o - 2, 0, 0, 0);
-        LED(x2o, y2o, z2o + 2, 0, 0, 0);
-
-        LED(xo + 1, yo + 1, zo, 0, 0, 0);
-        LED(xo + 1, yo - 1, zo, 0, 0, 0);
-        LED(xo - 1, yo + 1, zo, 0, 0, 0);
-        LED(xo - 1, yo - 1, zo, 0, 0, 0);
-        LED(xo + 1, yo + 1, zo + 1, 0, 0, 0);
-        LED(xo + 1, yo - 1, zo + 1, 0, 0, 0);
-        LED(xo - 1, yo + 1, zo + 1, 0, 0, 0);
-        LED(xo - 1, yo - 1, zo + 1, 0, 0, 0);
-        LED(xo + 1, yo + 1, zo - 1, 0, 0, 0);
-        LED(xo + 1, yo - 1, zo - 1, 0, 0, 0);
-        LED(xo - 1, yo + 1, zo - 1, 0, 0, 0);
-        LED(xo - 1, yo - 1, zo - 1, 0, 0, 0);
-
-        LED(x2o + 1, y2o + 1, z2o, 0, 0, 0);
-        LED(x2o + 1, y2o - 1, z2o, 0, 0, 0);
-        LED(x2o - 1, y2o + 1, z2o, 0, 0, 0);
-        LED(x2o - 1, y2o - 1, z2o, 0, 0, 0);
-        LED(x2o + 1, y2o + 1, z2o + 1, 0, 0, 0);
-        LED(x2o + 1, y2o - 1, z2o + 1, 0, 0, 0);
-        LED(x2o - 1, y2o + 1, z2o + 1, 0, 0, 0);
-        LED(x2o - 1, y2o - 1, z2o + 1, 0, 0, 0);
-        LED(x2o + 1, y2o + 1, z2o - 1, 0, 0, 0);
-        LED(x2o + 1, y2o - 1, z2o - 1, 0, 0, 0);
-        LED(x2o - 1, y2o + 1, z2o - 1, 0, 0, 0);
-        LED(x2o - 1, y2o - 1, z2o - 1, 0, 0, 0);
-
-        LED(x, y, z, c1, c2, c3);
-        LED(x, y, z - 1, c1, c2, c3);
-        LED(x, y, z + 1, c1, c2, c3);
-        LED(x, y, z - 2, c1, c2, c3);
-        LED(x, y, z + 2, c1, c2, c3);
-        LED(x + 1, y, z, c1, c2, c3);
-        LED(x - 1, y, z, c1, c2, c3);
-        LED(x, y + 1, z, c1, c2, c3);
-        LED(x, y - 1, z, c1, c2, c3);
-        LED(x + 2, y, z, c1, c2, c3);
-        LED(x - 2, y, z, c1, c2, c3);
-        LED(x, y + 2, z, c1, c2, c3);
-        LED(x, y - 2, z, c1, c2, c3);
-        LED(x + 1, y + 1, z, c1, c2, c3);
-        LED(x + 1, y - 1, z, c1, c2, c3);
-        LED(x - 1, y + 1, z, c1, c2, c3);
-        LED(x - 1, y - 1, z, c1, c2, c3);
-        LED(x + 1, y + 1, z + 1, c1, c2, c3);
-        LED(x + 1, y - 1, z + 1, c1, c2, c3);
-        LED(x - 1, y + 1, z + 1, c1, c2, c3);
-        LED(x - 1, y - 1, z + 1, c1, c2, c3);
-        LED(x + 1, y + 1, z - 1, c1, c2, c3);
-        LED(x + 1, y - 1, z - 1, c1, c2, c3);
-        LED(x - 1, y + 1, z - 1, c1, c2, c3);
-        LED(x - 1, y - 1, z - 1, c1, c2, c3);
-
-        LED(x2, y2, z2, c21, c22, c23);
-        LED(x2, y2, z2 - 1, c21, c22, c23);
-        LED(x2, y2, z2 + 1, c21, c22, c23);
-        LED(x2, y2, z2 - 2, c21, c22, c23);
-        LED(x2, y2, z2 + 2, c21, c22, c23);
-        LED(x2 + 1, y2, z2, c21, c22, c23);
-        LED(x2 - 1, y2, z2, c21, c22, c23);
-        LED(x2, y2 + 1, z2, c21, c22, c23);
-        LED(x2, y2 - 1, z2, c21, c22, c23);
-        LED(x2 + 2, y2, z2, c21, c22, c23);
-        LED(x2 - 2, y2, z2, c21, c22, c23);
-        LED(x2, y2 + 2, z2, c21, c22, c23);
-        LED(x2, y2 - 2, z2, c21, c22, c23);
-        LED(x2 + 1, y2 + 1, z2, c21, c22, c23);
-        LED(x2 + 1, y2 - 1, z2, c21, c22, c23);
-        LED(x2 - 1, y2 + 1, z2, c21, c22, c23);
-        LED(x2 - 1, y2 - 1, z2, c21, c22, c23);
-        LED(x2 + 1, y2 + 1, z2 + 1, c21, c22, c23);
-        LED(x2 + 1, y2 - 1, z2 + 1, c21, c22, c23);
-        LED(x2 - 1, y2 + 1, z2 + 1, c21, c22, c23);
-        LED(x2 - 1, y2 - 1, z2 + 1, c21, c22, c23);
-        LED(x2 + 1, y2 + 1, z2 - 1, c21, c22, c23);
-        LED(x2 + 1, y2 - 1, z2 - 1, c21, c22, c23);
-        LED(x2 - 1, y2 + 1, z2 - 1, c21, c22, c23);
-        LED(x2 - 1, y2 - 1, z2 - 1, c21, c22, c23);
-
-
-
-
-
-        x2o = x2;
-        y2o = y2;
-        z2o = z2;
-
-        xo = x;
-        yo = y;
-        zo = z;
-
-        delay(45);
-
-        x = x + xmult;
-        y = y + ymult;
-        z = z + zmult;
-
-        x2 = x2 + x2mult;
-        y2 = y2 + y2mult;
-        z2 = z2 + z2mult;
-
-        if (x >= 7)
-        {
-    //x=7;
-            xmult = random(-1, 1);
-        }
-        if (y >= 7)
-        {
-    //y=7;
-            ymult = random(-1, 1);
-        }
-        if (z >= 7)
-        {
-    //z=7;
-            zmult = random(-1, 1);
-        }
-        if (x <= 0)
-        {
-    //x=0;
-            xmult = random(0, 2);
-        }
-        if (y <= 0)
-        {
-    //y=0;
-            ymult = random(0, 2);
-        }
-        if (z <= 0)
-        {
-    //z=0;
-            zmult = random(0, 2);
+            for (k = 0; k < 200; k++)
+            {
+                set_led(random(8), random(8), random(8), 0, 0, 0);
+            }
         }
 
-        if (x2 >= 7)
-        {
-    //x=7;
-            x2mult = random(-1, 1);
-        }
-        if (y2 >= 7)
-        {
-    //y=7;
-            y2mult = random(-1, 1);
-        }
-        if (z2 >= 7)
-        {
-    //z=7;
-            z2mult = random(-1, 1);
-        }
-        if (x2 <= 0)
-        {
-    //x=0;
-            x2mult = random(0, 2);
-        }
-        if (y2 <= 0)
-        {
-    //y=0;
-            y2mult = random(0, 2);
-        }
-        if (z <= 0)
-        {
-    //z=0;
-            z2mult = random(0, 2);
-        }
+        clean();
 
-
-
-
-    }//counter  counter counter counter counter
-
-
-
-    for (counter = 0; counter < 15; counter++)
-    {
         color_select = random(0, 3);
         if (color_select == 0)
         {
@@ -1950,12 +1722,14 @@ void harlem_shake()
             c2 = random(0, 16);
             c3 = random(0, 16);
         }
+
         if (color_select == 1)
         {
             c1 = random(0, 16);
             c2 = 0;
             c3 = random(0, 16);
         }
+
         if (color_select == 2)
         {
             c1 = random(0, 16);
@@ -1963,156 +1737,418 @@ void harlem_shake()
             c3 = 0;
         }
 
-
-        int num1 = -1, num2 = -4, num3 = -6, num4 = -10;
-        for (m = 0; m < 20; m++)
+        color_select2 = random(0, 3);
+        if (color_select2 == 0)
         {
+            c21 = 0;
+            c22 = random(0, 16);
+            c23 = random(0, 16);
+        }
 
-            num1++;
-            num2++;
-            num3++;
-            num4++;
-
-
-            for (i = 3; i < 5; i++)
-            {
-                LED(num1, i, 3, 0, 0, 0);
-                LED(num1, 3, i, 0, 0, 0);
-                LED(num1, 4, i, 0, 0, 0);
-                LED(num1, i, 4, 0, 0, 0);
-            }
-            for (i = 3; i < 5; i++)
-            {
-                LED(num1 + 1, i, 4, c1, c2, c3);
-                LED(num1 + 1, 4, i, c1, c2, c3);
-                LED(num1 + 1, 3, i, c1, c2, c3);
-                LED(num1 + 1, i, 3, c1, c2, c3);
-            }
-            for (i = 2; i < 6; i++)
-            {
-                LED(num2, i, 2, 0, 0, 0);
-                LED(num2, 2, i, 0, 0, 0);
-                LED(num2, 5, i, 0, 0, 0);
-                LED(num2, i, 5, 0, 0, 0);
-            }
-            for (i = 2; i < 6; i++)
-            {
-                LED(num2 + 1, i, 2, c1, c2, c3);
-                LED(num2 + 1, 2, i, c1, c2, c3);
-                LED(num2 + 1, 5, i, c1, c2, c3);
-                LED(num2 + 1, i, 5, c1, c2, c3);
-            }
-            for (i = 1; i < 7; i++)
-            {
-                LED(num3, i, 1, 0, 0, 0);
-                LED(num3, 1, i, 0, 0, 0);
-                LED(num3, 6, i, 0, 0, 0);
-                LED(num3, i, 6, 0, 0, 0);
-            }
-            for (i = 1; i < 7; i++)
-            {
-                LED(num3 + 1, i, 1, c1, c2, c3);
-                LED(num3 + 1, 1, i, c1, c2, c3);
-                LED(num3 + 1, 6, i, c1, c2, c3);
-                LED(num3 + 1, i, 6, c1, c2, c3);
-            }
-            for (i = 0; i < 8; i++)
-            {
-                LED(num4, i, 0, 0, 0, 0);
-                LED(num4, 0, i, 0, 0, 0);
-                LED(num4, 7, i, 0, 0, 0);
-                LED(num4, i, 7, 0, 0, 0);
-            }
-            for (i = 0; i < 8; i++)
-            {
-                LED(num4 + 1, i, 0, c1, c2, c3);
-                LED(num4 + 1, 0, i, c1, c2, c3);
-                LED(num4 + 1, 7, i, c1, c2, c3);
-                LED(num4 + 1, i, 7, c1, c2, c3);
-            }
-            //delay(1);
-        }//m
-
-        num1 = 8;
-        num2 = 11;
-        num3 = 13;
-        num4 = 17;
-
-        for (m = 0; m < 20; m++)
+        if (color_select2 == 1)
         {
-            num1--;
-            num2--;
-            num3--;
-            num4--;
-            for (i = 3; i < 5; i++)
-            {
-                LED(num1, i, 3, 0, 0, 0);
-                LED(num1, 3, i, 0, 0, 0);
-                LED(num1, 4, i, 0, 0, 0);
-                LED(num1, i, 4, 0, 0, 0);
-            }
-            for (i = 3; i < 5; i++)
-            {
-                LED(num1 - 1, i, 4, 0, 0, 15);
-                LED(num1 - 1, 4, i, 0, 0, 15);
-                LED(num1 - 1, 3, i, 0, 0, 15);
-                LED(num1 - 1, i, 3, 0, 0, 15);
-            }
-            for (i = 2; i < 6; i++)
-            {
-                LED(num2, i, 2, 0, 0, 0);
-                LED(num2, 2, i, 0, 0, 0);
-                LED(num2, 5, i, 0, 0, 0);
-                LED(num2, i, 5, 0, 0, 0);
-            }
-            for (i = 2; i < 6; i++)
-            {
-                LED(num2 - 1, i, 2, 0, 0, 15);
-                LED(num2 - 1, 2, i, 0, 0, 15);
-                LED(num2 - 1, 5, i, 0, 0, 15);
-                LED(num2 - 1, i, 5, 0, 0, 15);
-            }
-            for (i = 1; i < 7; i++)
-            {
-                LED(num3, i, 1, 0, 0, 0);
-                LED(num3, 1, i, 0, 0, 0);
-                LED(num3, 6, i, 0, 0, 0);
-                LED(num3, i, 6, 0, 0, 0);
-            }
-            for (i = 1; i < 7; i++)
-            {
-                LED(num3 - 1, i, 1, 0, 0, 15);
-                LED(num3 - 1, 1, i, 0, 0, 15);
-                LED(num3 - 1, 6, i, 0, 0, 15);
-                LED(num3 - 1, i, 6, 0, 0, 15);
-            }
-            for (i = 0; i < 8; i++)
-            {
-                LED(num4, i, 0, 0, 0, 0);
-                LED(num4, 0, i, 0, 0, 0);
-                LED(num4, 7, i, 0, 0, 0);
-                LED(num4, i, 7, 0, 0, 0);
-            }
-            for (i = 0; i < 8; i++)
-            {
-                LED(num4 - 1, i, 0, 0, 0, 15);
-                LED(num4 - 1, 0, i, 0, 0, 15);
-                LED(num4 - 1, 7, i, 0, 0, 15);
-                LED(num4 - 1, i, 7, 0, 0, 15);
-            }
-            //delay(1);
-        }//m
+            c21 = random(0, 16);
+            c22 = 0;
+            c23 = random(0, 16);
+        }
 
-    }//counter
+        if (color_select2 == 2)
+        {
+            c21 = random(0, 16);
+            c22 = random(0, 16);
+            c23 = 0;
+        }
 
-}//harlem SHake
+        for (counter = 0; counter < 200; counter++)
+        {
+            set_led(xo, yo, zo, 0, 0, 0);
+            set_led(xo + 1, yo, zo, 0, 0, 0);
+            set_led(xo + 2, yo, zo, 0, 0, 0);
+            set_led(xo - 1, yo, zo, 0, 0, 0);
+            set_led(xo - 2, yo, zo, 0, 0, 0);
+            set_led(xo, yo + 1, zo, 0, 0, 0);
+            set_led(xo, yo - 1, zo, 0, 0, 0);
+            set_led(xo, yo + 2, zo, 0, 0, 0);
+            set_led(xo, yo - 2, zo, 0, 0, 0);
+            set_led(xo, yo, zo - 1, 0, 0, 0);
+            set_led(xo, yo, zo + 1, 0, 0, 0);
+            set_led(xo, yo, zo - 2, 0, 0, 0);
+            set_led(xo, yo, zo + 2, 0, 0, 0);
+
+            set_led(x2o, y2o, z2o, 0, 0, 0);
+            set_led(x2o + 1, y2o, z2o, 0, 0, 0);
+            set_led(x2o + 2, y2o, z2o, 0, 0, 0);
+            set_led(x2o - 1, y2o, z2o, 0, 0, 0);
+            set_led(x2o - 2, y2o, z2o, 0, 0, 0);
+            set_led(x2o, y2o + 1, z2o, 0, 0, 0);
+            set_led(x2o, y2o - 1, z2o, 0, 0, 0);
+            set_led(x2o, y2o + 2, z2o, 0, 0, 0);
+            set_led(x2o, y2o - 2, z2o, 0, 0, 0);
+            set_led(x2o, y2o, z2o - 1, 0, 0, 0);
+            set_led(x2o, y2o, z2o + 1, 0, 0, 0);
+            set_led(x2o, y2o, z2o - 2, 0, 0, 0);
+            set_led(x2o, y2o, z2o + 2, 0, 0, 0);
+
+            set_led(xo + 1, yo + 1, zo, 0, 0, 0);
+            set_led(xo + 1, yo - 1, zo, 0, 0, 0);
+            set_led(xo - 1, yo + 1, zo, 0, 0, 0);
+            set_led(xo - 1, yo - 1, zo, 0, 0, 0);
+            set_led(xo + 1, yo + 1, zo + 1, 0, 0, 0);
+            set_led(xo + 1, yo - 1, zo + 1, 0, 0, 0);
+            set_led(xo - 1, yo + 1, zo + 1, 0, 0, 0);
+            set_led(xo - 1, yo - 1, zo + 1, 0, 0, 0);
+            set_led(xo + 1, yo + 1, zo - 1, 0, 0, 0);
+            set_led(xo + 1, yo - 1, zo - 1, 0, 0, 0);
+            set_led(xo - 1, yo + 1, zo - 1, 0, 0, 0);
+            set_led(xo - 1, yo - 1, zo - 1, 0, 0, 0);
+
+            set_led(x2o + 1, y2o + 1, z2o, 0, 0, 0);
+            set_led(x2o + 1, y2o - 1, z2o, 0, 0, 0);
+            set_led(x2o - 1, y2o + 1, z2o, 0, 0, 0);
+            set_led(x2o - 1, y2o - 1, z2o, 0, 0, 0);
+            set_led(x2o + 1, y2o + 1, z2o + 1, 0, 0, 0);
+            set_led(x2o + 1, y2o - 1, z2o + 1, 0, 0, 0);
+            set_led(x2o - 1, y2o + 1, z2o + 1, 0, 0, 0);
+            set_led(x2o - 1, y2o - 1, z2o + 1, 0, 0, 0);
+            set_led(x2o + 1, y2o + 1, z2o - 1, 0, 0, 0);
+            set_led(x2o + 1, y2o - 1, z2o - 1, 0, 0, 0);
+            set_led(x2o - 1, y2o + 1, z2o - 1, 0, 0, 0);
+            set_led(x2o - 1, y2o - 1, z2o - 1, 0, 0, 0);
+
+            set_led(x, y, z, c1, c2, c3);
+            set_led(x, y, z - 1, c1, c2, c3);
+            set_led(x, y, z + 1, c1, c2, c3);
+            set_led(x, y, z - 2, c1, c2, c3);
+            set_led(x, y, z + 2, c1, c2, c3);
+            set_led(x + 1, y, z, c1, c2, c3);
+            set_led(x - 1, y, z, c1, c2, c3);
+            set_led(x, y + 1, z, c1, c2, c3);
+            set_led(x, y - 1, z, c1, c2, c3);
+            set_led(x + 2, y, z, c1, c2, c3);
+            set_led(x - 2, y, z, c1, c2, c3);
+            set_led(x, y + 2, z, c1, c2, c3);
+            set_led(x, y - 2, z, c1, c2, c3);
+            set_led(x + 1, y + 1, z, c1, c2, c3);
+            set_led(x + 1, y - 1, z, c1, c2, c3);
+            set_led(x - 1, y + 1, z, c1, c2, c3);
+            set_led(x - 1, y - 1, z, c1, c2, c3);
+            set_led(x + 1, y + 1, z + 1, c1, c2, c3);
+            set_led(x + 1, y - 1, z + 1, c1, c2, c3);
+            set_led(x - 1, y + 1, z + 1, c1, c2, c3);
+            set_led(x - 1, y - 1, z + 1, c1, c2, c3);
+            set_led(x + 1, y + 1, z - 1, c1, c2, c3);
+            set_led(x + 1, y - 1, z - 1, c1, c2, c3);
+            set_led(x - 1, y + 1, z - 1, c1, c2, c3);
+            set_led(x - 1, y - 1, z - 1, c1, c2, c3);
+
+            set_led(x2, y2, z2, c21, c22, c23);
+            set_led(x2, y2, z2 - 1, c21, c22, c23);
+            set_led(x2, y2, z2 + 1, c21, c22, c23);
+            set_led(x2, y2, z2 - 2, c21, c22, c23);
+            set_led(x2, y2, z2 + 2, c21, c22, c23);
+            set_led(x2 + 1, y2, z2, c21, c22, c23);
+            set_led(x2 - 1, y2, z2, c21, c22, c23);
+            set_led(x2, y2 + 1, z2, c21, c22, c23);
+            set_led(x2, y2 - 1, z2, c21, c22, c23);
+            set_led(x2 + 2, y2, z2, c21, c22, c23);
+            set_led(x2 - 2, y2, z2, c21, c22, c23);
+            set_led(x2, y2 + 2, z2, c21, c22, c23);
+            set_led(x2, y2 - 2, z2, c21, c22, c23);
+            set_led(x2 + 1, y2 + 1, z2, c21, c22, c23);
+            set_led(x2 + 1, y2 - 1, z2, c21, c22, c23);
+            set_led(x2 - 1, y2 + 1, z2, c21, c22, c23);
+            set_led(x2 - 1, y2 - 1, z2, c21, c22, c23);
+            set_led(x2 + 1, y2 + 1, z2 + 1, c21, c22, c23);
+            set_led(x2 + 1, y2 - 1, z2 + 1, c21, c22, c23);
+            set_led(x2 - 1, y2 + 1, z2 + 1, c21, c22, c23);
+            set_led(x2 - 1, y2 - 1, z2 + 1, c21, c22, c23);
+            set_led(x2 + 1, y2 + 1, z2 - 1, c21, c22, c23);
+            set_led(x2 + 1, y2 - 1, z2 - 1, c21, c22, c23);
+            set_led(x2 - 1, y2 + 1, z2 - 1, c21, c22, c23);
+            set_led(x2 - 1, y2 - 1, z2 - 1, c21, c22, c23);
+
+            x2o = x2;
+            y2o = y2;
+            z2o = z2;
+
+            xo = x;
+            yo = y;
+            zo = z;
+
+            delay(45);
+
+            x = x + xmult;
+            y = y + ymult;
+            z = z + zmult;
+
+            x2 = x2 + x2mult;
+            y2 = y2 + y2mult;
+            z2 = z2 + z2mult;
+
+            if (x >= 7)
+            {
+                //x=7;
+                xmult = random(-1, 1);
+            }
+
+            if (y >= 7)
+            {
+                //y=7;
+                ymult = random(-1, 1);
+            }
+
+            if (z >= 7)
+            {
+                //z=7;
+                zmult = random(-1, 1);
+            }
+
+            if (x <= 0)
+            {
+                //x=0;
+                xmult = random(0, 2);
+            }
+
+            if (y <= 0)
+            {
+                //y=0;
+                ymult = random(0, 2);
+            }
+
+            if (z <= 0)
+            {
+                //z=0;
+                zmult = random(0, 2);
+            }
+
+            if (x2 >= 7)
+            {
+                //x=7;
+                x2mult = random(-1, 1);
+            }
+
+            if (y2 >= 7)
+            {
+                //y=7;
+                y2mult = random(-1, 1);
+            }
+
+            if (z2 >= 7)
+            {
+                //z=7;
+                z2mult = random(-1, 1);
+            }
+
+            if (x2 <= 0)
+            {
+                //x=0;
+                x2mult = random(0, 2);
+            }
+
+            if (y2 <= 0)
+            {
+                //y=0;
+                y2mult = random(0, 2);
+            }
+
+            if (z <= 0)
+            {
+                //z=0;
+                z2mult = random(0, 2);
+            }
+        }
+
+        for (counter = 0; counter < 15; counter++)
+        {
+            color_select = random(0, 3);
+            if (color_select == 0)
+            {
+                c1 = 0;
+                c2 = random(0, 16);
+                c3 = random(0, 16);
+            }
+
+            if (color_select == 1)
+            {
+                c1 = random(0, 16);
+                c2 = 0;
+                c3 = random(0, 16);
+            }
+
+            if (color_select == 2)
+            {
+                c1 = random(0, 16);
+                c2 = random(0, 16);
+                c3 = 0;
+            }
+
+            int num1 = -1, num2 = -4, num3 = -6, num4 = -10;
+            for (m = 0; m < 20; m++)
+            {
+                num1++;
+                num2++;
+                num3++;
+                num4++;
+
+                for (i = 3; i < 5; i++)
+                {
+                    set_led(num1, i, 3, 0, 0, 0);
+                    set_led(num1, 3, i, 0, 0, 0);
+                    set_led(num1, 4, i, 0, 0, 0);
+                    set_led(num1, i, 4, 0, 0, 0);
+                }
+
+                for (i = 3; i < 5; i++)
+                {
+                    set_led(num1 + 1, i, 4, c1, c2, c3);
+                    set_led(num1 + 1, 4, i, c1, c2, c3);
+                    set_led(num1 + 1, 3, i, c1, c2, c3);
+                    set_led(num1 + 1, i, 3, c1, c2, c3);
+                }
+
+                for (i = 2; i < 6; i++)
+                {
+                    set_led(num2, i, 2, 0, 0, 0);
+                    set_led(num2, 2, i, 0, 0, 0);
+                    set_led(num2, 5, i, 0, 0, 0);
+                    set_led(num2, i, 5, 0, 0, 0);
+                }
+
+                for (i = 2; i < 6; i++)
+                {
+                    set_led(num2 + 1, i, 2, c1, c2, c3);
+                    set_led(num2 + 1, 2, i, c1, c2, c3);
+                    set_led(num2 + 1, 5, i, c1, c2, c3);
+                    set_led(num2 + 1, i, 5, c1, c2, c3);
+                }
+
+                for (i = 1; i < 7; i++)
+                {
+                    set_led(num3, i, 1, 0, 0, 0);
+                    set_led(num3, 1, i, 0, 0, 0);
+                    set_led(num3, 6, i, 0, 0, 0);
+                    set_led(num3, i, 6, 0, 0, 0);
+                }
+
+                for (i = 1; i < 7; i++)
+                {
+                    set_led(num3 + 1, i, 1, c1, c2, c3);
+                    set_led(num3 + 1, 1, i, c1, c2, c3);
+                    set_led(num3 + 1, 6, i, c1, c2, c3);
+                    set_led(num3 + 1, i, 6, c1, c2, c3);
+                }
+
+                for (i = 0; i < 8; i++)
+                {
+                    set_led(num4, i, 0, 0, 0, 0);
+                    set_led(num4, 0, i, 0, 0, 0);
+                    set_led(num4, 7, i, 0, 0, 0);
+                    set_led(num4, i, 7, 0, 0, 0);
+                }
+
+                for (i = 0; i < 8; i++)
+                {
+                    set_led(num4 + 1, i, 0, c1, c2, c3);
+                    set_led(num4 + 1, 0, i, c1, c2, c3);
+                    set_led(num4 + 1, 7, i, c1, c2, c3);
+                    set_led(num4 + 1, i, 7, c1, c2, c3);
+                }
+            }
+
+            num1 = 8;
+            num2 = 11;
+            num3 = 13;
+            num4 = 17;
+
+            for (m = 0; m < 20; m++)
+            {
+                num1--;
+                num2--;
+                num3--;
+                num4--;
+
+                for (i = 3; i < 5; i++)
+                {
+                    set_led(num1, i, 3, 0, 0, 0);
+                    set_led(num1, 3, i, 0, 0, 0);
+                    set_led(num1, 4, i, 0, 0, 0);
+                    set_led(num1, i, 4, 0, 0, 0);
+                }
+
+                for (i = 3; i < 5; i++)
+                {
+                    set_led(num1 - 1, i, 4, 0, 0, 15);
+                    set_led(num1 - 1, 4, i, 0, 0, 15);
+                    set_led(num1 - 1, 3, i, 0, 0, 15);
+                    set_led(num1 - 1, i, 3, 0, 0, 15);
+                }
+
+                for (i = 2; i < 6; i++)
+                {
+                    set_led(num2, i, 2, 0, 0, 0);
+                    set_led(num2, 2, i, 0, 0, 0);
+                    set_led(num2, 5, i, 0, 0, 0);
+                    set_led(num2, i, 5, 0, 0, 0);
+                }
+
+                for (i = 2; i < 6; i++)
+                {
+                    set_led(num2 - 1, i, 2, 0, 0, 15);
+                    set_led(num2 - 1, 2, i, 0, 0, 15);
+                    set_led(num2 - 1, 5, i, 0, 0, 15);
+                    set_led(num2 - 1, i, 5, 0, 0, 15);
+                }
+
+                for (i = 1; i < 7; i++)
+                {
+                    set_led(num3, i, 1, 0, 0, 0);
+                    set_led(num3, 1, i, 0, 0, 0);
+                    set_led(num3, 6, i, 0, 0, 0);
+                    set_led(num3, i, 6, 0, 0, 0);
+                }
+
+                for (i = 1; i < 7; i++)
+                {
+                    set_led(num3 - 1, i, 1, 0, 0, 15);
+                    set_led(num3 - 1, 1, i, 0, 0, 15);
+                    set_led(num3 - 1, 6, i, 0, 0, 15);
+                    set_led(num3 - 1, i, 6, 0, 0, 15);
+                }
+
+                for (i = 0; i < 8; i++)
+                {
+                    set_led(num4, i, 0, 0, 0, 0);
+                    set_led(num4, 0, i, 0, 0, 0);
+                    set_led(num4, 7, i, 0, 0, 0);
+                    set_led(num4, i, 7, 0, 0, 0);
+                }
+
+                for (i = 0; i < 8; i++)
+                {
+                    set_led(num4 - 1, i, 0, 0, 0, 15);
+                    set_led(num4 - 1, 0, i, 0, 0, 15);
+                    set_led(num4 - 1, 7, i, 0, 0, 15);
+                    set_led(num4 - 1, i, 7, 0, 0, 15);
+                }
+            }
+        }
+    }
+}
+
+
 
 void clean()
 {
     int ii, jj, kk;
-    for (ii = 0; ii < 8; ii++)
-        for (jj = 0; jj < 8; jj++)
-            for (kk = 0; kk < 8; kk++)
-                LED(ii, jj, kk, 0, 0, 0);
 
+    for (ii = 0; ii < 8; ii++)
+    {
+        for (jj = 0; jj < 8; jj++)
+        {
+            for (kk = 0; kk < 8; kk++)
+            {
+                set_led(ii, jj, kk, 0, 0, 0);
+            }
+        }
+    }
 }

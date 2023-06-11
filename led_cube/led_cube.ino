@@ -22,36 +22,36 @@
 
 /***************************** Includes & Macros ******************************/
 
-#include <SPI.h>// SPI Library used to clock data out to the shift registers
+#include <SPI.h>               // SPI Library used to clock data out to the shift registers
 #include "animations.cpp"
 
 //? arbitrary, go to shift registers
-#define latch_pin 2// can use any pin you want to latch the shift registers
+#define latch_pin 2            // Can use any pin you want to latch the shift registers
 //? arbitrary, go to shift registers
-#define blank_pin 4// same, can use any pin you want for this, just make sure you pull up via a 1k to 5V
+#define blank_pin 4            // Same, can use any pin you want for this, just make sure you pull up via a 1k to 5V
 //! have to be MOSI, CHANGE for our microcontroller
-#define data_pin 11// used by SPI, must be pin 11
+#define data_pin 11            // Used by SPI, must be pin 11
 //! have to be SCK, CHANGE for our microcontroller
-#define clock_pin 13// used by SPI, must be 13
+#define clock_pin 13           // Used by SPI, must be 13
 
-//These variables are used by multiplexing and Bit Angle Modulation Code
-int shift_out;//used in the code a lot in for(i= type loops
-byte cathode[8];//byte to write to the cathode shift register, 8 of them, shifting the ON level in each byte in the array
+// These variables are used by multiplexing and Bit Angle Modulation Code
+int shift_out;                 // Used in the code a lot in for(i= type loops
+byte cathode[8];               // Byte to write to the cathode shift register, 8 of them, shifting the ON level in each byte in the array
 
-//This is how the brightness for every LED is stored,  
-//Each LED only needs a 'bit' to know if it should be ON or OFF, so 64 Bytes gives you 512 bits= 512 LEDs
-//Since we are modulating the LEDs, using 4 bit resolution, each color has 4 arrays containing 64 bits each
+// This is how the brightness for every LED is stored,  
+// Each LED only needs a 'bit' to know if it should be ON or OFF, so 64 Bytes gives you 512 bits= 512 LEDs
+// Since we are modulating the LEDs, using 4 bit resolution, each color has 4 arrays containing 64 bits each
 byte red0[64], red1[64], red2[64], red3[64];
 byte blue0[64], blue1[64], blue2[64], blue3[64];
 byte green0[64], green1[64], green2[64], green3[64];
-//notice how more resolution will eat up more of your precious RAM
+// Notice how more resolution will eat up more of your precious RAM
 
-int level = 0;//keeps track of which level we are shifting data to
-int anodelevel = 0;//this increments through the anode levels
-int BAM_Bit, BAM_Counter = 0; // Bit Angle Modulation variables to keep track of things
+int level = 0;                 // Keeps track of which level we are shifting data to
+int anodelevel = 0;            // This increments through the anode levels
+int BAM_Bit, BAM_Counter = 0;  // Bit Angle Modulation variables to keep track of things
 
-//These variables can be used for other things
-unsigned long start;//for a millis timer to cycle through the animations
+// These variables can be used for other things
+unsigned long start;           // For a millis timer to cycle through the animations
 
 
 
@@ -96,17 +96,17 @@ void setup()
 /******************************** Sketch Loop *********************************/
 void loop()
 {
-// Each animation located in a sub routine
-// To control an LED, you simply:
-// LED(level you want 0-7, row you want 0-7, column you want 0-7, red brighness 0-15, green brighness 0-15, blue brighness 0-15);
+    // Each animation located in a sub routine
+    // To control an LED, you simply:
+    // LED(level you want 0-7, row you want 0-7, column you want 0-7, red brighness 0-15, green brighness 0-15, blue brighness 0-15);
 
-    rainVersionTwo();
+    rain();
     folder();
-    sinwaveTwo();
+    sine_wave();
     //wipe_out();
     clean();
-    bouncyvTwo();
-    color_wheelTWO();
+    bouncy();
+    color_wheel_v2();
     clean();
     harlem_shake();
 }
@@ -116,7 +116,7 @@ void loop()
 /***************************** LED Update Routine *****************************/
 void set_led(int level, int row, int column, byte red, byte green, byte blue)
 {
-    //This routine is how LEDs are updated, with the inputs for the LED location and its R G and B brightness levels
+    // This routine is how LEDs are updated, with the inputs for the LED location and its R G and B brightness levels
 
     // First, check and make sure nothing went beyond the limits, just clamp things at either 0 or 7 for location, and 0 or 15 for brightness
     if (level < 0)
@@ -278,8 +278,8 @@ ISR(TIMER1_COMPA_vect)
                 SPI.transfer(green3[shift_out]);
             for (shift_out = level; shift_out < level + 8; shift_out++)
                 SPI.transfer(blue3[shift_out]);
-                // Here is where the BAM_Counter is reset back to 0, it's only 4 bit, but since each cycle takes 8 counts,
-                // it goes 0 8 16 32, and when BAM_counter hits 64 we reset the BAM
+            // Here is where the BAM_Counter is reset back to 0, it's only 4 bit, but since each cycle takes 8 counts,
+            // it goes 0 8 16 32, and when BAM_counter hits 64 we reset the BAM
             if (BAM_Counter == 120)
             {
                 BAM_Counter = 0;
