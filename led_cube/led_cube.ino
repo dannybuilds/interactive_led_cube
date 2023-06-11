@@ -118,51 +118,51 @@ void set_led(int level, int row, int column, byte red, byte green, byte blue)
     // This routine is how LEDs are updated, with the inputs for the LED location and its R G and B brightness levels
 
     // First, check and make sure nothing went beyond the limits, just clamp things at either 0 or 7 for location, and 0 or 15 for brightness
-    if (level < 0)
+    if (level <= 0)
     {
         level = 0;
     }
-    if (level > 7)
+    if (level >= 7)
     {
         level = 7;
     }
-    if (row < 0)
+    if (row <= 0)
     {
         row = 0;
     }
-    if (row > 7)
+    if (row >= 7)
     {
         row = 7;
     }
-    if (column < 0)
+    if (column <= 0)
     {
         column = 0;
     }
-    if (column > 7)
+    if (column >= 7)
     {
         column = 7;
     }
-    if (red < 0)
+    if (red <= 0)
     {
         red = 0;
     }
-    if (red > 15)
+    if (red >= 15)
     {
         red = 15;
     }
-    if (green < 0)
+    if (green <= 0)
     {
         green = 0;
     }
-    if (green > 15)
+    if (green >= 15)
     {
         green = 15;
     }
-    if (blue < 0)
+    if (blue <= 0)
     {
         blue = 0;
     }
-    if (blue > 15)
+    if (blue >= 15)
     {
         blue = 15;
     }
