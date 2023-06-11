@@ -1,3 +1,25 @@
+// Authors :  Danny Restrepo
+//         :  Bodgan Gula
+//         :  Mark Gelman
+//         :  Nitin Suryadevara
+// Emails  :  restrepo@pdx.edu
+//         :  gula@pdx.edu
+//         :  gelman@pdx.edu
+//         :  nitin2@pdx.edu
+// Course  :  ECE103 Engineering Programming
+// School  :  Portland State University
+// Date    :  25th May 2023
+// Project :  Interactive LED Cube
+
+/*
+    Program Description:
+
+    //* FILL IN LATER //
+*/
+
+/******************************** Header files ********************************/
+/******************************** Include files ********************************/
+
 #include <SPI.h>// SPI Library used to clock data out to the shift registers
 #include "animations.cpp"
 
@@ -33,28 +55,19 @@ unsigned long start;//for a millis timer to cycle through the animations
 //****setup****setup****setup****setup****setup****setup****setup****setup****setup****setup****setup****setup****setup
 void setup()
 {
-    //? Look for these macros
+    Serial.begin(115200);// if you need it?
+
     SPI.setBitOrder(MSBFIRST);//Most Significant Bit First
     SPI.setDataMode(SPI_MODE0);// Mode 0 Rising edge of data, keep clock low
     // SPI.setClockDivider(SPI_CLOCK_DIV2);//Run the data in at 16MHz/2 - 8MHz
-    SPI.begin();
-    //? Look for these macros
 
-    Serial.begin(115200);// if you need it?
     noInterrupts();// kill interrupts until everybody is set up
 
-    //We use Timer 1 to refresh the cube
-    TCCR1A = B00000000;//Register A all 0's since we're not toggling any pins
-    TCCR1B = B00001011;//bit 3 set to place in CTC mode, will call an interrupt on a counter match
-    //bits 0 and 1 are set to divide the clock by 64, so 16MHz/64=250kHz
-    TIMSK1 = B00000010;//bit 1 set to call the interrupt on an OCR1A match
-    //! See below comment
-    OCR1A = 30; // you can play with this, but I set it to 30, which means:
-    //our clock runs at 250kHz, which is 1/250kHz = 4us
-    //with OCR1A set to 30, this means the interrupt will be called every (30+1)x4us=124us, 
-    // which gives a multiplex frequency of about 8kHz
-    //! we might have to include the below line of code
-    //! OCR1A  = (unsigned int)((250000UL / (REFRESH_RATE * ANODE_LEVELS)) - 1UL);
+    // Initialize a timer
+    timer = timerBegin(0, 8, true); // Timer 0, 8 prescaler (0.5us resolution, because ESP32 runs at 160MHz by default and 160/8 = 20MHz)
+    timerAttachInterrupt(timer, &onTimer, true);
+    timerAlarmWrite(timer, 62, true); // Set alarm to trigger every 62*0.5us = 31us (it's the closest we can get to 124us with the ESP32's clock speed and prescaler options)
+    timerAlarmEnable(timer);
 
     // here I just set up the cathode array, this is what's written to the cathode shift register, to enable each level
     cathode[0] = B00000001;
