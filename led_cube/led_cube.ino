@@ -97,7 +97,9 @@ void loop()
     // To control an LED, you simply:
     // LED(level you want 0-7, row you want 0-7, column you want 0-7, red brighness 0-15, green brighness 0-15, blue brighness 0-15);
 
-    sine_wave();
+    set_led(4, 4, 4, 15, 15, 15);
+
+    // sine_wave();
     // clean();
     // rain();
     // folder();
