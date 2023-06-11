@@ -59,12 +59,12 @@ void setup()
     noInterrupts();              // Kill interrupts until everything is set up
 
     // Initialize a timer
-    timer = timerBegin(0, 8, true);
+    time = timerBegin(0, 8, true);
     // Timer 0, 8 prescaler (0.5us resolution, because ESP32 runs at 160MHz by default and 160/8 = 20MHz)
-    timerAttachInterrupt(timer, &onTimer, true);
+    timerAttachInterrupt(time, &onTimer, true);
     // Set alarm to trigger every 62*0.5us = 31 us (it's the closest we can get to 124us with the ESP32's clock speed and prescaler options)
-    timerAlarmWrite(timer, 62, true);
-    timerAlarmEnable(timer);
+    timerAlarmWrite(time, 62, true);
+    timerAlarmEnable(time);
 
     // Sets up the cathode array, this is what's written to the cathode shift register, to enable each level
     cathode[0] = B00000001;
