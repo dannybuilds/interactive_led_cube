@@ -32,7 +32,6 @@ volatile int bam_counter = 0;    // Bit Angle Modulation variable to keep track 
 volatile int bam_bit = 0;        // Bit Angle Modulation variable to keep track of things
 volatile int cathode_level = 0;  // This increments through the anode levels
 volatile int level = 0;          // Keeps track of which level we are shifting data to
-unsigned long start;             // For a millis timer to cycle through the animations
 
 // These variables are used by multiplexing and Bit Angle Modulation Code
 int shift_out;                   // Used in the code a lot in for loops
