@@ -51,7 +51,7 @@ byte red3[64], green3[64], blue3[64];
 hw_timer_t* timer = NULL;
 
 // For a millis timer to cycle through the animations
-extern unsigned long start;
+unsigned long start;
 
 
 

@@ -23,7 +23,7 @@
 #include "prototypes.h"          // Function prototypes for the source and implementation files
 
 // For a millis timer to cycle through the animations
-extern unsigned long start;
+unsigned long start;
 
 
 

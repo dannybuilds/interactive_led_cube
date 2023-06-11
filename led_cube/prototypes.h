@@ -21,7 +21,7 @@
 #include <Arduino.h>
 
 // For a millis timer to cycle through the animations
-unsigned long start;
+extern unsigned long start;
 
 void set_led(int level, int row, int column, byte red, byte green, byte blue);
 
