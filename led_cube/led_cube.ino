@@ -121,6 +121,52 @@ void setup()
 /******************************** Sketch Loop *********************************/
 void loop()
 {
+    int choice = menu_select();
+
+    // Loads in the user choice from the menu module
+    switch (choice)
+    {
+        case 0:
+            // Load default
+            break;
+
+        case 1:
+            sine_wave();
+            break;
+
+        case 2:
+            rain();
+            break;
+
+        case 3:
+            folder();
+            break;
+
+        case 4:
+            wipe_out();
+            break;
+
+        case 5:
+            bouncy();
+            break;
+
+        case 6:
+            color_wheel_v2();
+            break;
+
+        case 7:
+            harlem_shake();
+            break;
+
+        case 8:
+            clean();
+            break;
+
+        case 9:
+            // diagnostic_mode();
+            break;
+    }
+
     //* For DEBUGGING *//
     // To control an LED:
     // set_led(level you want 0-7, row you want 0-7, column you want 0-7, red brighness 0-15, green brighness 0-15, blue brighness 0-15);
@@ -128,54 +174,7 @@ void loop()
     // delay(500);
 
     //* For DEBUGGING *//
-    // int choice = menu_select();
-    // // Loads in the user choice from the menu module
-    // switch (choice)
-    // {
-    //     case 0:
-    //         // Load default
-    //         break;
-
-    //     case 1:
-    //         sine_wave();
-    //         break;
-
-    //     case 2:
-    //         rain();
-    //         break;
-
-    //     case 3:
-    //         folder();
-    //         break;
-
-    //     case 4:
-    //         wipe_out();
-    //         break;
-
-    //     case 5:
-    //         bouncy();
-    //         break;
-
-    //     case 6:
-    //         color_wheel_v2();
-    //         break;
-
-    //     case 7:
-    //         harlem_shake();
-    //         break;
-
-    //     case 8:
-    //         clean();
-    //         break;
-
-    //     case 9:
-    //         // diagnostic_mode();
-    //         break;
-    // }
-
-    //* For DEBUGGING *//
-
-    sine_wave();
+    // sine_wave();
     // clean();
     // rain();
     // folder();
