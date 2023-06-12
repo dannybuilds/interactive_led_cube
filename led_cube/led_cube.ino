@@ -79,6 +79,12 @@ byte red3[32], green3[32], blue3[32];
 
 
 
+/******************************** Declarations ********************************/
+void set_led(int level, int row, int column, byte red, byte green, byte blue);
+void IRAM_ATTR onTimer();
+
+
+
 /******************************** Sketch Setup ********************************/
 void setup()
 {
@@ -174,7 +180,7 @@ void loop()
     // }
 
     //* For DEBUGGING *//
-    
+
     sine_wave();
     // clean();
     // rain();
