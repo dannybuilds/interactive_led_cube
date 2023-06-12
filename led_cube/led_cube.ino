@@ -36,16 +36,16 @@ volatile int level = 0;          // Keeps track of which level we are shifting d
 // These variables are used by multiplexing and Bit Angle Modulation Code
 int shift_out;                   // Used in the code a lot in for loops
 
-// Byte to write to the cathode shift register, 8 of them, shifting the ON level in each byte in the array
-byte cathode[8];
+// Byte to write to the cathode shift register, 1 of them, shifting the ON level in each byte in the array
+byte cathode;
 
 // This is how the brightness for every LED is stored,  
 // Each LED only needs a 'bit' to know if it should be ON or OFF, so 64 Bytes gives you 512 bits= 512 LEDs
 // Since we are modulating the LEDs, using 4 bit resolution, each color has 4 arrays containing 64 bits each
-byte red0[64], green0[64], blue0[64];
-byte red1[64], green1[64], blue1[64];
-byte red2[64], green2[64], blue2[64];
-byte red3[64], green3[64], blue3[64];
+byte red0[32], green0[32], blue0[32];
+byte red1[32], green1[32], blue1[32];
+byte red2[32], green2[32], blue2[32];
+byte red3[32], green3[32], blue3[32];
 
 
 
@@ -70,14 +70,7 @@ void setup()
     timerAlarmEnable(timer);
 
     // Sets up the cathode array, this is what's written to the cathode shift register, to enable each level
-    cathode[0] = B11111110;
-    cathode[1] = B11111101;
-    cathode[2] = B11111011;
-    cathode[3] = B11110111;
-    cathode[4] = B11101111;
-    cathode[5] = B11011111;
-    cathode[6] = B10111111;
-    cathode[7] = B01111111;
+    cathode = B00000000;
 
     // Sets up the Outputs
     pinMode(latch_pin, OUTPUT);      // Latch for daisy chains
@@ -181,7 +174,7 @@ void set_led(int level, int row, int column, byte red, byte green, byte blue)
     }
 
     // There are 512 LEDs in the cube, so when we write to level 2, column 5, row 4, that needs to be translated into a number from 0 to 511
-    int whichbyte = int(((level * 64) + (row * 8) + column) / 8);
+    int whichbyte = int(((level * 32) + (row * 8) + column) / 8);
 
     // The first level LEDs are first in the sequence, then 2nd level, then third, and so on
     // The (level*64) is what indexes the level's starting place, so level 0 are LEDs 0-63, level 1 are LEDs 64-127, and so on
@@ -210,7 +203,7 @@ void set_led(int level, int row, int column, byte red, byte green, byte blue)
     // this is the last byte in the array, which is right since this is the last LED
 
     // This next variable is the same thing as before, but here we don't divide by 8, so we get the LED number 0-511
-    int wholebyte = (level * 64) + (row * 8) + column;
+    int wholebyte = (level * 32) + (row * 8) + column;
     // This will all make sense in a sec
 
     // This is 4 bit color resolution, so each color contains x4 64 byte arrays, explanation below:
@@ -323,7 +316,42 @@ void IRAM_ATTR onTimer()
             break;
     }
 
-    SPI.transfer(cathode[cathode_level]);  // Sends out the cathode level byte
+    switch (cathode_level)
+    {
+        case 0:
+            cathode = B00000001;
+            break;
+
+        case 1:
+            cathode = B00000010;
+            break;
+
+        case 2:
+            cathode = B00000100;
+            break;
+
+        case 3:
+            cathode = B00001000;
+            break;
+
+        case 4:
+            cathode = B00010000;
+            break;
+
+        case 5:
+            cathode = B00100000;
+            break;
+
+        case 6:
+            cathode = B01000000;
+            break;
+
+        case 7:
+            cathode = B10000000;
+            break;
+    }
+
+    SPI.transfer(cathode);                 // Sends out the cathode level byte
 
     digitalWrite(latch_pin, HIGH);         // Latch pin HIGH
     digitalWrite(latch_pin, LOW);          // Latch pin LOW
