@@ -15,13 +15,15 @@
 
 /*
     Program Description:
+        Defines the serial data operations needed for a variety of visually engaging
+        animations designed for a 8x8x8 common cathode RGB LED cube display.
 */
 
 
 
 /***************************** Includes & Macros ******************************/
 #include <SPI.h>                 // SPI Library used to clock data out to the shift registers
-#include "prototypes.h"          // Function prototypes for the source and implementation files
+#include "animations.h"          // Function prototypes for the source and implementation files
 
 // For a millis timer to cycle through the animations
 unsigned long start;

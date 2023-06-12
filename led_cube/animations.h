@@ -11,21 +11,12 @@
 // School  :  Portland State University
 // Date    :  25th May 2023
 // Project :  Interactive LED Cube
-// Title   :  Function Prototypes, Header File
+// Title   :  Animation Function Prototypes, Header File
 
-#ifndef PROTOTYPES_H
-#define PROTOTYPES_H
+#ifndef ANIMATIONS_H
+#define ANIMATIONS_H
 
 
-
-// For the byte data type
-#include <Arduino.h>
-
-int show_menu();
-
-void set_led(int level, int row, int column, byte red, byte green, byte blue);
-
-void IRAM_ATTR onTimer();
 
 void wipe_out();
 
@@ -47,4 +38,4 @@ void clean();
 
 
 
-#endif /* PROTOTYPES_H*/
+#endif /* ANIMATIONS_H */

@@ -13,22 +13,15 @@
 // Project :  Interactive LED Cube
 // Title   :  Terminal Menu Module, Source File
 
-/*
-    Program Description:
-        Creates PDCurses Window object and customizes it for an
-        effortless and pleasing menu select user experience.
-*/
-
 
 
 /***************************** Includes & Macros ******************************/
 #include <curses.h>
 #include <string.h>
-#include "menu.h"
 
 
 
-int menu_select()
+int main()
 {
     // Initialize the library
     initscr();
@@ -158,7 +151,7 @@ int menu_select()
             wattron(menuwin, COLOR_PAIR(1));
             box(menuwin, 0, 0);
             wattroff(menuwin, COLOR_PAIR(1));
-            break; // Exit the loop
+            choice = -1;
         }
     }
 
@@ -167,6 +160,5 @@ int menu_select()
     refresh();
     endwin();
 
-    // Return the selected menu item
-    return choice;
+    return 0;
 }
