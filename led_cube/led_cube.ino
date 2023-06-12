@@ -127,54 +127,55 @@ void loop()
     // set_led(4, 4, 4, 15, 15, 15);
     // delay(500);
 
-    int choice = menu_select();
+    //* For DEBUGGING *//
+    // int choice = menu_select();
+    // // Loads in the user choice from the menu module
+    // switch (choice)
+    // {
+    //     case 0:
+    //         // Load default
+    //         break;
 
-    // Loads in the user choice from the menu module
-    switch (choice)
-    {
-        case 0:
-            // Load default
-            break;
+    //     case 1:
+    //         sine_wave();
+    //         break;
 
-        case 1:
-            sine_wave();
-            break;
+    //     case 2:
+    //         rain();
+    //         break;
 
-        case 2:
-            rain();
-            break;
+    //     case 3:
+    //         folder();
+    //         break;
 
-        case 3:
-            folder();
-            break;
+    //     case 4:
+    //         wipe_out();
+    //         break;
 
-        case 4:
-            wipe_out();
-            break;
+    //     case 5:
+    //         bouncy();
+    //         break;
 
-        case 5:
-            bouncy();
-            break;
+    //     case 6:
+    //         color_wheel_v2();
+    //         break;
 
-        case 6:
-            color_wheel_v2();
-            break;
+    //     case 7:
+    //         harlem_shake();
+    //         break;
 
-        case 7:
-            harlem_shake();
-            break;
+    //     case 8:
+    //         clean();
+    //         break;
 
-        case 8:
-            clean();
-            break;
-
-        case 9:
-            // diagnostic_mode();
-            break;
-    }
+    //     case 9:
+    //         // diagnostic_mode();
+    //         break;
+    // }
 
     //* For DEBUGGING *//
-    // sine_wave();
+    
+    sine_wave();
     // clean();
     // rain();
     // folder();
