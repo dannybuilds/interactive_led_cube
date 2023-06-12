@@ -11,7 +11,7 @@
 // School  :  Portland State University
 // Date    :  25th May 2023
 // Project :  Interactive LED Cube
-// Title   :  Terminal Menu Module, Source File
+// Title   :  Terminal Menu Module, For Execution Separate from Main Program
 
 
 
