@@ -95,18 +95,8 @@ void loop()
     // To control an LED, you simply:
     // LED(level you want 0-7, row you want 0-7, column you want 0-7, red brighness 0-15, green brighness 0-15, blue brighness 0-15);
 
-    // set_led(4, 4, 4, 15, 15, 15);
+    set_led(4, 4, 4, 15, 15, 15);
 
-    for (int i = 0; i < 8; i++)
-    {
-        for (int j = 0; j < 8; j++)
-        {
-            for (int k = 0; k < 8; k++)
-            {
-                set_led(i, j, k, 0, 0, 15);
-            }
-        }
-    }
     delay(500);
 
     // sine_wave();
@@ -354,8 +344,6 @@ void IRAM_ATTR onTimer()
             cathode = 0b01111111;
             break;
     }
-
-
 
     SPI.transfer(cathode);                 // Sends out the cathode level byte
 
