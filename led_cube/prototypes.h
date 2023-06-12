@@ -1,7 +1,8 @@
-// Authors :  Danny Restrepo
-//         :  Bodgan Gula
-//         :  Mark Gelman
+// Author  :  Danny Restrepo
+// Members :  Bodgan Gula
 //         :  Nitin Suryadevara
+//         :  Mark Gelman
+//         :  Danny Restrepo
 // Emails  :  restrepo@pdx.edu
 //         :  gula@pdx.edu
 //         :  gelman@pdx.edu
