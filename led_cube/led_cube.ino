@@ -323,37 +323,39 @@ void IRAM_ATTR onTimer()
     switch (cathode_level)
     {
         case 0:
-            cathode = 0b00000001;
+            cathode = 0b11111110;
             break;
 
         case 1:
-            cathode = 0b00000010;
+            cathode = 0b11111101;
             break;
 
         case 2:
-            cathode = 0b00000100;
+            cathode = 0b11111011;
             break;
 
         case 3:
-            cathode = 0b00001000;
+            cathode = 0b11110111;
             break;
 
         case 4:
-            cathode = 0b00010000;
+            cathode = 0b11101111;
             break;
 
         case 5:
-            cathode = 0b00100000;
+            cathode = 0b11011111;
             break;
 
         case 6:
-            cathode = 0b01000000;
+            cathode = 0b10111111;
             break;
 
         case 7:
-            cathode = 0b10000000;
+            cathode = 0b01111111;
             break;
     }
+
+
 
     SPI.transfer(cathode);                 // Sends out the cathode level byte
 
