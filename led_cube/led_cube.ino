@@ -25,7 +25,7 @@
 
 const int latch_pin = 21;        // GPIO21 will drive RCLK (latch) on shift registers
 const int blank_pin = 26;        // Same, can use any pin you want for this, just make sure you pull up via a 1k to 5V
-const int data_pin = 18;         // Used by SPI, must be GPIO18
+const int data_pin = 18;         // Used by SPI, must be GPIO18, used for serially driving the shift register daisy chains
 const int clock_pin = 5;         // Used by SPI, must be GPIO5
 
 volatile int bam_counter = 0;    // Bit Angle Modulation variable to keep track of things
@@ -57,7 +57,7 @@ void setup()
 
     Serial.begin(115200);
 
-    SPI.setBitOrder(LSBFIRST);   // Least Significant Bit First
+    SPI.setBitOrder(MSBFIRST);   // Least Significant Bit First
     SPI.setDataMode(SPI_MODE0);  // Mode 0 Rising edge of data, need to keep clock low
     noInterrupts();              // Kill interrupts until everything is set up
 
@@ -80,12 +80,13 @@ void setup()
     cathode[7] = B01111111;
 
     // Sets up the Outputs
-    pinMode(latch_pin, OUTPUT);  // Latch
-    pinMode(data_pin, OUTPUT);   // MOSI DATA
-    pinMode(clock_pin, OUTPUT);  // SPI Clock
-    pinMode(blank_pin, OUTPUT);  // Output Enable, important to do this last, so LEDs do not flash on boot up
-    SPI.begin();                 // Start up the SPI library
-    interrupts();                // This lets the multiplexing start
+    pinMode(latch_pin, OUTPUT);      // Latch for daisy chains
+    pinMode(data_pin, OUTPUT);       // MOSI DATA for daisy chains
+    pinMode(clock_pin, OUTPUT);      // SPI Clock
+    pinMode(blank_pin, OUTPUT);      // Output Enable, important to do this last, so LEDs do not flash on boot up
+
+    SPI.begin();                     // Start up the SPI library
+    interrupts();                    // This lets the multiplexing start
 }
 
 
@@ -109,7 +110,7 @@ void loop()
             }
         }
     }
-    delay(1000);
+    delay(500);
 
     // sine_wave();
     // clean();
@@ -275,7 +276,7 @@ void IRAM_ATTR onTimer()
     {
         // The BAM bit will be a value from 0-3, and only shift out the arrays corresponding to that bit, 0-3
         // Here's how this works, each case is the bit in the Bit angle modulation from 0-4, 
-        // Next, it depends on which level we're on, so the byte in the array to be written depends on which level, but since each level contains 64 LED,
+        // Next, it depends on which level we're on, so the byte in the array to be written depends on which level, but since each level contains 64 LEDs,
         // we only shift out 8 bytes for each color
         case 0:
             for (int shift_out = level; shift_out < level + 8; shift_out++)
