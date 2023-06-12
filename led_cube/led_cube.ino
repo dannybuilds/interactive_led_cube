@@ -70,7 +70,7 @@ void setup()
     timerAlarmEnable(timer);
 
     // Sets up the cathode array, this is what's written to the cathode shift register, to enable each level
-    cathode = B00000000;
+    cathode = 0b00000000;
 
     // Sets up the Outputs
     pinMode(latch_pin, OUTPUT);      // Latch for daisy chains
@@ -82,6 +82,10 @@ void setup()
     interrupts();                    // This lets the multiplexing start
 }
 
+// byte byteVar = 0b10101010;  // Example byte, binary: 10101010
+
+// // Set the 3rd bit (0-indexed) to 1
+// byteVar = byteVar | (1 << 3); 
 
 
 /******************************** Sketch Loop *********************************/
@@ -319,35 +323,35 @@ void IRAM_ATTR onTimer()
     switch (cathode_level)
     {
         case 0:
-            cathode = B00000001;
+            cathode = 0b00000001;
             break;
 
         case 1:
-            cathode = B00000010;
+            cathode = 0b00000010;
             break;
 
         case 2:
-            cathode = B00000100;
+            cathode = 0b00000100;
             break;
 
         case 3:
-            cathode = B00001000;
+            cathode = 0b00001000;
             break;
 
         case 4:
-            cathode = B00010000;
+            cathode = 0b00010000;
             break;
 
         case 5:
-            cathode = B00100000;
+            cathode = 0b00100000;
             break;
 
         case 6:
-            cathode = B01000000;
+            cathode = 0b01000000;
             break;
 
         case 7:
-            cathode = B10000000;
+            cathode = 0b10000000;
             break;
     }
 
