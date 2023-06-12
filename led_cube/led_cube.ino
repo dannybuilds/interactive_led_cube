@@ -87,7 +87,7 @@ void setup()
 
     Serial.begin(115200);
 
-    SPI.setBitOrder(MSBFIRST);   // Least Significant Bit First
+    SPI.setBitOrder(MSBFIRST);   // Most Significant Bit First
     SPI.setDataMode(SPI_MODE0);  // Mode 0 Rising edge of data, need to keep clock low
     noInterrupts();              // Kill interrupts until everything is set up
 
