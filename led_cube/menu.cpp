@@ -13,13 +13,17 @@
 // Project :  Interactive LED Cube
 // Title   :  Terminal Menu Module, Source File
 
+
+
 /***************************** Includes & Macros ******************************/
 #include <curses.h>
 #include <string.h>
+// Function prototypes for the source and implementation files
+#include "prototypes.h"
 
 
 
-int main()
+int show_menu()
 {
     // Initialize the library
     initscr();
@@ -37,7 +41,7 @@ int main()
     init_pair(7, COLOR_RED, COLOR_GREEN);    // Red text on green background for second screen
 
     // Create a window for the menu
-    WINDOW* menuwin = newwin(20, 40, (LINES - 20) / 2, (COLS - 40) / 2);
+    WINDOW* menuwin = newwin(40, 120, (LINES - 40) / 2, (COLS - 120) / 2);
     keypad(menuwin, TRUE);                   // Enable keyboard mapping
     wbkgd(menuwin, COLOR_PAIR(2));           // Set the background color to yellow
     box(menuwin, 0, 0);
@@ -76,7 +80,7 @@ int main()
     {
         // Print the title
         wattron(menuwin, COLOR_PAIR(4));
-        mvwprintw(menuwin, 4, (40 - strlen("LED Cube Main Menu: Choose an Option")) / 2, "LED Cube Main Menu: Choose an Option");
+        mvwprintw(menuwin, 11, (120 - strlen("LED Cube Main Menu: Choose an Option")) / 2, "LED Cube Main Menu: Choose an Option");
         wattroff(menuwin, COLOR_PAIR(4));
 
         for (int i = 0; i < num_options; ++i)
@@ -85,7 +89,7 @@ int main()
                 wattron(menuwin, COLOR_PAIR(3));
             else
                 wattron(menuwin, COLOR_PAIR(2));
-            mvwprintw(menuwin, i + 7, (40 - strlen(options[i])) / 2, options[i]);
+            mvwprintw(menuwin, i + 14, (120 - strlen(options[i])) / 2, options[i]);
             if (i == highlight)
                 wattroff(menuwin, COLOR_PAIR(3));
             else
@@ -128,13 +132,13 @@ int main()
 
             // Print the selected option
             wattron(menuwin, COLOR_PAIR(6));
-            mvwprintw(menuwin, 9, (40 - strlen("Now running...")) / 2, "Now running...");
-            mvwprintw(menuwin, 10, (40 - strlen(options[choice])) / 2, "%s", options[choice]);
+            mvwprintw(menuwin, 16, (120 - strlen("Now running...")) / 2, "Now running...");
+            mvwprintw(menuwin, 17, (120 - strlen(options[choice])) / 2, "%s", options[choice]);
             wattroff(menuwin, COLOR_PAIR(6));
 
             // Print the return instruction
             wattron(menuwin, COLOR_PAIR(7));
-            mvwprintw(menuwin, 13, (40 - strlen("(Press any button to return.)")) / 2, "(Press any button to return.)");
+            mvwprintw(menuwin, 20, (120 - strlen("(Press any button to return.)")) / 2, "(Press any button to return.)");
             wattroff(menuwin, COLOR_PAIR(7));
 
             wrefresh(menuwin);

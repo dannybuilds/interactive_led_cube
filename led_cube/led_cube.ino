@@ -62,15 +62,16 @@ void setup()
     SPI.setDataMode(SPI_MODE0);  // Mode 0 Rising edge of data, need to keep clock low
     noInterrupts();              // Kill interrupts until everything is set up
 
-    //! ************************************************************************************************************************************
+    //! Potential Sourece of Bug(s) ********************************************
     // Initialize a timer (0.5us resolution, because ESP32 runs at 80 MHz by default and 80/10 = 8MHz)
     timer = timerBegin(0, 10, true);
 
     timerAttachInterrupt(timer, &onTimer, true);
 
-    //! ************************************************************************************************************************************
+    //! Potential Sourece of Bug(s) ********************************************
     // Set alarm to trigger every 62 * 0.5us = 31 us (it's the closest we can get to 124us with the ESP32's clock speed and prescaler options)
     timerAlarmWrite(timer, 248, true);
+
     timerAlarmEnable(timer);
 
     // Sets up the cathode array, this is what's written to the cathode shift register, to enable each level
@@ -103,15 +104,17 @@ void loop()
 
     delay(500);
 
-    // sine_wave();
-    // clean();
-    // rain();
-    // folder();
-    // wipe_out();
-    // bouncy();
-    // color_wheel_v2();
-    // clean();
-    // harlem_shake();
+    sine_wave();
+    clean();
+    rain();
+    folder();
+    wipe_out();
+    bouncy();
+    color_wheel_v2();
+    clean();
+    harlem_shake();
+
+    
 }
 
 
