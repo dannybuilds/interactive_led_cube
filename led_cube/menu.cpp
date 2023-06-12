@@ -1,3 +1,17 @@
+// Authors :  Danny Restrepo
+//         :  Bodgan Gula
+//         :  Mark Gelman
+//         :  Nitin Suryadevara
+// Emails  :  restrepo@pdx.edu
+//         :  gula@pdx.edu
+//         :  gelman@pdx.edu
+//         :  nitin2@pdx.edu
+// Course  :  ECE103 Engineering Programming
+// School  :  Portland State University
+// Date    :  25th May 2023
+// Project :  Interactive LED Cube
+// Title   :  Terminal Menu Module, Source File
+
 #include <curses.h>
 #include <string.h>
 
@@ -12,18 +26,18 @@ int main()
     start_color();
 
     // Define colors
-    init_pair(1, COLOR_BLUE, COLOR_YELLOW); // Blue for border
-    init_pair(2, COLOR_BLUE, COLOR_YELLOW); // Blue text on yellow background
-    init_pair(3, COLOR_YELLOW, COLOR_BLUE); // Yellow text on blue background for highlighted item
-    init_pair(4, COLOR_RED, COLOR_YELLOW); // Red for title
-    init_pair(5, COLOR_BLACK, COLOR_GREEN); // Black for border on second screen
-    init_pair(6, COLOR_BLACK, COLOR_GREEN); // Black text on green background for second screen
-    init_pair(7, COLOR_RED, COLOR_GREEN); // Red text on green background for second screen
+    init_pair(1, COLOR_BLUE, COLOR_YELLOW);  // Blue for border
+    init_pair(2, COLOR_BLUE, COLOR_YELLOW);  // Blue text on yellow background
+    init_pair(3, COLOR_YELLOW, COLOR_BLUE);  // Yellow text on blue background for highlighted item
+    init_pair(4, COLOR_RED, COLOR_YELLOW);   // Red for title
+    init_pair(5, COLOR_BLACK, COLOR_GREEN);  // Black for border on second screen
+    init_pair(6, COLOR_BLACK, COLOR_GREEN);  // Black text on green background for second screen
+    init_pair(7, COLOR_RED, COLOR_GREEN);    // Red text on green background for second screen
 
     // Create a window for the menu
     WINDOW* menuwin = newwin(20, 40, (LINES - 20) / 2, (COLS - 40) / 2);
-    keypad(menuwin, TRUE); // Enable keyboard mapping
-    wbkgd(menuwin, COLOR_PAIR(2)); // Set the background color to yellow
+    keypad(menuwin, TRUE);                   // Enable keyboard mapping
+    wbkgd(menuwin, COLOR_PAIR(2));           // Set the background color to yellow
     box(menuwin, 0, 0);
     refresh();
 
