@@ -89,6 +89,8 @@ void rainbow(float value, byte &r, byte &g, byte &b);
 /******************************** Sketch Setup ********************************/
 void setup()
 {
+    SPI.begin();
+
     // 
     pinMode(latch_pin, OUTPUT);
     pinMode(data_pin, OUTPUT);
@@ -103,7 +105,7 @@ void setup()
     digitalWrite(clear_pin, HIGH);
 
     // Highest setting
-    Serial.begin(512000);
+    Serial.begin(115200);
 }
 
 
@@ -120,8 +122,8 @@ void loop()
     // Increment time
     time += 1.0 / 60.0;
 
-    // Delay to achieve approximately 60 frames per second
-    delay(1000 / 60);
+    // // Delay to achieve approximately 60 frames per second
+    // delay(1000 / 60);
 }
 
 
@@ -130,9 +132,21 @@ void loop()
 void set_led_data(const int cathode_level, const int anode_row, const int anode_col,
                   const byte red, const byte green, const byte blue)
 {
+    //? Debugging Debugging Debugging Debugging Debugging Debugging Debugging Debugging Debugging 
+    diagnose(red, "INcoming red Data");
+    diagnose(green, "INcoming green Data");
+    diagnose(blue, "INcoming blue Data");
+    //? Debugging Debugging Debugging Debugging Debugging Debugging Debugging Debugging Debugging 
+
     red_data[cathode_level][anode_row][anode_col] = red;
     green_data[cathode_level][anode_row][anode_col] = green;
     blue_data[cathode_level][anode_row][anode_col] = blue;
+
+    //? Debugging Debugging Debugging Debugging Debugging Debugging Debugging Debugging Debugging 
+    diagnose(red_data[cathode_level][anode_row][anode_col], "Red Saved Data");
+    diagnose(green_data[cathode_level][anode_row][anode_col], "Green Saved Data");
+    diagnose(blue_data[cathode_level][anode_row][anode_col], "Blue Saved Data");
+    //? Debugging Debugging Debugging Debugging Debugging Debugging Debugging Debugging Debugging 
 }
 
 
@@ -186,9 +200,9 @@ void pulse_width_mod()
                     // If BLUE intensity value for the pixel is below than the threshold
                     if (blue_data[vertical][rows_b][cols_b] < pwm_b)
                     {
-                        // Error checking
-                        assert(register_index >= 0 && register_index <= 25);
-                        assert(bit_index >= 0 && bit_index <= 7);
+                        // // Error checking
+                        // assert(register_index >= 0 && register_index <= 25);
+                        // assert(bit_index >= 0 && bit_index <= 7);
 
                         // The the BLUE channel gets turned on
                         bitSet(display_serial_out[register_index], bit_index);
@@ -215,9 +229,9 @@ void pulse_width_mod()
                     // If GREEN intensity value for the pixel is below than the threshold
                     if (green_data[vertical][row_g][cols_g] < pwm_g)
                     {
-                        // Error checking
-                        assert(register_index >= 0 && register_index <= 25);
-                        assert(bit_index >= 0 && bit_index <= 7);
+                        // // Error checking
+                        // assert(register_index >= 0 && register_index <= 25);
+                        // assert(bit_index >= 0 && bit_index <= 7);
 
                         // The the GREEN channel gets turned on
                         bitSet(display_serial_out[register_index], bit_index);
@@ -244,9 +258,9 @@ void pulse_width_mod()
                     // If RED intensity value for the pixel is below than the threshold
                     if (red_data[vertical][rows_r][cols_r] < pwm_r)
                     {
-                        // Error checking
-                        assert(register_index >= 0 && register_index <= 25);
-                        assert(bit_index >= 0 && bit_index <= 7);
+                        // // Error checking
+                        // assert(register_index >= 0 && register_index <= 25);
+                        // assert(bit_index >= 0 && bit_index <= 7);
 
                         // The the RED channel gets turned on
                         bitSet(display_serial_out[register_index], bit_index);
@@ -258,6 +272,8 @@ void pulse_width_mod()
                 register_index++;
             }
         }
+
+        register_index = 1;
 
         // Ensures data doesn't get sent to outputs of shift registers
         digitalWrite(latch_pin, LOW);
@@ -273,8 +289,6 @@ void pulse_width_mod()
         // Prevents accidental data outputs, bug prevention
         digitalWrite(latch_pin, LOW);
     }
-
-    delay(5);           // 
     reset_storage();    // 
 }
 
