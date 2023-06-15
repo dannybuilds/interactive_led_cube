@@ -97,7 +97,7 @@ void setup()
 /******************************** Sketch Loop *********************************/
 void loop()
 {
-    update_registers();
+
 }
 
 
@@ -136,11 +136,8 @@ void store_color_data()
 
 
 /************** Latches Serial Data In to Registers' Parallel Out *************/
-void update_registers()
+void pulse_width_mod()
 {
-    int register_index = 0;     // 
-    int cathode_index = 0;      // 
-
     // Vertical level data, Cathode control
     for (int i = 0; i < LAYERS; i++)
     {
@@ -196,4 +193,81 @@ void update_registers()
 
     // 
     digitalWrite(latch_pin, LOW);
+}
+
+//! ***************************************************************************
+
+int bit_index = 0;          //
+int register_index = 1;     // 
+
+// 
+for (int vertical = 0; vertical < LAYERS; vertical++)
+{
+    // 
+    display_serial_out[0] = 0;
+    // 
+    bitSet(display_serial_out[0], vertical);
+
+    // Serial out for BLUE channel daisy chain of shift registers
+    for (int pwm_b = 0; pwm_b < 256; pwm_b++)
+    {
+        for (int rows_b = 0; rows_b < ROWS; rows_b++)
+        {
+            for (int cols_b = 0; cols_b < COLS; cols_b++)
+            {
+                // 
+                if (blue_data[vertical][rows_b][cols_b] < pwm_b)
+                {
+                    // Error checking
+                    assert(register_index >= 0 && register_index <= 25);
+                    // 
+                    bitSet(display_serial_out[register_index]);
+                }
+            }
+            // 
+            register_index++;
+        }
+    }
+
+    // Serial out for GREEN channel daisy chain of shift registers
+    for (int pwm_g = 0; pwm_g < 256; pwm_g++)
+    {
+        for (int row_g = 0; row_g < ROWS; row_g++)
+        {
+            for (int cols_g = 0; cols_g < COLS; cols_g++)
+            {
+                // 
+                if (green_data[vertical][row_g][cols_g] < pwm_g)
+                {
+                    // Error checking
+                    assert(register_index >= 0 && register_index <= 25);
+                    // 
+                    bitSet(display_serial_out[register_index]);
+                }
+            }
+            // 
+            register_index++;
+        }
+    }
+
+    // Serial out for RED channel daisy chain of shift registers
+    for (int pwm_r = 0; pwm_r < 256; pwm_r++)
+    {
+        for (int rows_r = 0; rows_r < ROWS; rows_r++)
+        {
+            for (int cols_r = 0; cols_r < COLS; cols_r++)
+            {
+                // 
+                if (red_data[vertical][rows_r][cols_r] < pwm_r)
+                {
+                    // Error checking
+                    assert(register_index >= 0 && register_index <= 25);
+                    // 
+                    bitSet(display_serial_out[register_index]);
+                }
+            }
+            // 
+            register_index++;
+        }
+    }
 }
