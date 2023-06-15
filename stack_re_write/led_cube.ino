@@ -53,7 +53,6 @@
 #include "animations.h"          // Function prototypes for animations module
 // #include "menu.h"                // Function prototypes for menu module
 
-#define COLORS 3                 // One for each color channel (R, G, B)
 #define LAYERS 8                 // Number of vertical layers in cube display
 #define LEDS_PER_LAYER 64        // Number of channels for a single color per vertical layer
 #define OUTPUTS_PER_SR 8         // Number of parallel outputs per shift register
@@ -64,9 +63,11 @@ const int data_pin = 18;         // SER, used for serial input on the shift regi
 const int clock_pin = 5;         // SRCLK, used by SPI, must be GPIO5
 const int clear_pin = 26;        // SRCLR, used for prepping registers for data input, active low
 
-byte vert_level = 0;                                // 8 bits
-byte display_serial_out[NUM_OF_SR] = { 0 };         // 200 bits
-byte color_buffer[LAYERS][LEDS_PER_LAYER][COLORS];  // 12,288 bits
+byte vert_level = 0;                              // 8 bits, 1 per vertical level
+byte red_data[LAYERS][LEDS_PER_LAYER] = { 0 };    // 4096 bits, 8 per individual LED channel
+byte green_data[LAYERS][LEDS_PER_LAYER] = { 0 };  // 4096 bits, 8 per individual LED channel
+byte blue_data[LAYERS][LEDS_PER_LAYER] = { 0 };   // 4096 bits, 8 per individual LED channel
+byte display_serial_out[NUM_OF_SR] = { 0 };       // 200 bits, 1 per register output
 
 
 
@@ -135,7 +136,7 @@ void update_registers()
     int cathode_index = 0;      // 
 
     // Vertical level data, Cathode control
-    for (int i = 0; i < OUTPUTS_PER_SR; i++)
+    for (int i = 0; i < LAYERS; i++)
     {
         // If program detects a '1' in cathode control byte
         if (bitRead(vert_level, i))
