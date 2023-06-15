@@ -51,7 +51,7 @@
 #include <SPI.h>                 // SPI Library used to clock data out to the shift registers
 #include <math.h>                // Math C Library needed for sine() function
 #include <Arduino.h>             // For the byte data type
-#include "animations.h"          // Function prototypes for animations module
+// #include "animations.h"          // Function prototypes for animations module
 // #include "menu.h"                // Function prototypes for menu module
 
 #define ROWS 8                   // Number of horizontal rows per layer, anodes
@@ -88,7 +88,7 @@ void set_led_data(const int level, const int row, const int col,
 //! ****************************************************************************
 void sineWaveAnimation(float time);
 byte floatToColor(float value);
-void rainbow(float value, byte &r, byte &g, byte &b)
+void rainbow(float value, byte &r, byte &g, byte &b);
 //! ****************************************************************************
 
 
