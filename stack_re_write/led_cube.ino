@@ -53,14 +53,22 @@
 #include "animations.h"          // Function prototypes for animations module
 // #include "menu.h"                // Function prototypes for menu module
 
+#define NUM_OF_CH 64             // Number of channels for a single color per vertical layer
+#define NUM_OF_SF 25             // Total number of shift registers
+
 const int latch_pin = 21;        // GPIO21 will drive RCLK (latch) on shift registers
 const int blank_pin = 26;        // Same, can use any pin you want for this, just make sure you pull up via a 1k to 5V
 const int data_pin = 18;         // Used by SPI, must be GPIO18, used for serially driving the shift register daisy chains
 const int clock_pin = 5;         // Used by SPI, must be GPIO5
 
-int value = 0;
-byte switch_var = 0;
-byte display_data = 0;
+// int value = 0;
+// byte switch_var = 0;
+
+byte vert_level = 0;
+byte display_data[NUM_OF_SF] = { 0 };
+byte red_data[NUM_OF_CH] = { 0 };
+byte green_data[NUM_OF_CH] = { 0 };
+byte blue_data[NUM_OF_CH] = { 0 };
 
 
 
@@ -94,7 +102,10 @@ void set_led(int cathode_level,
              byte green,
              byte blue)
 {
-    
+    int which_register = (int) (((cathode_level * 64) + (anode_row * 8) + anode_column) / 8);
+    int which_bit = (int) (((cathode_level * 64) + (anode_row * 8) + anode_column));
+
+
 }
 
 
@@ -114,6 +125,8 @@ void diagnose(const byte chosen_data, const char target_name[])
 /************** Latches Serial Data In to Registers' Parallel Out *************/
 void update_registers()
 {
+
+
     digitalWrite(latch_pin, LOW);
     shiftOUt(data_pin, clock_pin, LSBFIRST, display_data);
     digitalWrite(latch_pin, HIGH);
