@@ -87,7 +87,12 @@ void loop()
 
 
 /***************************** LED Update Routine *****************************/
-void set_led(int cathode_level, int anode_row, int anode_column, byte red, byte green, byte blue)
+void set_led(int cathode_level,
+             int anode_row,
+             int anode_column,
+             byte red,
+             byte green,
+             byte blue)
 {
 
 }
