@@ -76,6 +76,8 @@ void setup()
     pinMode(data_pin, OUTPUT);
     pinMode(clock_pin, OUTPUT);
 
+    digitalWrite(latch_pin, LOW);
+
     Serial.begin(9600);
 }
 
@@ -125,11 +127,6 @@ void update_registers()
     int register_index = 0;
     int cathode_index = 0;
 
-    digitalWrite(out_en_pin, HIGH);
-    digitalWrite(out_en_pin, LOW);
-    digitalWrite(clear_pin, LOW);
-    digitalWrite(clear_pin, HIGH);
-
     // Vertical level data, Cathode control
     for (int i = 0; i < OUTPUTS_PER_SF; i++)
     {
@@ -175,6 +172,5 @@ void update_registers()
     }
 
     digitalWrite(latch_pin, HIGH);
-
-    digitalWrite(clear_pin, LOW);
+    digitalWrite(latch_pin, LOW);
 }
