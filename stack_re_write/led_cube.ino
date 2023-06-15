@@ -64,7 +64,6 @@ const int data_pin = 18;         // SER, used for serial input on the shift regi
 const int clock_pin = 5;         // SRCLK, used by SPI, must be GPIO5
 const int clear_pin = 26;        // SRCLR, used for prepping registers for data input, active low
 
-byte vert_level = 0;                            // 8 bits, 1 per vertical level
 byte red_data[LAYERS][ROWS][COLS] = { 0 };      // 4096 bits, 8 per individual LED channel
 byte green_data[LAYERS][ROWS][COLS] = { 0 };    // 4096 bits, 8 per individual LED channel
 byte blue_data[LAYERS][ROWS][COLS] = { 0 };     // 4096 bits, 8 per individual LED channel
@@ -102,16 +101,13 @@ void loop()
 
 
 
-/***************************** LED Update Routine *****************************/
-void set_led_data(int cathode_level,
-                  int anode_row,
-                  int anode_column,
-                  byte red,
-                  byte green,
-                  byte blue)
+/*********************** LED Color Data Storage Routine ***********************/
+void set_led_data(int cathode_level, int anode_row, int anode_col,
+                  byte red, byte green, byte blue)
 {
-    int which_register = (int) (((cathode_level * 64) + (anode_row * 8) + anode_column) / 8);
-    int which_bit = (int) (((cathode_level * 64) + (anode_row * 8) + anode_column));
+    red_data[cathode_level][anode_row][anode_col] = red;
+    green_data[cathode_level][anode_row][anode_col] = green;
+    blue_data[cathode_level][anode_row][anode_col] = blue;
 }
 
 
