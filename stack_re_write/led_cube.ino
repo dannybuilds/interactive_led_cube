@@ -53,31 +53,40 @@
 #include "animations.h"          // Function prototypes for animations module
 // #include "menu.h"                // Function prototypes for menu module
 
-#define NUM_OF_SF 25             // Total number of shift registers
-#define NUM_OF_CH 64             // Number of channels for a single color per vertical layer
+#define NUM_OF_SR 25             // Total number of shift registers
+#define LEDS_PER_LAYER 64        // Number of channels for a single color per vertical layer
 #define OUTPUTS_PER_SF 8         // Number of parallel outputs per shift register
 
-const int latch_pin = 21;        // GPIO21 will drive RCLK (latch) on shift registers
-const int data_pin = 18;         // Used by SPI, must be GPIO18, used for serially driving the shift register daisy chains
-const int clock_pin = 5;         // Used by SPI, must be GPIO5
+const int latch_pin = 21;        // RCLK (storage clock, latch), positive edge triggered
+const int data_pin = 18;         // SER, used for serial input on the shift register daisy chains
+const int clock_pin = 5;         // SRCLK, used by SPI, must be GPIO5
+const int clear_pin = 26;        // SRCLR, used for prepping registers for data input, active low
 
 byte vert_level = 0;
-byte display_data[NUM_OF_SF] = { 0 };
-byte red_data[NUM_OF_CH] = { 0 };
-byte green_data[NUM_OF_CH] = { 0 };
-byte blue_data[NUM_OF_CH] = { 0 };
+byte display_data[NUM_OF_SR] = { 0 };
+byte red_data[LEDS_PER_LAYER] = { 0 };
+byte green_data[LEDS_PER_LAYER] = { 0 };
+byte blue_data[LEDS_PER_LAYER] = { 0 };
 
 
 
 /******************************** Sketch Setup ********************************/
 void setup()
 {
+    // 
     pinMode(latch_pin, OUTPUT);
     pinMode(data_pin, OUTPUT);
     pinMode(clock_pin, OUTPUT);
+    pinMode(clear_pin, OUTPUT);
 
+    // 
     digitalWrite(latch_pin, LOW);
 
+    // 
+    digitalWrite(clear_pin, LOW);
+    digitalWrite(clear_pin, HIGH);
+
+    // might be a little low
     Serial.begin(9600);
 }
 
@@ -130,8 +139,11 @@ void update_registers()
     // Vertical level data, Cathode control
     for (int i = 0; i < OUTPUTS_PER_SF; i++)
     {
+        // If program detects a '1' in cathode control byte
         if (bitRead(vert_level, i))
         {
+            // Then it'll write a '1' in the corresponding index of 
+            // the output buffer array for that frame of animation
             bitSet(display_data[register_index], i);
         }
 
@@ -143,7 +155,7 @@ void update_registers()
     }
 
     // Blue channel data, Anode control
-    for (int j = 0; j < NUM_OF_CH; j++)
+    for (int j = 0; j < LEDS_PER_LAYER; j++)
     {
         for (int k = 0; k < OUTPUTS_PER_SF; k++)
         {
@@ -166,7 +178,7 @@ void update_registers()
 
     digitalWrite(latch_pin, LOW);
 
-    for (int m = 0; m < NUM_OF_SF; m++)
+    for (int m = 0; m < NUM_OF_SR; m++)
     {
         shiftOut(data_pin, clock_pin, LSBFIRST, display_data[m]);
     }
