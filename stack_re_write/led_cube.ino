@@ -103,12 +103,12 @@ void loop()
 
 
 /***************************** LED Update Routine *****************************/
-void set_led(int cathode_level,
-             int anode_row,
-             int anode_column,
-             byte red,
-             byte green,
-             byte blue)
+void set_led_data(int cathode_level,
+                  int anode_row,
+                  int anode_column,
+                  byte red,
+                  byte green,
+                  byte blue)
 {
     int which_register = (int) (((cathode_level * 64) + (anode_row * 8) + anode_column) / 8);
     int which_bit = (int) (((cathode_level * 64) + (anode_row * 8) + anode_column));
@@ -124,13 +124,6 @@ void diagnose(const byte chosen_data, const char target_name[])
 
     Serial.print(message);
     Serial.println(chosen_data, BIN);
-}
-
-
-
-void store_color_data()
-{
-
 }
 
 
