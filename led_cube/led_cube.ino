@@ -49,6 +49,7 @@
 
 /***************************** Includes & Macros ******************************/
 #include <SPI.h>                 // SPI Library used to clock data out to the shift registers
+#include <math.h>                // Math C Library needed for sine() function
 #include <Arduino.h>             // For the byte data type
 #include "animations.h"          // Function prototypes for animations module
 // #include "menu.h"                // Function prototypes for menu module
@@ -70,6 +71,12 @@ byte blue_data[LAYERS][ROWS][COLS] = { 0 };     // 4096 bits, 8 per individual L
 byte display_serial_out[NUM_OF_SR] = { 0 };     // 200 bits, 1 per register output
 
 
+//! ****************************************************************************
+// Assuming global storage arrays are defined as:
+// byte red_data[8][8][8], green_data[8][8][8], blue_data[8][8][8];
+const float PI = 3.14159265358979323846;
+//! ****************************************************************************
+
 
 /********************************* Prototypes *********************************/
 void reset_storage(void);
@@ -78,6 +85,11 @@ void diagnose(const byte data, const char name[]);
 void set_led_data(const int level, const int row, const int col,
                   const byte red, const byte green, const byte blue);
 
+//! ****************************************************************************
+void sineWaveAnimation(float time);
+byte floatToColor(float value);
+void rainbow(float value, byte &r, byte &g, byte &b)
+//! ****************************************************************************
 
 
 /******************************** Sketch Setup ********************************/
@@ -105,7 +117,17 @@ void setup()
 /******************************** Sketch Loop *********************************/
 void loop()
 {
+    // Time in seconds, increments in 1/60 second steps
+    static float time = 0.0;
 
+    // Update sine wave animation with current time
+    sineWaveAnimation(time);
+
+    // Increment time
+    time += 1.0 / 60.0;
+
+    // Delay to achieve approximately 60 frames per second
+    delay(1000 / 60);
 }
 
 
@@ -279,3 +301,65 @@ void reset_storage()
         }
     }
 }
+
+
+
+
+//! ****************************************************************************
+// Convert a value in the range [0, 1] to [0, 255] for color intensity
+byte floatToColor(float value)
+{
+    return (byte) (value * 255);
+}
+//! ****************************************************************************
+
+
+//! ****************************************************************************
+// Convert a value in the range [0, 1] to a rainbow color (R, G, B)
+void rainbow(float value, byte &r, byte &g, byte &b)
+{
+    float red = sin(value * 2 * PI);
+    float green = sin(value * 2 * PI + (2 * PI / 3));
+    float blue = sin(value * 2 * PI + (4 * PI / 3));
+
+    r = floatToColor((red + 1) / 2);
+    g = floatToColor((green + 1) / 2);
+    b = floatToColor((blue + 1) / 2);
+}
+//! ****************************************************************************
+
+
+//! ****************************************************************************
+// The animation function to display sine wave
+void sineWaveAnimation(float time)
+{
+    const int center = 4;
+    const float frequency = 0.2; // frequency of the wave
+    const float amplitude = 3.0; // amplitude of the wave
+
+    for (int z = 0; z < 8; z++)
+    {
+        for (int y = 0; y < 8; y++)
+        {
+            for (int x = 0; x < 8; x++)
+            {
+                // Calculate distance from center
+                float distance = sqrt(pow(x - center, 2) + pow(y - center, 2) + pow(z - center, 2));
+
+                // Calculate sine wave value based on distance and time
+                float sineValue = sin(distance * frequency + time) * amplitude;
+
+                // Map the sine value to a color
+                byte r, g, b;
+                rainbow((sineValue + 1) / 2, r, g, b);
+
+                // Set the LED color data
+                set_led_data(z, y, x, r, g, b);
+            }
+        }
+    }
+
+    // Send the color data to the LEDs
+    pulse_width_mod();
+}
+//! ****************************************************************************
