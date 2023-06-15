@@ -243,7 +243,7 @@ void set_led(int level, int row, int column, byte red, byte green, byte blue)
     }
 
     // There are 512 LEDs in the cube, so when we write to level 2, column 5, row 4, that needs to be translated into a number from 0 to 511
-    int whichbyte = int(((level * 32) + (row * 8) + column) / 8);
+    int which_register = (int) (((level * 64) + (row * 8) + column) / 8);
 
     // The first level LEDs are first in the sequence, then 2nd level, then third, and so on
     // The (level*64) is what indexes the level's starting place, so level 0 are LEDs 0-63, level 1 are LEDs 64-127, and so on
@@ -256,7 +256,7 @@ void set_led(int level, int row, int column, byte red, byte green, byte blue)
     // 08 09 10 11 12 13 14 15
     // 16 17 18 19 20 21 22 23
     // 24 25 26 27 28 29 30 31
-    // 32 33 34 35 36 37 38 39
+    // 64 33 34 35 36 37 38 39
     // 40 41 42 43 44 45 46 47  
     // 48 49 50 51 52 53 54 55  
     // 56 57 58 59 60 61 62 63
@@ -272,7 +272,7 @@ void set_led(int level, int row, int column, byte red, byte green, byte blue)
     // this is the last byte in the array, which is right since this is the last LED
 
     // This next variable is the same thing as before, but here we don't divide by 8, so we get the LED number 0-511
-    int wholebyte = (level * 32) + (row * 8) + column;
+    int which_bit = (level * 64) + (row * 8) + column;
     // This will all make sense in a sec
 
     // This is 4 bit color resolution, so each color contains x4 64 byte arrays, explanation below:
