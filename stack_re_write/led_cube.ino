@@ -138,136 +138,126 @@ void store_color_data()
 /************** Latches Serial Data In to Registers' Parallel Out *************/
 void pulse_width_mod()
 {
-    // Vertical level data, Cathode control
-    for (int i = 0; i < LAYERS; i++)
+    // Tracks which bit the program is currently "viewing"
+    // (per byte)
+    int bit_index;
+
+    // Tracks which register the program is currently "viewing"
+    // (for the whole daisy chain)
+    int register_index = 1;
+
+    // Traverses through each vertical layer of cube
+    // (layers parallel with ground, i.e. horizontal cuts)
+    for (int vertical = 0; vertical < LAYERS; vertical++)
     {
-        // If program detects a '1' in cathode control byte
-        if (bitRead(vert_level, i))
-        {
-            // Then it'll write a '1' in the corresponding index of 
-            // the output buffer array for that frame of animation
-            bitSet(display_serial_out[register_index], i);
-        }
+        // Resets layer selection for a 1/8 duty cycle 
+        // per vertical layer (at best)
+        display_serial_out[0] = 0;
 
-        // Once 8 bits of code are set, advance to next shift register
-        if (i == OUTPUTS_PER_SR - 1)
-        {
-            register_index++;
-        }
-    }
+        // Serial out for vertical layer selection
+        // Cathode control
+        bitSet(display_serial_out[0], vertical);
 
-    //************************************************** AT REG_INDEX = 1
-
-    // Blue channel data, Anode control
-    for (int j = 0; j < LEDS_PER_LAYER; j++)
-    {
-        for (int k = 0; k < OUTPUTS_PER_SR; k++)
+        // Serial out for BLUE channel daisy chain of shift registers
+        // Anode control
+        for (int pwm_b = 0; pwm_b < 256; pwm_b++)
         {
-            if (bitRead(blue_data[j], k))
+            for (int rows_b = 0; rows_b < ROWS; rows_b++)
             {
-                bitSet(display_serial_out[register_index], );
-            }
+                // Resets bit counter at the start of every shift register
+                bit_index = 0;
 
-            // Once 8 bits of code are set, advance to next shift register
-            if (i == OUTPUTS_PER_SR - 1)
-            {
+                for (int cols_b = 0; cols_b < COLS; cols_b++)
+                {
+                    // 
+                    if (blue_data[vertical][rows_b][cols_b] < pwm_b)
+                    {
+                        // Error checking
+                        assert(register_index >= 0 && register_index <= 25);
+                        assert(bit_index >= 0 && bit_index <= 7);
+
+                        // 
+                        bitSet(display_serial_out[register_index], bit_index);
+                    }
+                    // 
+                    bit_index++;
+                }
+                // 
                 register_index++;
             }
         }
-    }
 
-    // Green channel data, Anode control
-
-    // Red channel data, Anode control
-
-    // 
-    digitalWrite(latch_pin, LOW);
-
-    for (int m = 0; m < NUM_OF_SR; m++)
-    {
-        shiftOut(data_pin, clock_pin, LSBFIRST, display_serial_out[m]);
-    }
-
-    // 
-    digitalWrite(latch_pin, HIGH);
-
-    // 
-    digitalWrite(latch_pin, LOW);
-}
-
-//! ***************************************************************************
-
-int bit_index = 0;          //
-int register_index = 1;     // 
-
-// 
-for (int vertical = 0; vertical < LAYERS; vertical++)
-{
-    // 
-    display_serial_out[0] = 0;
-    // 
-    bitSet(display_serial_out[0], vertical);
-
-    // Serial out for BLUE channel daisy chain of shift registers
-    for (int pwm_b = 0; pwm_b < 256; pwm_b++)
-    {
-        for (int rows_b = 0; rows_b < ROWS; rows_b++)
+        // Serial out for GREEN channel daisy chain of shift registers
+        // Anode control
+        for (int pwm_g = 0; pwm_g < 256; pwm_g++)
         {
-            for (int cols_b = 0; cols_b < COLS; cols_b++)
+            for (int row_g = 0; row_g < ROWS; row_g++)
             {
-                // 
-                if (blue_data[vertical][rows_b][cols_b] < pwm_b)
-                {
-                    // Error checking
-                    assert(register_index >= 0 && register_index <= 25);
-                    // 
-                    bitSet(display_serial_out[register_index]);
-                }
-            }
-            // 
-            register_index++;
-        }
-    }
+                // Resets bit counter at the start of every shift register
+                bit_index = 0;
 
-    // Serial out for GREEN channel daisy chain of shift registers
-    for (int pwm_g = 0; pwm_g < 256; pwm_g++)
-    {
-        for (int row_g = 0; row_g < ROWS; row_g++)
-        {
-            for (int cols_g = 0; cols_g < COLS; cols_g++)
-            {
-                // 
-                if (green_data[vertical][row_g][cols_g] < pwm_g)
+                for (int cols_g = 0; cols_g < COLS; cols_g++)
                 {
-                    // Error checking
-                    assert(register_index >= 0 && register_index <= 25);
                     // 
-                    bitSet(display_serial_out[register_index]);
-                }
-            }
-            // 
-            register_index++;
-        }
-    }
+                    if (green_data[vertical][row_g][cols_g] < pwm_g)
+                    {
+                        // Error checking
+                        assert(register_index >= 0 && register_index <= 25);
+                        assert(bit_index >= 0 && bit_index <= 7);
 
-    // Serial out for RED channel daisy chain of shift registers
-    for (int pwm_r = 0; pwm_r < 256; pwm_r++)
-    {
-        for (int rows_r = 0; rows_r < ROWS; rows_r++)
-        {
-            for (int cols_r = 0; cols_r < COLS; cols_r++)
-            {
-                // 
-                if (red_data[vertical][rows_r][cols_r] < pwm_r)
-                {
-                    // Error checking
-                    assert(register_index >= 0 && register_index <= 25);
+                        // 
+                        bitSet(display_serial_out[register_index], bit_index);
+                    }
                     // 
-                    bitSet(display_serial_out[register_index]);
+                    bit_index++;
                 }
+                // 
+                register_index++;
             }
-            // 
-            register_index++;
         }
+
+        // Serial out for RED channel daisy chain of shift registers
+        // Anode control
+        for (int pwm_r = 0; pwm_r < 256; pwm_r++)
+        {
+            for (int rows_r = 0; rows_r < ROWS; rows_r++)
+            {
+                // Resets bit counter at the start of every shift register
+                bit_index = 0;
+
+                for (int cols_r = 0; cols_r < COLS; cols_r++)
+                {
+                    // 
+                    if (red_data[vertical][rows_r][cols_r] < pwm_r)
+                    {
+                        // Error checking
+                        assert(register_index >= 0 && register_index <= 25);
+                        assert(bit_index >= 0 && bit_index <= 7);
+
+                        // 
+                        bitSet(display_serial_out[register_index], bit_index);
+                    }
+                    // 
+                    bit_index++;
+                }
+                // 
+                register_index++;
+            }
+        }
+
+        // 
+        digitalWrite(latch_pin, LOW);
+
+        // 
+        for (int n = 0; n < NUM_OF_SR; n++)
+        {
+            shiftOut(data_pin, clock_pin, LSBFIRST, display_serial_out[n]);
+        }
+
+        // 
+        digitalWrite(latch_pin, HIGH);
+
+        // 
+        digitalWrite(latch_pin, LOW);
     }
 }
