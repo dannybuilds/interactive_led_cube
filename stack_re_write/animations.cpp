@@ -2248,21 +2248,3 @@ void harlem_shake()
         }
     }
 }
-
-
-
-void clean()
-{
-    int ii, jj, kk;
-
-    for (ii = 0; ii < 8; ii++)
-    {
-        for (jj = 0; jj < 8; jj++)
-        {
-            for (kk = 0; kk < 8; kk++)
-            {
-                set_led_data(ii, jj, kk, 0, 0, 0);
-            }
-        }
-    }
-}
