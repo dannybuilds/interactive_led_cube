@@ -53,16 +53,15 @@
 #include "animations.h"          // Function prototypes for animations module
 // #include "menu.h"                // Function prototypes for menu module
 
-#define NUM_OF_CH 64             // Number of channels for a single color per vertical layer
 #define NUM_OF_SF 25             // Total number of shift registers
+#define NUM_OF_CH 64             // Number of channels for a single color per vertical layer
+#define OUTPUTS_PER_SF 8         // Number of parallel outputs per shift register
 
+const int out_en_pin = 26;       // Used for clearing shift registers, for initializing normal operation
+const int clear_pin = 25;        // Used for clearing shift registers, for initializing normal operation
 const int latch_pin = 21;        // GPIO21 will drive RCLK (latch) on shift registers
-const int blank_pin = 26;        // Same, can use any pin you want for this, just make sure you pull up via a 1k to 5V
 const int data_pin = 18;         // Used by SPI, must be GPIO18, used for serially driving the shift register daisy chains
 const int clock_pin = 5;         // Used by SPI, must be GPIO5
-
-// int value = 0;
-// byte switch_var = 0;
 
 byte vert_level = 0;
 byte display_data[NUM_OF_SF] = { 0 };
@@ -75,6 +74,8 @@ byte blue_data[NUM_OF_CH] = { 0 };
 /******************************** Sketch Setup ********************************/
 void setup()
 {
+    pinMode(out_en_pin, OUTPUT);
+    pinMode(clear_pin, OUTPUT);
     pinMode(latch_pin, OUTPUT);
     pinMode(data_pin, OUTPUT);
     pinMode(clock_pin, OUTPUT);
@@ -125,9 +126,59 @@ void diagnose(const byte chosen_data, const char target_name[])
 /************** Latches Serial Data In to Registers' Parallel Out *************/
 void update_registers()
 {
+    int register_index = 0;
+    int cathode_index = 0;
 
+    digitalWrite(out_en_pin, HIGH);
+    digitalWrite(out_en_pin, LOW);
+    digitalWrite(clear_pin, LOW);
+    digitalWrite(clear_pin, HIGH);
+
+    // Vertical level data, Cathode control
+    for (int i = 0; i < OUTPUTS_PER_SF; i++)
+    {
+        if (bitRead(vert_level, i))
+        {
+            bitSet(display_data[register_index], i);
+        }
+
+        // Once 8 bits of code are set, advance to next shift register
+        if (i == OUTPUTS_PER_SF - 1)
+        {
+            register_index++;
+        }
+    }
+
+    // Blue channel data, Anode control
+    for (int j = 0; j < NUM_OF_CH; j++)
+    {
+        for (int k = 0; k < OUTPUTS_PER_SF; k++)
+        {
+            if (bitRead(blue_data[j], k))
+            {
+                bitSet(display_data[register_index], );
+            }
+
+            // Once 8 bits of code are set, advance to next shift register
+            if (i == OUTPUTS_PER_SF - 1)
+            {
+                register_index++;
+            }
+        }
+    }
+
+    // Green channel data, Anode control
+
+    // Red channel data, Anode control
 
     digitalWrite(latch_pin, LOW);
-    shiftOUt(data_pin, clock_pin, LSBFIRST, display_data);
+
+    for (int m = 0; m < NUM_OF_SF; m++)
+    {
+        shiftOut(data_pin, clock_pin, LSBFIRST, display_data[m]);
+    }
+
     digitalWrite(latch_pin, HIGH);
+
+    digitalWrite(clear_pin, LOW);
 }
