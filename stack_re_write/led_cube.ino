@@ -57,8 +57,6 @@
 #define NUM_OF_CH 64             // Number of channels for a single color per vertical layer
 #define OUTPUTS_PER_SF 8         // Number of parallel outputs per shift register
 
-const int out_en_pin = 26;       // Used for clearing shift registers, for initializing normal operation
-const int clear_pin = 25;        // Used for clearing shift registers, for initializing normal operation
 const int latch_pin = 21;        // GPIO21 will drive RCLK (latch) on shift registers
 const int data_pin = 18;         // Used by SPI, must be GPIO18, used for serially driving the shift register daisy chains
 const int clock_pin = 5;         // Used by SPI, must be GPIO5
@@ -74,8 +72,6 @@ byte blue_data[NUM_OF_CH] = { 0 };
 /******************************** Sketch Setup ********************************/
 void setup()
 {
-    pinMode(out_en_pin, OUTPUT);
-    pinMode(clear_pin, OUTPUT);
     pinMode(latch_pin, OUTPUT);
     pinMode(data_pin, OUTPUT);
     pinMode(clock_pin, OUTPUT);
