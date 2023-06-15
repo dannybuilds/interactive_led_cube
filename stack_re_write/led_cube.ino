@@ -169,20 +169,20 @@ void pulse_width_mod()
 
                 for (int cols_b = 0; cols_b < COLS; cols_b++)
                 {
-                    // 
+                    // If BLUE intensity value for the pixel is below than the threshold
                     if (blue_data[vertical][rows_b][cols_b] < pwm_b)
                     {
                         // Error checking
                         assert(register_index >= 0 && register_index <= 25);
                         assert(bit_index >= 0 && bit_index <= 7);
 
-                        // 
+                        // The the BLUE channel gets turned on
                         bitSet(display_serial_out[register_index], bit_index);
                     }
-                    // 
+                    // Moves onto the next bit in the byte 
                     bit_index++;
                 }
-                // 
+                // Moves onto the next register in daisy chain 
                 register_index++;
             }
         }
@@ -198,20 +198,20 @@ void pulse_width_mod()
 
                 for (int cols_g = 0; cols_g < COLS; cols_g++)
                 {
-                    // 
+                    // If GREEN intensity value for the pixel is below than the threshold
                     if (green_data[vertical][row_g][cols_g] < pwm_g)
                     {
                         // Error checking
                         assert(register_index >= 0 && register_index <= 25);
                         assert(bit_index >= 0 && bit_index <= 7);
 
-                        // 
+                        // The the GREEN channel gets turned on
                         bitSet(display_serial_out[register_index], bit_index);
                     }
-                    // 
+                    // Moves onto the next bit in the byte 
                     bit_index++;
                 }
-                // 
+                // Moves onto the next register in daisy chain 
                 register_index++;
             }
         }
@@ -227,37 +227,37 @@ void pulse_width_mod()
 
                 for (int cols_r = 0; cols_r < COLS; cols_r++)
                 {
-                    // 
+                    // If RED intensity value for the pixel is below than the threshold
                     if (red_data[vertical][rows_r][cols_r] < pwm_r)
                     {
                         // Error checking
                         assert(register_index >= 0 && register_index <= 25);
                         assert(bit_index >= 0 && bit_index <= 7);
 
-                        // 
+                        // The the RED channel gets turned on
                         bitSet(display_serial_out[register_index], bit_index);
                     }
-                    // 
+                    // Moves onto the next bit in the byte
                     bit_index++;
                 }
-                // 
+                // Moves onto the next register in daisy chain
                 register_index++;
             }
         }
 
-        // 
+        // Ensures data doesn't get sent to outputs of shift registers
         digitalWrite(latch_pin, LOW);
 
-        // 
-        for (int n = 0; n < NUM_OF_SR; n++)
+        // Shifts all of the store color data for this layer (in reverse)
+        for (int n = NUM_OF_SR - 1; n >= 0; n--)
         {
             shiftOut(data_pin, clock_pin, LSBFIRST, display_serial_out[n]);
         }
 
-        // 
+        // Outputs (i.e. stores) shifted data at the desired timing
         digitalWrite(latch_pin, HIGH);
 
-        // 
+        // Prevents accidental data outputs, bug prevention
         digitalWrite(latch_pin, LOW);
     }
 }
