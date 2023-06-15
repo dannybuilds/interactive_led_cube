@@ -71,12 +71,6 @@ byte blue_data[LAYERS][ROWS][COLS] = { 0 };     // 4096 bits, 8 per individual L
 byte display_serial_out[NUM_OF_SR] = { 0 };     // 200 bits, 1 per register output
 
 
-//! ****************************************************************************
-// Assuming global storage arrays are defined as:
-// byte red_data[8][8][8], green_data[8][8][8], blue_data[8][8][8];
-const float PI = 3.14159265358979323846;
-//! ****************************************************************************
-
 
 /********************************* Prototypes *********************************/
 void reset_storage(void);
