@@ -1807,7 +1807,7 @@ void harlem_shake()
                     set_led_data(i, j, k, random(16), 0, random(16));
     }
 
-    clean();
+    reset_storage();
 
     for (m = 0; m < 3; m++)
     {
@@ -1827,7 +1827,7 @@ void harlem_shake()
             }
         }
 
-        clean();
+        reset_storage();
 
         color_select = random(0, 3);
         if (color_select == 0)

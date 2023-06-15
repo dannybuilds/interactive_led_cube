@@ -71,6 +71,15 @@ byte display_serial_out[NUM_OF_SR] = { 0 };     // 200 bits, 1 per register outp
 
 
 
+/********************************* Prototypes *********************************/
+void reset_storage(void);
+void pulse_width_mod(void);
+void diagnose(const byte data, const char name[]);
+void set_led_data(const int level, const int row, const int col,
+                  const byte red, const byte green, const byte blue);
+
+
+
 /******************************** Sketch Setup ********************************/
 void setup()
 {
@@ -102,8 +111,8 @@ void loop()
 
 
 /*********************** LED Color Data Storage Routine ***********************/
-void set_led_data(int cathode_level, int anode_row, int anode_col,
-                  byte red, byte green, byte blue)
+void set_led_data(const int cathode_level, const int anode_row, const int anode_col,
+                  const byte red, const byte green, const byte blue)
 {
     red_data[cathode_level][anode_row][anode_col] = red;
     green_data[cathode_level][anode_row][anode_col] = green;
@@ -245,26 +254,27 @@ void pulse_width_mod()
 
         // Outputs (i.e. stores) shifted data at the desired timing
         digitalWrite(latch_pin, HIGH);
-
         // Prevents accidental data outputs, bug prevention
         digitalWrite(latch_pin, LOW);
     }
+
+    delay(5);           // 
+    reset_storage();    // 
 }
 
 
 
-//! ***************************************************************************
-void clean()
+void reset_storage()
 {
-    int ii, jj, kk;
+    int i, j, k;
 
-    for (ii = 0; ii < 8; ii++)
+    for (i = 0; i < LAYERS; i++)
     {
-        for (jj = 0; jj < 8; jj++)
+        for (j = 0; j < ROWS; j++)
         {
-            for (kk = 0; kk < 8; kk++)
+            for (k = 0; k < COLS; k++)
             {
-                set_led_data(ii, jj, kk, 0, 0, 0);
+                set_led_data(i, j, k, 0, 0, 0);
             }
         }
     }
