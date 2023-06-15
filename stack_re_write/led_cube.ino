@@ -100,9 +100,13 @@ void set_led(int cathode_level,
 
 
 /******************* Diagnostic Module for Debugging/Testing ******************/
-void diagnostic_mode()
+void diagnostic_mode(const byte chosen_data, const char target_name[])
 {
+    char message[100];
+    sprintf(message, "Binary data in the %s byte: ", target_name);
 
+    Serial.print(message);
+    Serial.println(chosen_data, BIN);
 }
 
 
