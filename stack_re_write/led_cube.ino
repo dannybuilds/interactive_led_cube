@@ -53,8 +53,9 @@
 #include "animations.h"          // Function prototypes for animations module
 // #include "menu.h"                // Function prototypes for menu module
 
-#define LAYERS 8                 // Number of vertical layers in cube display
-#define LEDS_PER_LAYER 64        // Number of channels for a single color per vertical layer
+#define ROWS 8                   // Number of horizontal rows per layer, anodes
+#define COLS 8                   // Number of horizontal columns per layer, anodes
+#define LAYERS 8                 // Number of vertical layers in cube display, cathodes
 #define OUTPUTS_PER_SR 8         // Number of parallel outputs per shift register
 #define NUM_OF_SR 25             // Total number of shift registers
 
@@ -63,11 +64,11 @@ const int data_pin = 18;         // SER, used for serial input on the shift regi
 const int clock_pin = 5;         // SRCLK, used by SPI, must be GPIO5
 const int clear_pin = 26;        // SRCLR, used for prepping registers for data input, active low
 
-byte vert_level = 0;                              // 8 bits, 1 per vertical level
-byte red_data[LAYERS][LEDS_PER_LAYER] = { 0 };    // 4096 bits, 8 per individual LED channel
-byte green_data[LAYERS][LEDS_PER_LAYER] = { 0 };  // 4096 bits, 8 per individual LED channel
-byte blue_data[LAYERS][LEDS_PER_LAYER] = { 0 };   // 4096 bits, 8 per individual LED channel
-byte display_serial_out[NUM_OF_SR] = { 0 };       // 200 bits, 1 per register output
+byte vert_level = 0;                            // 8 bits, 1 per vertical level
+byte red_data[LAYERS][ROWS][COLS] = { 0 };      // 4096 bits, 8 per individual LED channel
+byte green_data[LAYERS][ROWS][COLS] = { 0 };    // 4096 bits, 8 per individual LED channel
+byte blue_data[LAYERS][ROWS][COLS] = { 0 };     // 4096 bits, 8 per individual LED channel
+byte display_serial_out[NUM_OF_SR] = { 0 };     // 200 bits, 1 per register output
 
 
 
@@ -111,8 +112,6 @@ void set_led(int cathode_level,
 {
     int which_register = (int) (((cathode_level * 64) + (anode_row * 8) + anode_column) / 8);
     int which_bit = (int) (((cathode_level * 64) + (anode_row * 8) + anode_column));
-
-
 }
 
 
@@ -125,6 +124,13 @@ void diagnose(const byte chosen_data, const char target_name[])
 
     Serial.print(message);
     Serial.println(chosen_data, BIN);
+}
+
+
+
+void store_color_data()
+{
+
 }
 
 
