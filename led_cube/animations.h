@@ -13,6 +13,8 @@
 // Project :  Interactive LED Cube
 // Title   :  Animation Function Prototypes, Header File
 
+// Sup ma boi
+
 #ifndef ANIMATIONS_H
 #define ANIMATIONS_H
 
